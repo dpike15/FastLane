@@ -93,14 +93,14 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
                         resultString = "Member does not exist";
                     }else{
                         if(car.getStatus().equals("true")){
-                            resultString = car.getVin() + " " + car.getMake() + " " +
-                                    car.getModel() + " is currently already checked out!";
+                            resultString = car.getVin() + " " + car.getCarInfo().getMake() + " " +
+                                    car.getCarInfo().getModel() + " is currently already checked out!";
                         }else if(!car.getStatus().equals("true") &&
                             car.getVin().equals(member.getReservationVin())){
                             resultString = member.getFirst_name() + " " + member.getLast_name() +
                                     " checked in successfully with an " + car.getVin() + " " +
-                                    car.getMake() + " " +
-                                    car.getModel();
+                                    car.getCarInfo().getMake() + " " +
+                                    car.getCarInfo().getModel();
                             car.setStatus("true");
                             mapper.save(car);
                         }else{

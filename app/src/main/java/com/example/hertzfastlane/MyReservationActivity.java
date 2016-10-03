@@ -11,6 +11,8 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 
+import java.util.List;
+
 public class MyReservationActivity extends AppCompatActivity {
     DynamoDBMapper carMapper;
     Car car;
@@ -36,30 +38,32 @@ public class MyReservationActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+
+
                 //Accessing Car based on reservationßß
                 car = carMapper.load(Car.class,member.getReservationVin());
-
+                List<String> features = car.getFeatures();
                 //Updating text fields to load static information
                 TextView carTitle = (TextView) findViewById(R.id.textView);
-                carTitle.setText(car.getMake() +  " " + car.getModel());
+                carTitle.setText(car.getCarInfo().getMake() +  " " + car.getCarInfo().getModel());
 
                 TextView carMpg = (TextView) findViewById(R.id.textView2);
-                carMpg.setText("MPG: City: "  + car.getMpgCity() + " Hwy: " + car.getMpgHighway() );
+                carMpg.setText("MPG: City: "  + car.getCarInfo().getMpgCity() + " Hwy: " + car.getCarInfo().getMpgHighway() );
 
                 TextView passengers = (TextView) findViewById(R.id.textView3);
-                passengers.setText("Passengers: " + car.getPassengers());
+                passengers.setText("Passengers: " + car.getCarInfo().getPassengers());
 
                 TextView luggage = (TextView) findViewById(R.id.textView4);
-                luggage.setText("Luggage: " + car.getLuggage());
+                luggage.setText("Luggage: " + car.getCarInfo().getLuggage());
 
                 TextView trasnmission = (TextView) findViewById(R.id.textView5);
-                trasnmission.setText("Transmission: " + car.getTransmission());
+                trasnmission.setText("Transmission: " + car.getCarInfo().getTransmission());
 
-                TextView features = (TextView) findViewById(R.id.textView6);
-                features.setText(car.getFeatures());
+                TextView featuresText = (TextView) findViewById(R.id.textView6);
+                featuresText.setText(features.get(1));
 
                 TextView rate = (TextView) findViewById(R.id.textView7);
-                rate.setText("Rate: " + car.getRate() + " Daily");
+                rate.setText("Rate: " + car.getCarInfo().getRate() + " Daily");
             }
         };
         Thread thread = new Thread(runnable);

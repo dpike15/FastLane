@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Testing"
+                android:text="Chevy Impala LTZ"
                 android:id="@+id/textView"
                 android:textColor="#fff129"
                 android:textSize="26dp"
@@ -73,6 +73,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="MPG: 22 City/ 33 Hwy"
                         android:id="@+id/textView2"
                         android:textColor="#b9b9b9"
                         android:textSize="16dp"
@@ -81,6 +82,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Passengers: 5"
                         android:id="@+id/textView3"
                         android:textColor="#b9b9b9"
                         android:textSize="16dp"
@@ -89,6 +91,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Luggage: 2 Large / 1 Small"
                         android:id="@+id/textView4"
                         android:textColor="#b9b9b9"
                         android:textSize="16dp"
@@ -105,6 +108,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Transmission: Automatic"
                         android:id="@+id/textView5"
                         android:textColor="#b9b9b9"
                         android:textSize="16dp"
@@ -113,6 +117,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Sirius XM Radio"
                         android:id="@+id/textView6"
                         android:textColor="#b9b9b9"
                         android:textSize="16dp"
@@ -121,6 +126,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Rate: $49.29 Daily"
                         android:id="@+id/textView7"
                         android:textColor="#b9b9b9"
                         android:textSize="16dp"
