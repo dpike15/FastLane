@@ -22,7 +22,16 @@ public class LoginActivity extends AppCompatActivity {
     boolean exist;
     private DatabaseReference mDatabase;
     private DynamoDBMapper mapperMembers;
-    private users member;
+
+    public static users getMember() {
+        return member;
+    }
+
+    public void setMember(users member) {
+        this.member = member;
+    }
+
+    private static users member;
     boolean login;
 
     @Override
@@ -46,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 //Amazon Web Services Connection
-                //Credentials for identity pools for Table Cars and members - AWS
+                //Credentials for identity pools for Table users - AWS
                 // Initialize the Amazon Cognito credentials provider for users Table
               // Initialize the Amazon Cognito credentials provider
                 CognitoCachingCredentialsProvider credentialsProviderMembers = new CognitoCachingCredentialsProvider(

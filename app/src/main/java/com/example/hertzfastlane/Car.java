@@ -68,6 +68,77 @@ public class Car{
     private String color;
     private String miles;
 
+    @DynamoDBAttribute(attributeName = "mpgCity")
+    public String getMpgCity() {
+        return mpgCity;
+    }
+
+    public void setMpgCity(String mpgCity) {
+        this.mpgCity = mpgCity;
+    }
+
+    @DynamoDBAttribute(attributeName = "mpgHighway")
+    public String getMpgHighway() {
+        return mpgHighway;
+    }
+
+    public void setMpgHighway(String mpgHighway) {
+        this.mpgHighway = mpgHighway;
+    }
+
+    @DynamoDBAttribute(attributeName = "passengers")
+    public String getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(String passengers) {
+        this.passengers = passengers;
+    }
+
+    @DynamoDBAttribute(attributeName = "luggage")
+    public String getLuggage() {
+        return luggage;
+    }
+
+    public void setLuggage(String luggage) {
+        this.luggage = luggage;
+    }
+
+    @DynamoDBAttribute(attributeName = "features")
+    public String getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(String features) {
+        this.features = features;
+    }
+
+    @DynamoDBAttribute(attributeName = "rate")
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    @DynamoDBAttribute(attributeName = "transmission")
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(String transmission) {
+        this.transmission = transmission;
+    }
+
+    private String mpgCity;
+    private String mpgHighway;
+    private String passengers;
+    private String luggage;
+    private String features;
+    private String rate;
+    private String transmission;
+
     //Hash Key used for searching
     @DynamoDBHashKey(attributeName = "VIN")
     public String getVin(){
