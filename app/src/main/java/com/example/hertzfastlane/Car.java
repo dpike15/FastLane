@@ -20,6 +20,16 @@ import java.util.List;
 public class Car{
     private String vin;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    private String image;
+
     private String status;
 
     @DynamoDBAttribute(attributeName = "reservationId")

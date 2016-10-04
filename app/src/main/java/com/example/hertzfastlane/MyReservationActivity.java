@@ -1,17 +1,27 @@
 package com.example.hertzfastlane;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.s3.model.transform.Unmarshallers;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
+
+import static android.R.attr.onClick;
 
 public class MyReservationActivity extends AppCompatActivity {
     DynamoDBMapper carMapper;
@@ -39,7 +49,6 @@ public class MyReservationActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-
                 //Accessing Car based on reservationßß
                 car = carMapper.load(Car.class,member.getReservationVin());
                 List<String> features = car.getFeatures();
@@ -64,6 +73,11 @@ public class MyReservationActivity extends AppCompatActivity {
 
                 TextView rate = (TextView) findViewById(R.id.textView7);
                 rate.setText("Rate: " + car.getCarInfo().getRate() + " Daily");
+
+                ImageView imageView = (ImageView) findViewById(R.id.imageView4);
+                imageView.setImageDrawable(LoadImage(car.getImage()));
+
+
             }
         };
         Thread thread = new Thread(runnable);
@@ -76,7 +90,29 @@ public class MyReservationActivity extends AppCompatActivity {
         }
 
 
+        Button upgradeButton = (Button) findViewById(R.id.button);
+       upgradeButton.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View v) {
+               sendSMS("10063","Testing message");
+           }
+       });
+
+    }
+    public static Drawable LoadImage(String url){
+        try{
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is,"SrcName");
+
+            return d;
+        }catch(Exception e){
+            return null;
+        }
     }
 
+    private void sendSMS(String phoneNumber, String message) {
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, null, null);
+    }
 
 }
