@@ -62,8 +62,10 @@ public class MyReservationActivity extends AppCompatActivity {
                             .password("e93cc83b1d85bd5c712886ba101bd9531ca36d464bc40d60f982ec46b3db8f5f")
                             .build();
 
+                    //Accessing Cars Database
                     Database db = client.database("cars",false);
 
+                    //Selecting Document using a JSON selector : VIN number
                     String selector = "\"selector\": {\"vin\": \"" + member.getReservationVin() + "\"}";
 
                     List<cloudantCar> cars = db.findByIndex(selector,cloudantCar.class);
@@ -73,6 +75,7 @@ public class MyReservationActivity extends AppCompatActivity {
                     cloudantCar car = cars.get(0);
                     List<String> features = car.getFeatures();
 
+                    //Setting textViews with Dynamic Data
                     TextView carTitle = (TextView) findViewById(R.id.textView);
                     carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() +  " " + car.getInfo().getModel());
 
