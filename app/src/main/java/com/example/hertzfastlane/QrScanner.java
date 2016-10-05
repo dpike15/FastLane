@@ -10,7 +10,12 @@ import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.cloudant.client.api.CloudantClient;
+import com.cloudant.client.api.Database;
 import com.google.zxing.Result;
+
+import java.net.MalformedURLException;
+import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -23,9 +28,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
     private String qrString;
     private String resultString;
     private ZXingScannerView mScannerView;
-    //DynamoDB Mapper objects - JSON data
-    private DynamoDBMapper mapper;
-    private DynamoDBMapper mapperMembers;
+    //DynamoDB Mapper objects - JSON dat
     Car car;
     Member member;
 
@@ -61,65 +64,34 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
 
         qrString = result.getText();
 
-        //Credentials for identity pools for Table Cars and members - AWS
-        // Initialize the Amazon Cognito credentials provider for members Table
-        CognitoCachingCredentialsProvider credentialsProviderMembers = new CognitoCachingCredentialsProvider(
-                getApplicationContext(),
-                "us-east-1:d203cc02-4b6f-475d-84b1-93687e673058", // Identity Pool ID
-                Regions.US_EAST_1 // Region
-        );
-        AmazonDynamoDBClient ddbClientMembers = new AmazonDynamoDBClient(credentialsProviderMembers);
-        mapperMembers = new DynamoDBMapper(ddbClientMembers);
-
-
-        // Initialize the Amazon Cognito credentials provider for Cars table
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getApplicationContext(),
-                "us-east-1:d471f9f6-bda2-4a1f-85c5-4cb99127c6d1", // Identity Pool ID
-                Regions.US_EAST_1 // Region
-        );
-        //DB client and JSON mapper-Cars Table
-        AmazonDynamoDBClient ddbClient = new AmazonDynamoDBClient(credentialsProvider);
-        mapper = new DynamoDBMapper(ddbClient);
-
         Runnable runnable = new Runnable(){
 
             @Override
             public void run(){
-                car = mapper.load(Car.class,qrString);
-                if(car != null){
-                    member = mapperMembers.load(Member.class, car.getReservationId());
-                    if(member == null){
-                        resultString = "Member does not exist";
-                    }else{
-                        if(car.getStatus().equals("true")){
-                            resultString = car.getVin() + " " + car.getCarInfo().getMake() + " " +
-                                    car.getCarInfo().getModel() + " is currently already checked out!";
-                        }else if(!car.getStatus().equals("true") &&
-                            car.getVin().equals(member.getReservationVin())){
-                            resultString = member.getFirst_name() + " " + member.getLast_name() +
-                                    " checked in successfully with an " + car.getVin() + " " +
-                                    car.getCarInfo().getMake() + " " +
-                                    car.getCarInfo().getModel();
-                            car.setStatus("true");
-                            mapper.save(car);
-                        }else{
-                            resultString = "This car does not match your reservation!";
-                        }
-                    }
-                }else{
-                    resultString = "Car does not exist";
+                CloudantClient client;
+                try{
+                    client = Connection.getClient();
+                    Database carsdb = client.database("cars",false);
+
+                    String selectorCars = "\"selector\": {\"vin\": \"" + qrString + "\"}";
+
+                    List<Car> cars = carsdb.findByIndex(selectorCars,Car.class);
+
+                    Car scannedCar = cars.get(0);
+
+
+                    resultString = scannedCar.getInfo().getMake() + " " + scannedCar.getInfo()
+                            .getModel() + " scanned.";
+
+                }catch(MalformedURLException e){
+                    e.printStackTrace();
                 }
             }
 
         };
         Thread thread = new Thread(runnable);
         thread.start();
-        try{
-            thread.join();
-        }catch(Exception e){
-            return;
-        }
+
 
         try{
             thread.join();
@@ -127,10 +99,10 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
             return;
         }
 
-        //builder.setTitle("Scan result");
+        builder.setTitle("Scan result");
         if(resultString != null)
         {
-            //builder.setMessage(resultString);
+            builder.setMessage(resultString);
             Intent carActivityIntent = new Intent(QrScanner.this, CarActivity.class);
             QrScanner.this.startActivity(carActivityIntent);
         }

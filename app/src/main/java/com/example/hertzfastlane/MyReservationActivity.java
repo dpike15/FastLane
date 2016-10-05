@@ -31,23 +31,13 @@ import static android.R.attr.onClick;
 public class MyReservationActivity extends AppCompatActivity {
     DynamoDBMapper carMapper;
     Car car;
-    users member;
+    Member member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_reservation);
-    /*
-        // Initialize the Amazon Cognito credentials provider for Cars table
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getApplicationContext(),
-                "us-east-1:d471f9f6-bda2-4a1f-85c5-4cb99127c6d1", // Identity Pool ID
-                Regions.US_EAST_1 // Region
-        );
-        //DB client and JSON mapper-Cars Table
-        AmazonDynamoDBClient ddbClient = new AmazonDynamoDBClient(credentialsProvider);
-        carMapper = new DynamoDBMapper(ddbClient);
-        */
+
         //Getting user information from login
         member = LoginActivity.getMember();
 
@@ -57,22 +47,26 @@ public class MyReservationActivity extends AppCompatActivity {
                 //Running CloudantDB instead of AWS
                 CloudantClient client;
                 try {
-                    client = ClientBuilder.url(new URL("https://6a4c10ac-077f-4d8c-9ca3-53f0e84f3d5a-bluemix:e93cc83b1d85bd5c712886ba101bd9531ca36d464bc40d60f982ec46b3db8f5f@6a4c10ac-077f-4d8c-9ca3-53f0e84f3d5a-bluemix.cloudant.com"))
-                            .username("6a4c10ac-077f-4d8c-9ca3-53f0e84f3d5a-bluemix")
-                            .password("e93cc83b1d85bd5c712886ba101bd9531ca36d464bc40d60f982ec46b3db8f5f")
-                            .build();
 
+                    client = Connection.getClient();
                     //Accessing Cars Database
-                    Database db = client.database("cars",false);
+                    Database reservationsdb = client.database("reservations",false);
 
                     //Selecting Document using a JSON selector : VIN number
-                    String selector = "\"selector\": {\"vin\": \"" + member.getReservationVin() + "\"}";
+                    String selectorRes = "\"selector\": {\"Customer_Id\": \"" + member.getCustomer_id()+ "\"}";
 
-                    List<cloudantCar> cars = db.findByIndex(selector,cloudantCar.class);
+                    List<Reservation> reservations = reservationsdb.findByIndex(selectorRes,Reservation.class);
 
-                    //cloudantCar car = db.find(cloudantCar.class , "b820f313731688509b4a5ae6c3ac9fa6");
+                    Reservation currentRes = reservations.get(0);
 
-                    cloudantCar car = cars.get(0);
+                    Database carsdb = client.database("cars",false);
+
+                    String selector = "\"selector\": {\"vin\": \"" + currentRes.getCar_Vin()+ "\"}";
+
+                    List<Car> cars = carsdb.findByIndex(selector,Car.class);
+
+                    Car car = cars.get(0);
+
                     List<String> features = car.getFeatures();
 
                     //Setting textViews with Dynamic Data
@@ -99,22 +93,6 @@ public class MyReservationActivity extends AppCompatActivity {
                 } catch (MalformedURLException e){
                     e.printStackTrace();
                 }
-
-
-                //AWS
-                /*
-                //Accessing Car based on reservationßß
-                car = carMapper.load(Car.class,member.getReservationVin());
-
-
-
-                //Updating text fields to load static information
-
-                */
-                /*
-                ImageView imageView = (ImageView) findViewById(R.id.imageView4);
-                imageView.setImageDrawable(LoadImage(car.getImage()));
-                */
 
             }
         };

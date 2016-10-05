@@ -7,31 +7,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.cloudant.client.api.ClientBuilder;
+import com.cloudant.client.api.CloudantClient;
+import com.cloudant.client.api.Database;
 import com.google.firebase.database.DatabaseReference;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
     String TAG = "LoginActivity";
     String username;
     String password;
-    boolean exist;
-    private DatabaseReference mDatabase;
-    private DynamoDBMapper mapperMembers;
 
-    public static users getMember() {
-        return member;
+    public static Member getMember() {
+        return user;
     }
 
-    public void setMember(users member) {
-        this.member = member;
+    public void setMember(Member member) {
+        this.user = member;
     }
 
-    private static users member;
+    private static Member user;
     boolean login;
 
     @Override
@@ -53,51 +58,44 @@ public class LoginActivity extends AppCompatActivity {
 
                  login = false;
 
-
-                //Amazon Web Services Connection
-                //Credentials for identity pools for Table users - AWS
-                // Initialize the Amazon Cognito credentials provider for users Table
-              // Initialize the Amazon Cognito credentials provider
-                CognitoCachingCredentialsProvider credentialsProviderMembers = new CognitoCachingCredentialsProvider(
-                     getApplicationContext(),
-                        "us-east-1:f9decd8d-cbed-4d6f-a8c9-b4bd1ce2d35c", // Identity Pool ID
-                     Regions.US_EAST_1 // Region
-                );
-                AmazonDynamoDBClient ddbClientMembers = new AmazonDynamoDBClient(credentialsProviderMembers);
-                mapperMembers = new DynamoDBMapper(ddbClientMembers);
-
-
-                //Getting login information for a user and chacking validity
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
-                        if(username.equals("") || password.equals("")) {
-                            login = false;
-                        }else{
-                            member = mapperMembers.load(users.class, username);
-                            if(member == null){
-                                login = false;
-                            }else{
-                                if(password.equals(member.getPassword())){
-                                    login = true;
-                                }else{
-                                    login = false;
+                        //Running CloudantDB instead of AWS
+                        CloudantClient client;
+                        try {
+                            client = ClientBuilder.url(new URL("https://6a4c10ac-077f-4d8c-9ca3-53f0e84f3d5a-bluemix:e93cc83b1d85bd5c712886ba101bd9531ca36d464bc40d60f982ec46b3db8f5f@6a4c10ac-077f-4d8c-9ca3-53f0e84f3d5a-bluemix.cloudant.com"))
+                                    .username("6a4c10ac-077f-4d8c-9ca3-53f0e84f3d5a-bluemix")
+                                    .password("e93cc83b1d85bd5c712886ba101bd9531ca36d464bc40d60f982ec46b3db8f5f")
+                                    .build();
 
-                                }
+                            //Accessing Cars Database
+                            Database db = client.database("customers", false);
+
+                            //Selecting Document using a JSON selector : VIN number
+                            String selector = "\"selector\": {\"username\": \"" + username +"\"}";
+
+                            List<Member> memberLookup = db.findByIndex(selector, Member.class);
+
+                            user = memberLookup.get(0);
+
+                            if(password.equals(user.getPassword())){
+                                login = true;
                             }
-                        }
 
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 };
-                Thread thread = new Thread(runnable);
-                thread.start();
+        Thread thread = new Thread(runnable);
+        thread.start();
 
-                //Wait for thread to finish
-                try{
-                    thread.join();
-                }catch(Exception e){
-                    return;
-                }
+        try{
+            thread.join();
+        }catch(Exception e){
+            return;
+        }
 
                 //If login success proceed to application
                 if(login){
