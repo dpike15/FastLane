@@ -8,13 +8,13 @@ import java.util.List;
 
 
 /*
- * Desrializor class Car for database "Cars"
+ * Deserializer class Car for database "Cars"
  */
 public class Car {
     private String vin;
     private List<String> features;
     private String image;
-    private String reservationId;
+
     private String status;
     private Info info;
 
@@ -32,14 +32,6 @@ public class Car {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getReservationId() {
-        return reservationId;
-    }
-
-    public void setReservationId(String reservationId) {
-        this.reservationId = reservationId;
     }
 
     public String getStatus() {

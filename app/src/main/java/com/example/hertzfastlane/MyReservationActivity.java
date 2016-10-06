@@ -55,16 +55,19 @@ public class MyReservationActivity extends AppCompatActivity {
                     //Selecting Document using a JSON selector : VIN number
                     String selectorRes = "\"selector\": {\"Customer_Id\": \"" + member.getCustomer_id()+ "\"}";
 
+                    //Retrieving Reservations
                     List<Reservation> reservations = reservationsdb.findByIndex(selectorRes,Reservation.class);
 
                     Reservation currentRes = reservations.get(0);
 
+                    //Retrieving Car with above reservation using Car VIN
                     Database carsdb = client.database("cars",false);
 
                     String selector = "\"selector\": {\"vin\": \"" + currentRes.getCar_Vin()+ "\"}";
 
                     List<Car> cars = carsdb.findByIndex(selector,Car.class);
 
+                    //Using retrieved Car object to populate fields
                     Car car = cars.get(0);
 
                     List<String> features = car.getFeatures();
