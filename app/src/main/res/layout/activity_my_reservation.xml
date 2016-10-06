@@ -14,7 +14,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="vertical"
@@ -61,13 +64,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chevy Impala LTZ"
                 android:id="@+id/textView"
                 android:textColor="#fff129"
                 android:textSize="26dp"
                 android:fontFamily="sans-serif-condensed"
                 android:textAlignment="center"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:text="TITLE" />
 
             <LinearLayout
                 android:orientation="horizontal"
