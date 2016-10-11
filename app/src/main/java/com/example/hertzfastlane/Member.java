@@ -10,14 +10,7 @@ package com.example.hertzfastlane;
 
 public class Member {
     private String customer_id;
-
-    public String getCustomer_id() {
-        return customer_id;
-    }
-
-    public void setCustomer_id(String customer_id) {
-        this.customer_id = customer_id;
-    }
+    private String _id;
 
     public String getUsername() {
         return username;
@@ -35,80 +28,100 @@ public class Member {
         this.password = password;
     }
 
-    public String getSMS_Text() {
-        return SMS_Text;
-    }
-
-    public void setSMS_Text(String SMS_Text) {
-        this.SMS_Text = SMS_Text;
-    }
-
     private String username;
     private String password;
 
+    public String getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(String customer_id) {
+        this.customer_id = customer_id;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String get_rev() {
+        return _rev;
+    }
+
+    public void set_rev(String _rev) {
+        this._rev = _rev;
+    }
+
     public String getFirst_NM() {
-        return First_NM;
+        return first_NM;
     }
 
     public void setFirst_NM(String first_NM) {
-        First_NM = first_NM;
+        this.first_NM = first_NM;
     }
 
     public String getMiddle_NM() {
-        return Middle_NM;
+        return middle_NM;
     }
 
     public void setMiddle_NM(String middle_NM) {
-        Middle_NM = middle_NM;
+        this.middle_NM = middle_NM;
     }
 
     public String getLast_NM() {
-        return Last_NM;
+        return last_NM;
     }
 
     public void setLast_NM(String last_NM) {
-        Last_NM = last_NM;
+        this.last_NM = last_NM;
     }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
     public void setGender(String gender) {
-        Gender = gender;
+        this.gender = gender;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
-    public String getSMS_TEXT() {
-        return SMS_Text;
+    public String getSms_Text() {
+        return sms_Text;
     }
 
-    public void setSMS_TEXT(String SMS_TEXT) {
-        this.SMS_Text = SMS_TEXT;
+    public void setSms_Text(String sms_Text) {
+        this.sms_Text = sms_Text;
     }
 
     public String getName_On_Card() {
-        return Name_On_Card;
+        return name_On_Card;
     }
 
     public void setName_On_Card(String name_On_Card) {
-        Name_On_Card = name_On_Card;
+        this.name_On_Card = name_On_Card;
     }
 
-    private String First_NM;
-    private String Middle_NM;
-    private String Last_NM;
-    private String Gender;
-    private String Email;
-    private String SMS_Text;
-    private String Name_On_Card;
+    private String _rev;
+
+
+
+    private String first_NM;
+    private String middle_NM;
+    private String last_NM;
+    private String gender;
+    private String email;
+    private String sms_Text;
+    private String name_On_Card;
 
 }
 
