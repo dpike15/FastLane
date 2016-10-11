@@ -7,22 +7,26 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.Button;
 import android.widget.EditText;
 import android.content.Context;
+
+import java.lang.reflect.Field;
+
 public class UserActivity extends AppCompatActivity {
     //public Button button;
     final Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
 
         final EditText etName = (EditText) findViewById(R.id.etName);
         final Button bMyReservation = (Button) findViewById(R.id.bMyReservation);
         final Button bScanner = (Button) findViewById(R.id.bScanner);
         final Button bMap = (Button) findViewById(R.id.bMap);
         final Button bHelp = (Button) findViewById(R.id.bHelp);
+
 
         //final String
         //Intent intent = getIntent();

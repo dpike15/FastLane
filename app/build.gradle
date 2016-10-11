@@ -44,6 +44,7 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
     compile 'com.almworks.sqlite4java:sqlite4java:1.0.392'
     compile files('libs/cloudant-client-2.6.2.jar')
+    compile 'com.github.chrisbanes:PhotoView:1.3.0'
 }
 
 
