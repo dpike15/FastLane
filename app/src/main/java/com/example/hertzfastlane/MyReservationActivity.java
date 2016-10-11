@@ -54,10 +54,11 @@ import org.apache.http.HttpResponse;
 
 public class MyReservationActivity extends AppCompatActivity {
     private Car car;
-    Member member;
+    private Member member;
     private static String result ="";
     public static final String URL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/reservations/_find";
     private static StringEntity entity;
+    private Reservation memberReservation;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -71,15 +72,16 @@ public class MyReservationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_reservation);
 
         //Getting user information from login
-        member = LoginActivity.getMember();
+
 
 
 
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-
-                String selectorRes = "{\"selector\": {\"Customer_Id\": \"0\"}}";
+                member = LoginActivity.getMember();
+                //JSON Query Paramaters
+                String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getCustomer_id() + "\"}}";
 
                 HttpClient httpclient = new DefaultHttpClient();
 
@@ -98,33 +100,42 @@ public class MyReservationActivity extends AppCompatActivity {
 
                 HttpResponse response;
 
-
+                //Get RESERVATION INFORMATION
                 try {
                     response = httpclient.execute(request);
                     HttpEntity entity = response.getEntity();
                     InputStream instream = entity.getContent();
+                    //JSON RESPONSE AS STRING
                     String result = convertStreamToString(instream);
                     JSONObject json = new JSONObject(result);
+                    //RETURNED AS ARRAY OF DOCUMENTS TITLED DOCS
                     JSONArray array = json.getJSONArray("docs");
                     JSONObject jsonRes = (JSONObject) array.get(0);
-                    String car_vin = jsonRes.get("Car_Vin").toString();
-
+                    String reservation = jsonRes.toString();
+                    ObjectMapper mapperReservation = new ObjectMapper();
+                    //PULL CAR VIN FROM RESERVATION NUMBER
+                    memberReservation = mapperReservation.readValue(reservation, Reservation.class);
                     instream.close();
 
-
-                    String URLGET = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/cars/" + car_vin;
+                    //URL CALL FOR CARS DATABASE
+                    String URLGET = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/cars/"
+                            + memberReservation.getCar_Vin();
 
                     HttpGet get = new HttpGet(URLGET);
 
+                    //Web Service
                     HttpResponse responseCar = httpclient.execute(get);
                     HttpEntity entityCar = responseCar.getEntity();
                     InputStream instreamCar = entityCar.getContent();
                     String resultCar = convertStreamToString(instreamCar);
+
+                    //Deserializing
                     JSONObject cars = new JSONObject(resultCar);
                     JSONObject info = cars.getJSONObject("info");
                     String infoString = info.toString();
-                    instream.close();
+                    instreamCar.close();
 
+                    //Deserializing to JSON Car Information
                     ObjectMapper mapper = new ObjectMapper();
 
                     car = mapper.readValue(resultCar, Car.class);
@@ -132,7 +143,27 @@ public class MyReservationActivity extends AppCompatActivity {
                     Info infoCar = mapper.readValue(infoString,Info.class);
                     car.setInfo(infoCar);
 
+                    //Setting textViews with Dynamic Data
 
+                    //Car name
+                    TextView carTitle = (TextView) findViewById(R.id.textView21);
+                    carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getModel() + " " + car.getInfo().getMake());
+
+                    //Confirmation Number
+                    TextView confirmation = (TextView) findViewById(R.id.textView19);
+                    confirmation.setText("Confirmation Number: " + memberReservation.getReservation_Num());
+
+                    //Pick up Location
+                    TextView pickupLocation = (TextView) findViewById(R.id.textView16);
+                    pickupLocation.setText("Pick-Up Location: " + memberReservation.getPick_Up());
+
+                    //Return Location
+                    TextView returnLocation = (TextView) findViewById(R.id.textView14);
+                    returnLocation.setText("Return Location: " + memberReservation.getReturnLocation());
+
+                    //Reservation Date
+                    TextView reservationDate = (TextView) findViewById(R.id.textView20);
+                    reservationDate.setText(memberReservation.getPick_Up_Date());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -150,28 +181,8 @@ public class MyReservationActivity extends AppCompatActivity {
         } catch (Exception e) {
             return;
         }
-        //Setting textViews with Dynamic Data
-        TextView carTitle = (TextView) findViewById(R.id.textView);
-        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getModel() + " " + car.getInfo().getMake());
 
 
-        TextView carMpg = (TextView) findViewById(R.id.textView2);
-        carMpg.setText("MPG: City: " + car.getInfo().getMpgCity() + " Hwy: " + car.getInfo().getMpgHighway());
-
-        TextView passengers = (TextView) findViewById(R.id.textView3);
-        passengers.setText("Passengers: " + car.getInfo().getPassengers());
-
-        TextView luggage = (TextView) findViewById(R.id.textView4);
-        luggage.setText("Luggage: " + car.getInfo().getLuggage());
-
-        TextView trasnmission = (TextView) findViewById(R.id.textView5);
-        trasnmission.setText("Transmission: " + car.getInfo().getTransmission());
-
-        TextView featuresText = (TextView) findViewById(R.id.textView6);
-        featuresText.setText(car.getFeatures().get(0));
-
-        TextView rate = (TextView) findViewById(R.id.textView7);
-        rate.setText("Rate: " + car.getInfo().getRate() + " Daily");
 
 
         Button upgradeButton = (Button) findViewById(R.id.button);
