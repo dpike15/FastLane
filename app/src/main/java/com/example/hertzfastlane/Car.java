@@ -16,6 +16,18 @@ public class Car {
     private String image;
     private String _id;
 
+    public String getVehicleClass() {
+        return vehicleClass;
+    }
+
+    public void setVehicleClass(String vehicleClass) {
+        this.vehicleClass = vehicleClass;
+    }
+
+    private String vehicleClass;
+
+
+
     public String get_id() {
         return _id;
     }

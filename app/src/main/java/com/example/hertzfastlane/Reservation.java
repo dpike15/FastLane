@@ -11,6 +11,16 @@ public class Reservation {
     private String number_Of_Rental_Days;
     private String pick_Up;
 
+    public String getVehicleClass() {
+        return vehicleClass;
+    }
+
+    public void setVehicleClass(String vehicleClass) {
+        this.vehicleClass = vehicleClass;
+    }
+
+    private String vehicleClass;
+
     public String get_id() {
         return _id;
     }
