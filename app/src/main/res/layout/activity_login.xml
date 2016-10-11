@@ -72,7 +72,7 @@
                 android:background="#CC1f1f1f"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:fontFamily="sans-serif-thin"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp" />
@@ -90,7 +90,7 @@
                 android:background="#CC1f1f1f"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:fontFamily="sans-serif-thin"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp" />
@@ -101,7 +101,7 @@
                 android:text="Login"
                 android:id="@+id/bLogin"
                 android:background="@drawable/button_border"
-                android:textColor="#fff129"
+                android:textColor="#ffd100"
                 android:layout_weight="1"
                 android:layout_marginBottom="20dp"
                 android:textSize="18dp"
