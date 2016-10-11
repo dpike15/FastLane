@@ -31,6 +31,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -52,11 +53,12 @@ import org.apache.http.HttpResponse;
 
 
 public class MyReservationActivity extends AppCompatActivity {
-    Car car;
+    private Car car;
     Member member;
     private static String result ="";
     public static final String URL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/reservations/_find";
     private static StringEntity entity;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -70,6 +72,8 @@ public class MyReservationActivity extends AppCompatActivity {
 
         //Getting user information from login
         member = LoginActivity.getMember();
+
+
 
         Runnable runnable = new Runnable() {
             @Override
@@ -116,15 +120,18 @@ public class MyReservationActivity extends AppCompatActivity {
                     HttpEntity entityCar = responseCar.getEntity();
                     InputStream instreamCar = entityCar.getContent();
                     String resultCar = convertStreamToString(instreamCar);
-                    JSONObject jsonCar = new JSONObject(resultCar);
-                    JSONObject info = (JSONObject) jsonCar.get("info");
-                    String make = info.get("make").toString();
-                    String model = info.get("model").toString();
-                    String year = info.get("year").toString();
+                    JSONObject cars = new JSONObject(resultCar);
+                    JSONObject info = cars.getJSONObject("info");
+                    String infoString = info.toString();
                     instream.close();
-                    //Setting textViews with Dynamic Data
-                    TextView carTitle = (TextView) findViewById(R.id.textView);
-                    carTitle.setText(year + " " + model + " " + make );
+
+                    ObjectMapper mapper = new ObjectMapper();
+
+                    car = mapper.readValue(resultCar, Car.class);
+
+                    Info infoCar = mapper.readValue(infoString,Info.class);
+                    car.setInfo(infoCar);
+
 
 
                 } catch (Exception e) {
@@ -132,25 +139,6 @@ public class MyReservationActivity extends AppCompatActivity {
 
                 }
 
-/*
-                TextView carMpg = (TextView) findViewById(R.id.textView2);
-                carMpg.setText("MPG: City: " + car.getInfo().getMpgCity() + " Hwy: " + car.getInfo().getMpgHighway());
-
-                TextView passengers = (TextView) findViewById(R.id.textView3);
-                passengers.setText("Passengers: " + car.getInfo().getPassengers());
-
-                TextView luggage = (TextView) findViewById(R.id.textView4);
-                luggage.setText("Luggage: " + car.getInfo().getLuggage());
-
-                TextView trasnmission = (TextView) findViewById(R.id.textView5);
-                trasnmission.setText("Transmission: " + car.getInfo().getTransmission());
-
-                TextView featuresText = (TextView) findViewById(R.id.textView6);
-                featuresText.setText(features.get(1));
-
-                TextView rate = (TextView) findViewById(R.id.textView7);
-                rate.setText("Rate: " + car.getInfo().getRate() + " Daily");
-*/
 
             }
         };
@@ -162,6 +150,28 @@ public class MyReservationActivity extends AppCompatActivity {
         } catch (Exception e) {
             return;
         }
+        //Setting textViews with Dynamic Data
+        TextView carTitle = (TextView) findViewById(R.id.textView);
+        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getModel() + " " + car.getInfo().getMake());
+
+
+        TextView carMpg = (TextView) findViewById(R.id.textView2);
+        carMpg.setText("MPG: City: " + car.getInfo().getMpgCity() + " Hwy: " + car.getInfo().getMpgHighway());
+
+        TextView passengers = (TextView) findViewById(R.id.textView3);
+        passengers.setText("Passengers: " + car.getInfo().getPassengers());
+
+        TextView luggage = (TextView) findViewById(R.id.textView4);
+        luggage.setText("Luggage: " + car.getInfo().getLuggage());
+
+        TextView trasnmission = (TextView) findViewById(R.id.textView5);
+        trasnmission.setText("Transmission: " + car.getInfo().getTransmission());
+
+        TextView featuresText = (TextView) findViewById(R.id.textView6);
+        featuresText.setText(car.getFeatures().get(0));
+
+        TextView rate = (TextView) findViewById(R.id.textView7);
+        rate.setText("Rate: " + car.getInfo().getRate() + " Daily");
 
 
         Button upgradeButton = (Button) findViewById(R.id.button);

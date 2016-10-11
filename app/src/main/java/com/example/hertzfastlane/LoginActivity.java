@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -94,12 +95,16 @@ public class LoginActivity extends AppCompatActivity {
                             HttpEntity entity = response.getEntity();
                             InputStream instream = entity.getContent();
                             String result = convertStreamToString(instream);
-                            JSONObject json = new JSONObject(result);
-                            String passwordDB = json.get("password").toString();
+
+
+                            ObjectMapper mapper = new ObjectMapper();
+
+                            user = mapper.readValue(result, Member.class);
+
                             instream.close();
-                           if(password.equals(passwordDB)) {
+                           if(password.equals(user.getPassword())) {
                                login = true;
-                               user.setCustomer_id(json.get("Customer_Id").toString());
+
                            }
                         } catch (Exception e) {
                             e.printStackTrace();
