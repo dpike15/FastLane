@@ -18,6 +18,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+
 public class UserActivity extends AppCompatActivity {
     //public Button button;
     final Context context = this;
@@ -35,6 +36,7 @@ public class UserActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+
         final EditText etName = (EditText) findViewById(R.id.etName);
         final TextView tvWelcome = (TextView) findViewById(R.id.tv_welcome);
         final Button bMyReservation = (Button) findViewById(R.id.bMyReservation);
@@ -45,8 +47,6 @@ public class UserActivity extends AppCompatActivity {
         tvWelcome.setText("Welcome " + name + ",\nLet us know how we can help.");
 
 
-
-
         bMyReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,15 +55,6 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-      /*    bMap.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-
-               Intent mapIntent = new Intent(UserActivity.this, MapActivity.class);
-                UserActivity.this.startActivity(mapIntent);
-            }
-        });
-*/
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -106,14 +97,14 @@ public class UserActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_maps:
                 startActivity(new Intent(this, MapActivity.class));
                 return true;
