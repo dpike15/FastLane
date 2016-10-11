@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:text="Scan Vehicle"
-            android:id="@+id/button"
+            android:id="@+id/bScanVehicle"
             android:background="@drawable/button_border"
             android:textColor="#ffd100"
             android:layout_margin="10dp" />

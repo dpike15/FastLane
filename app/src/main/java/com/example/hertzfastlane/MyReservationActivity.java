@@ -1,35 +1,15 @@
 package com.example.hertzfastlane;
 
 
-import android.content.Entity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-
-import org.apache.http.Header;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.entity.StringEntity;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.appindexing.Action;
@@ -37,18 +17,21 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-
-import org.apache.http.client.HttpClient;
-
-import org.apache.http.client.methods.HttpGet;
-
-import org.apache.http.impl.client.DefaultHttpClient;
-
-
-import java.io.InputStream;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 
 
@@ -185,11 +168,13 @@ public class MyReservationActivity extends AppCompatActivity {
 
 
 
-        Button upgradeButton = (Button) findViewById(R.id.button);
-        upgradeButton.setOnClickListener(new View.OnClickListener() {
+        Button bScanVehicle = (Button) findViewById(R.id.bScanVehicle);
+        bScanVehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendSMS("8605978596", "Testing message");
+                //sendSMS("8605978596", "Testing message");
+                Intent scanIntent = new Intent(MyReservationActivity.this, QrScanner.class);
+                MyReservationActivity.this.startActivity(scanIntent);
             }
         });
 

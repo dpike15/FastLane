@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class UserActivity extends AppCompatActivity {
     //public Button button;
+
     final Context context = this;
     Member member;
     /**

@@ -75,7 +75,9 @@
                 android:textSize="18dp"
                 android:fontFamily="sans-serif-thin"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp" />
+                android:paddingBottom="10dp"
+                android:inputType="textPersonName"
+                android:singleLine="true" />
 
             <EditText
                 android:layout_width="fill_parent"
