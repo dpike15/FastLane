@@ -15,6 +15,24 @@ public class CarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
+
+        Car car = QrScanner.getCar();
+
+        TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
+        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
+
+        TextView mpg = (TextView) findViewById(R.id.tvMPG);
+        mpg.setText(car.getInfo().getMpgCity() + " MPG");
+
+        TextView passengers = (TextView) findViewById(R.id.tvPassenger);
+        passengers.setText("Passengers: " + car.getInfo().getPassengers());
+
+        TextView features= (TextView) findViewById(R.id.tvSatRadio);
+        features.setText(car.getFeatures().get(0));
+
+        TextView rate = (TextView) findViewById(R.id.tvRate);
+        rate.setText(car.getInfo().getRate() + " USD");
+
     }
 
     @Override
