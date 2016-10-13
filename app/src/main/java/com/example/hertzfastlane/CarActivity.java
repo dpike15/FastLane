@@ -18,26 +18,20 @@ public class CarActivity extends AppCompatActivity {
 
         Car car = QrScanner.getCar();
 
-        TextView carTitle = (TextView) findViewById(R.id.textView);
-        carTitle.setText(car.getInfo().getMake() + " " + car.getInfo().getModel());
+        TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
+        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
 
-        TextView mpg = (TextView) findViewById(R.id.textView2);
-        mpg.setText("MPG " + car.getInfo().getMpgCity() + " CITY / " + car.getInfo().getMpgHighway() + " HWY");
+        TextView mpg = (TextView) findViewById(R.id.tvMPG);
+        mpg.setText(car.getInfo().getMpgCity() + " MPG");
 
-        TextView passengers = (TextView) findViewById(R.id.textView3);
+        TextView passengers = (TextView) findViewById(R.id.tvPassenger);
         passengers.setText("Passengers: " + car.getInfo().getPassengers());
 
-        TextView Luggage= (TextView) findViewById(R.id.textView4);
-        Luggage.setText("Luggage " + car.getInfo().getLuggage());
-
-        TextView transmission = (TextView) findViewById(R.id.textView5);
-        transmission.setText("Transmission: " + car.getInfo().getTransmission());
-
-        TextView features= (TextView) findViewById(R.id.textView6);
+        TextView features= (TextView) findViewById(R.id.tvSatRadio);
         features.setText(car.getFeatures().get(0));
 
-        TextView rate = (TextView) findViewById(R.id.textView7);
-        rate.setText("Daily Rate: " + car.getInfo().getRate());
+        TextView rate = (TextView) findViewById(R.id.tvRate);
+        rate.setText(car.getInfo().getRate() + " USD");
 
     }
 
