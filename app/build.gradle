@@ -46,6 +46,7 @@ dependencies {
     compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
     compile files('libs/cloudant-client-2.6.2.jar')
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 
