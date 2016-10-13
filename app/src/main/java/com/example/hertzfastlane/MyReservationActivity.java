@@ -166,13 +166,13 @@ public class MyReservationActivity extends AppCompatActivity {
             }
         };
 
-        ImageView carImage=(ImageView)findViewById(vehicleImage);
+  /*      ImageView carImage=(ImageView)findViewById(vehicleImage);
         Picasso.with(getApplicationContext())
                 .load("http://i.imgur.com/OYMyYcj.png")
 //.resize(283,113)
                 .error(R.drawable.app_icon)
                 .into(carImage);
-
+*/
 
 
         Thread thread = new Thread(runnable);
