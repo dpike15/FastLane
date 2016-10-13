@@ -3,35 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.hertzfastlane.CarActivity"
-    android:background="@drawable/gradient_bg_dark">
+    android:background="#1f1f1f">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingTop="60dp">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:src="@drawable/logo_checkout_updated"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:layout_gravity="top|left"
-                android:maxWidth="200dp" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -39,125 +19,120 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prestige Collection"
+                android:id="@+id/tvCollection"
+                android:textColor="#b9b9b9"
+                android:textSize="18dp"
+                android:fontFamily="sans-serif-thin"
+                android:textAlignment="center"
+                android:paddingBottom="20dp"
+                android:background="@drawable/bottom_border"/>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView4"
-                android:src="@drawable/impala_2016"
-                android:scaleType="center" />
+                android:src="@drawable/cadillac_cts_change"
+                android:scaleType="centerInside"
+                android:paddingTop="20dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chevy Impala LTZ"
-                android:id="@+id/textView"
-                android:textColor="#fff129"
-                android:textSize="26dp"
-                android:fontFamily="sans-serif-condensed"
+                android:text="Make and Model"
+                android:id="@+id/tvMakeModel"
+                android:textColor="#b9b9b9"
+                android:textSize="23dp"
+                android:fontFamily="sans-serif-thin"
                 android:textAlignment="center"
                 android:padding="10dp" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView8"
+                android:src="@drawable/divider_2"
+                android:scaleType="fitCenter"
+                android:padding="10dp" />
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp">
+                    android:text="34 MPG"
+                    android:id="@+id/tvMPG"
+                    android:textColor="#b9b9b9"
+                    android:fontFamily="sans-serif-thin"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="MPG: 22 City/ 33 Hwy"
-                        android:id="@+id/textView2"
-                        android:textColor="#b9b9b9"
-                        android:textSize="16dp"
-                        android:padding="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Passengers: 5"
-                        android:id="@+id/textView3"
-                        android:textColor="#b9b9b9"
-                        android:textSize="16dp"
-                        android:padding="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Luggage: 2 Large / 1 Small"
-                        android:id="@+id/textView4"
-                        android:textColor="#b9b9b9"
-                        android:textSize="16dp"
-                        android:padding="5dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp">
+                    android:text="5 Passenger"
+                    android:id="@+id/tvPassenger"
+                    android:textColor="#b9b9b9"
+                    android:fontFamily="sans-serif-thin"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Transmission: Automatic"
-                        android:id="@+id/textView5"
-                        android:textColor="#b9b9b9"
-                        android:textSize="16dp"
-                        android:padding="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sirius XM Radio"
-                        android:id="@+id/textView6"
-                        android:textColor="#b9b9b9"
-                        android:textSize="16dp"
-                        android:padding="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rate: $49.29 Daily"
-                        android:id="@+id/textView7"
-                        android:textColor="#b9b9b9"
-                        android:textSize="16dp"
-                        android:padding="5dp" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sirius XM Radio"
+                    android:id="@+id/tvSatRadio"
+                    android:textColor="#b9b9b9"
+                    android:fontFamily="sans-serif-thin"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
+
         </LinearLayout>
+
+        <TextView
+            android:text="Summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:textColor="#b9b9b9"
+            android:textSize="16dp"
+            android:fontFamily="sans-serif-thin"
+            android:textAlignment="center"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="199.00 USD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvRate"
+            android:textColor="#b9b9b9"
+            android:textSize="26dp"
+            android:fontFamily="sans-serif-thin"
+            android:textAlignment="center"
+            android:padding="10dp"/>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2">
+            android:layout_weight="2"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Upgrade"
-                android:id="@+id/button"
-                android:background="@drawable/button_border"
-                android:textColor="#fff129"
-                android:layout_weight="1"
-                android:layout_margin="10dp" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="Choose Vehicle"
+                android:text="Select This Vehicle"
                 android:id="@+id/bChooseVehicle"
                 android:background="@drawable/button_border"
                 android:textColor="#fff129"

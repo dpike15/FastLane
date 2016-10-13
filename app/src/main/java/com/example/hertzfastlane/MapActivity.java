@@ -26,7 +26,7 @@ public class MapActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         imageView = (ImageView) findViewById(R.id.imageView6);
-        Drawable bitmap = ContextCompat.getDrawable(this, R.drawable.lot_map);
+        Drawable bitmap = ContextCompat.getDrawable(this, R.drawable.lot_map_2);
         imageView.setImageDrawable(bitmap);
 
         mAttacher = new PhotoViewAttacher(imageView);
