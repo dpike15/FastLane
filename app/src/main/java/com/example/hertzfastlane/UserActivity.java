@@ -9,9 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -19,9 +23,12 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 
+
+
 public class UserActivity extends AppCompatActivity {
     //public Button button;
-
+    private ListView mDrawerList;           // hamburger menu
+    private ArrayAdapter<String> mAdapter;  //hamburger menu
     final Context context = this;
     Member member;
     /**
@@ -34,9 +41,21 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        //ReplaceFont.replaceDefaultFont(this, "DEFAULT", "segoeuib.ttf" );
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        mDrawerList = (ListView)findViewById(R.id.navList);  // hamburger menu
+        addDrawerItems();   // hamburger menu options method
+                                                                   // Temporary on click prompt
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(UserActivity.this, "Thank You For Using Hertz!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         final EditText etName = (EditText) findViewById(R.id.etName);
         final TextView tvWelcome = (TextView) findViewById(R.id.tv_welcome);
@@ -115,5 +134,10 @@ public class UserActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void addDrawerItems() {
+        String[] osArray = { "Profile", "Home", "Rental", "Gold Plus Rewards", "Goodbye" };
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapter);
     }
 }

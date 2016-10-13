@@ -6,7 +6,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -53,6 +56,9 @@ public class MyReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_reservation);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         //Getting user information from login
 
@@ -129,24 +135,24 @@ public class MyReservationActivity extends AppCompatActivity {
                     //Setting textViews with Dynamic Data
 
                     //Car name
-                    TextView carTitle = (TextView) findViewById(R.id.textView21);
+                    TextView carTitle = (TextView) findViewById(R.id.tvVehicleMakeModel);
                     carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getModel() + " " + car.getInfo().getMake());
 
                     //Confirmation Number
-                    TextView confirmation = (TextView) findViewById(R.id.textView19);
-                    confirmation.setText("Confirmation Number: " + memberReservation.getReservation_Num());
+                    TextView confirmation = (TextView) findViewById(R.id.tvConfirmationNumber);
+                    confirmation.setText((memberReservation.getReservation_Num()));
 
                     //Pick up Location
-                    TextView pickupLocation = (TextView) findViewById(R.id.textView16);
-                    pickupLocation.setText("Pick-Up Location: " + memberReservation.getPick_Up());
+                    TextView pickupLocation = (TextView) findViewById(R.id.tvPickUpLocation);
+                    pickupLocation.setText(memberReservation.getPick_Up());
 
                     //Return Location
-                    TextView returnLocation = (TextView) findViewById(R.id.textView14);
-                    returnLocation.setText("Return Location: " + memberReservation.getReturnLocation());
+                    TextView returnLocation = (TextView) findViewById(R.id.tvReturnLocation);
+                    returnLocation.setText(memberReservation.getReturnLocation());
 
                     //Reservation Date
-                    TextView reservationDate = (TextView) findViewById(R.id.textView20);
-                    reservationDate.setText(memberReservation.getPick_Up_Date());
+                    TextView reservationDate = (TextView) findViewById(R.id.tvReservationDate);
+                    reservationDate.setText("Reservation Date: " + memberReservation.getPick_Up_Date());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -213,6 +219,26 @@ public class MyReservationActivity extends AppCompatActivity {
                 .setObject(object)
                 .setActionStatus(Action.STATUS_TYPE_COMPLETED)
                 .build();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_maps:
+                startActivity(new Intent(this, MapActivity.class));
+                return true;
+            case R.id.action_help:
+                startActivity(new Intent(this, HelpActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
