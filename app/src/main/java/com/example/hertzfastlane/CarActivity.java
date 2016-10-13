@@ -15,6 +15,11 @@ public class CarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
+
+        Car car = QrScanner.getCar();
+
+        TextView carTitle = (TextView) findViewById(R.id.textView);
+        carTitle.setText(car.getInfo().getMake() + " " + car.getInfo().getModel());
     }
 
     @Override

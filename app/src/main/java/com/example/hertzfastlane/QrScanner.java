@@ -42,6 +42,16 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
     private final String URL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/cars/";
     private Member member;
 
+    public static Car getCar() {
+        return car;
+    }
+
+    public static void setCar(Car car) {
+        QrScanner.car = car;
+    }
+
+    private static Car car;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +107,14 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
                     InputStream instreamCar = entity.getContent();
                     String resultCar = MyReservationActivity.convertStreamToString(instreamCar);
                     JSONObject carJson = new JSONObject(resultCar);
-                    String vehicleClass = carJson.get("vehicleClass").toString();
+                    JSONObject carInfo = carJson.getJSONObject("info");
+                    String carInfoString = carInfo.toString();
 
+                    ObjectMapper mapper = new ObjectMapper();
 
+                    car = mapper.readValue(resultCar,Car.class);
+                    Info info = mapper.readValue(carInfoString,Info.class);
+                    car.setInfo(info);
 
                     String reservationURL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/reservations/_find";
                     //Getting Reservation Data
@@ -126,11 +141,11 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
                         //RETURNED AS ARRAY OF DOCUMENTS TITLED DOCS
                         JSONArray array = json.getJSONArray("docs");
                         JSONObject jsonRes = (JSONObject) array.get(0);
-                        String reservation = jsonRes.get("vehicleClass").toString();
+                        String reservationClass = jsonRes.get("vehicleClass").toString();
                         instream.close();
 
 
-                    if(reservation.equals(vehicleClass)){
+                    if(reservationClass.equals(car.getVehicleClass())){
                         scanResult = true;
                     }
 
