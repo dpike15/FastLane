@@ -1,108 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.hertzfastlane.UserActivity"
     android:background="@drawable/gradient_bg_dark">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#000001"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:logo="@drawable/logo_checkout_updated"
+        android:padding="5dp"
+        app:titleMargin="6dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/home"
+        android:id="@+id/imageView6"
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingTop="60dp">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:padding="0dp" >
+            android:paddingTop="20dp">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:padding="15dp">
 
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imageView2"
-                    android:src="@drawable/logo_checkout_updated"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:layout_margin="20dp" />
-
-            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome"
+                android:ems="10"
+                android:textSize="16dp"
+                android:id="@+id/tv_welcome"
+                android:lines="2"
+                android:textColor="#b9b9b9"
+                android:fontFamily="sans-serif-thin"
+                android:background="@drawable/welcome_gradient"
+                android:padding="10dp"
+                android:textIsSelectable="false" />
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_height="wrap_content"
+            android:background="#CC1f1f1f">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Would you like to see your reservations?"
+                android:ems="10"
+                android:textSize="16dp"
+                android:id="@+id/tv_reservation_count"
+                android:textAlignment="center"
+                android:textColor="#b9b9b9"
+                android:fontFamily="sans-serif-thin"
+                android:padding="10dp"
+                android:textIsSelectable="false"/>
 
             <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="My Reservation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Reservations"
                 android:id="@+id/bMyReservation"
-                android:background="@drawable/button_border"
+                android:padding="10dp"
+                android:background="#1Affffff"
                 android:textColor="#ffffff"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1"
-                android:longClickable="false" />
+                android:fontFamily="sans-serif-thin"
+                android:textSize="18dp"
+                android:longClickable="false"
+                android:layout_gravity="center_horizontal"
+                android:textAllCaps="false"
+                android:layout_marginBottom="30dp" />
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="Scan Vehicle"
-                android:id="@+id/bScanner"
-                android:background="@drawable/button_border"
-                android:textColor="#ffffff"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/top_border"
+                android:baselineAligned="true"
+                android:padding="10dp">
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="Parking Lot Map"
-                android:id="@+id/bMap"
-                android:background="@drawable/button_border"
-                android:textColor="#ffffff"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1" />
+                <TextView
+                    android:text="275 Points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvPoints"
+                    android:textColor="#b9b9b9"
+                    android:fontFamily="sans-serif-thin"
+                    android:layout_weight="1"
+                    android:textAlignment="center" />
 
+                <TextView
+                    android:text="Gold Member"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvGoldMember"
+                    android:textColor="#b9b9b9"
+                    android:fontFamily="sans-serif-thin"
+                    android:layout_weight="1"
+                    android:textAlignment="center" />
 
-
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="Need Help?"
-                android:id="@+id/bHelp"
-                android:background="@drawable/button_border"
-                android:textColor="#ffffff"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_weight="1" />
+                <TextView
+                    android:text="2 YTD Rentals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvYTDRental"
+                    android:textColor="#b9b9b9"
+                    android:fontFamily="sans-serif-thin"
+                    android:layout_weight="1"
+                    android:textAlignment="center" />
+            </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
+
 </RelativeLayout>
