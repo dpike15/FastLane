@@ -19,6 +19,8 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 
+
+
 public class UserActivity extends AppCompatActivity {
     //public Button button;
 
@@ -34,6 +36,9 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        //ReplaceFont.replaceDefaultFont(this, "DEFAULT", "segoeuib.ttf" );
+
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
