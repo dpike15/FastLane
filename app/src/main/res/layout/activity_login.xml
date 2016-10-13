@@ -41,8 +41,8 @@
                 android:maxHeight="300dp"
                 android:maxWidth="400dp"
                 android:adjustViewBounds="true"
-                android:id="@+id/imageView"
-                android:src="@drawable/logo_checkout_updated"
+                android:id="@+id/imgLoginLogo"
+                android:src="@drawable/logo_checkout_corrected_color"
                 android:scaleType="fitStart"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
@@ -63,7 +63,7 @@
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/etUsername"
+                android:id="@+id/et_Username"
                 android:hint="User Name"
                 android:maxLines="1"
                 android:textAlignment="center"
@@ -76,14 +76,13 @@
                 android:fontFamily="sans-serif-thin"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:inputType="textPersonName"
-                android:singleLine="true" />
+                android:inputType="textPersonName"/>
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:inputType="textPassword"
-                android:id="@+id/etPassword"
+                android:id="@+id/et_Password"
                 android:hint="Password"
                 android:maxLines="1"
                 android:textAlignment="center"
@@ -101,7 +100,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="Login"
-                android:id="@+id/bLogin"
+                android:id="@+id/b_Login"
                 android:background="@drawable/button_border"
                 android:textColor="#ffd100"
                 android:layout_weight="1"
