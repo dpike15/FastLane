@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -27,8 +29,16 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class UserActivity extends AppCompatActivity {
     //public Button button;
-    private ListView mDrawerList;           // hamburger menu
-    private ArrayAdapter<String> mAdapter;  //hamburger menu
+
+    /* hamburger menu variables */
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
+
+    /* hamburger toggle bar variables */
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
+
     final Context context = this;
     Member member;
     /**
@@ -47,15 +57,44 @@ public class UserActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        mDrawerList = (ListView)findViewById(R.id.navList);  // hamburger menu
-        addDrawerItems();   // hamburger menu options method
-                                                                   // Temporary on click prompt
+        /** Hamburger display menu*/
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        addDrawerItems();
+
+        /** Hamburger toggle action bar */
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        //setupDrawer();  /* function needs to be fixed  currently not in use */
+
+        /** toggle hamburger layout   **strings xml added in res folder*/
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** used when drawer is open   ** not fully working should display Gold Star! */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Gold Star!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** used when a drawer is closed */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+        /** on click drawer options */
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(UserActivity.this, "Thank You For Using Hertz!", Toast.LENGTH_SHORT).show();
             }
         });
+        /** hamburger layout ended ^^ */
 
         final EditText etName = (EditText) findViewById(R.id.etName);
         final TextView tvWelcome = (TextView) findViewById(R.id.tv_welcome);
@@ -124,6 +163,9 @@ public class UserActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+       if (mDrawerToggle.onOptionsItemSelected(item)) { // added for hamburger toggle
+            return true;
+        }
         switch (item.getItemId()) {
             case R.id.action_maps:
                 startActivity(new Intent(this, MapActivity.class));
@@ -133,11 +175,18 @@ public class UserActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+
         }
     }
-    private void addDrawerItems() {
+    private void addDrawerItems() {  // hamburger layout display method
         String[] osArray = { "Profile", "Home", "Rental", "Gold Plus Rewards", "Goodbye" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
+    }
+    /** Not currently used  needs to be fixed */
+    private void setupDrawer() {
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+       // mDrawerLayout.setDrawerListener(mDrawerToggle);
+
     }
 }
