@@ -152,7 +152,7 @@ public class MyReservationActivity extends AppCompatActivity {
 
                     //Reservation Date
                     TextView reservationDate = (TextView) findViewById(R.id.tvReservationDate);
-                    reservationDate.setText(memberReservation.getPick_Up_Date());
+                    reservationDate.setText("Reservation Date: " + memberReservation.getPick_Up_Date());
 
                 } catch (Exception e) {
                     e.printStackTrace();
