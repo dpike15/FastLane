@@ -1,15 +1,19 @@
 package com.example.hertzfastlane;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
 
 public class CarActivity extends AppCompatActivity {
-
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,19 @@ public class CarActivity extends AppCompatActivity {
 
         TextView rate = (TextView) findViewById(R.id.tvRate);
         rate.setText(car.getInfo().getRate() + " USD");
+
+        Button chooseButton = (Button) findViewById(R.id.bChooseVehicle);
+        chooseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                builder.setTitle("Updated: ");
+                builder.setMessage("Successfully updated reservation! Please proceed to the gate.");
+                alertDialog = builder.create();
+                alertDialog.show();
+                Intent home = new Intent(CarActivity.this, UserActivity.class);
+                CarActivity.this.startActivity(home);
+            }
+        });
 
     }
 
