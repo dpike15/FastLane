@@ -102,7 +102,7 @@
             android:text="Summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView2"
+            android:id="@+id/tvSummary"
             android:textColor="#b9b9b9"
             android:textSize="16dp"
             android:fontFamily="sans-serif-thin"
