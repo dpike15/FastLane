@@ -87,7 +87,13 @@ public class UserActivity extends AppCompatActivity {
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
+
         setupDrawer();
+
+
+        setupDrawer();  /* function needs to be fixed  currently not in use */
+
+
         /** on click drawer options */
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -176,9 +182,9 @@ public class UserActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
+
     private void addDrawerItems() {  // hamburger layout display method
         String[] osArray = { "Profile", "Home", "Rental", "Gold Plus Rewards", "Goodbye" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
@@ -190,4 +196,11 @@ public class UserActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
     }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState){
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
 }
