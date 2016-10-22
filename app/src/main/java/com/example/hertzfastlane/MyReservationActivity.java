@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +19,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -37,8 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-
-import static com.example.hertzfastlane.R.id.vehicleImage;
 
 
 public class MyReservationActivity extends AppCompatActivity {
@@ -110,7 +106,7 @@ public class MyReservationActivity extends AppCompatActivity {
                     instream.close();
 
                     //URL CALL FOR CARS DATABASE
-                    String URLGET = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/cars/"
+                    String URLGET = "https://169.46.154.154:8080/cars/"
                             + memberReservation.getCar_Vin();
 
                     HttpGet get = new HttpGet(URLGET);
@@ -166,12 +162,12 @@ public class MyReservationActivity extends AppCompatActivity {
             }
         };
 
-        ImageView carImage=(ImageView)findViewById(vehicleImage);
-        Picasso.with(getApplicationContext())
-                .load("http://i.imgur.com/OYMyYcj.png")
-//.resize(283,113)
-                .error(R.drawable.app_icon)
-                .into(carImage);
+//        ImageView carImage=(ImageView)findViewById(vehicleImage);
+//        Picasso.with(getApplicationContext())
+//                .load("http://i.imgur.com/OYMyYcj.png")
+////.resize(283,113)
+//                .error(R.drawable.app_icon)
+//                .into(carImage);
 
 
 
