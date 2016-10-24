@@ -10,6 +10,11 @@ public class Reservation {
     private String reservation_Num;
     private String number_Of_Rental_Days;
     private String pick_Up;
+    private String customer_Id;
+    private String car_Vin;
+    private String returnLocation;
+    private String pick_Up_Date;
+    private String vehicleClass;
 
     public String getVehicleClass() {
         return vehicleClass;
@@ -19,7 +24,7 @@ public class Reservation {
         this.vehicleClass = vehicleClass;
     }
 
-    private String vehicleClass;
+
 
     public String get_id() {
         return _id;
@@ -93,10 +98,6 @@ public class Reservation {
         this.pick_Up_Date = pick_Up_Date;
     }
 
-    private String customer_Id;
-    private String car_Vin;
-    private String returnLocation;
-    private String pick_Up_Date;
 
 
 

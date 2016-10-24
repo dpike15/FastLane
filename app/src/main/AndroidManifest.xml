@@ -7,11 +7,11 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
@@ -25,8 +25,7 @@
         <activity android:name=".RegisterActivity" />
         <activity
             android:name=".UserActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity android:name=".QrScanner" />
         <activity android:name=".CheckoutActivity" />
         <activity android:name=".CarActivity" />
@@ -45,6 +44,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".MapActivity2" />
+        <activity android:name=".MyReservationList"></activity>
     </application>
 
 </manifest>

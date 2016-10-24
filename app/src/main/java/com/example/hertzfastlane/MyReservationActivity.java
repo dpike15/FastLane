@@ -35,6 +35,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class MyReservationActivity extends AppCompatActivity {
@@ -170,15 +173,18 @@ public class MyReservationActivity extends AppCompatActivity {
 //                .into(carImage);
 
 
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
-        Thread thread = new Thread(runnable);
-        thread.start();
+        executor.scheduleAtFixedRate(runnable , 0, 500, TimeUnit.MILLISECONDS );
 
-        try {
-            thread.join();
-        } catch (Exception e) {
-            return;
-        }
+//        Thread thread = new Thread(runnable);
+//        thread.start();
+//
+//        try {
+//            thread.join();
+//        } catch (Exception e) {
+//            return;
+//        }
 
 
 
