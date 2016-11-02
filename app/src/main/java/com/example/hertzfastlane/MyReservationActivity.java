@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +45,7 @@ public class MyReservationActivity extends AppCompatActivity {
     public static final String URL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/reservations/_find";
     private static StringEntity entity;
     private Reservation memberReservation;
+    private ProgressBar spinner;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -55,6 +57,9 @@ public class MyReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_reservation);
+
+        spinner =(ProgressBar)findViewById(R.id.progress_loader);
+        spinner.setVisibility(View.GONE);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -134,8 +139,8 @@ public class MyReservationActivity extends AppCompatActivity {
                     //Setting textViews with Dynamic Data
 
                     //Car name
-                    TextView carTitle = (TextView) findViewById(R.id.tvVehicleMakeModel);
-                    carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getModel() + " " + car.getInfo().getMake());
+                    //TextView carTitle = (TextView) findViewById(R.id.tvVehicleMakeModel);
+                    //carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getModel() + " " + car.getInfo().getMake());
 
                     //Confirmation Number
                     TextView confirmation = (TextView) findViewById(R.id.tvConfirmationNumber);
@@ -187,6 +192,7 @@ public class MyReservationActivity extends AppCompatActivity {
         bScanVehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
                 //sendSMS("8605978596", "Testing message");
                 Intent scanIntent = new Intent(MyReservationActivity.this, QrScanner.class);
                 MyReservationActivity.this.startActivity(scanIntent);
@@ -268,6 +274,12 @@ public class MyReservationActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        spinner.setVisibility(View.GONE);
     }
 
     public static String convertStreamToString(InputStream is) {

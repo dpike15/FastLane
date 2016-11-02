@@ -11,11 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,13 @@ public class UserActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
 
+    private ProgressBar spinner;
+
+    Animation animSlideDown, animSlideUp;
+
+
+
+
     final Context context = this;
     Member member;
     /**
@@ -51,6 +61,16 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+
+        spinner =(ProgressBar)findViewById(R.id.progress_loader);
+        spinner.setVisibility(View.GONE);
+
+        animSlideDown = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_down);
+
+        animSlideUp = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.slide_up);
 
         //ReplaceFont.replaceDefaultFont(this, "DEFAULT", "segoeuib.ttf" );
 
@@ -106,13 +126,17 @@ public class UserActivity extends AppCompatActivity {
 
         String name = member.getFirst_NM();
         tvWelcome.setText("Welcome " + name + ",\nLet us know how we can help.");
+        tvWelcome.startAnimation(animSlideDown);
+        //tvWelcome.startAnimation(animSlideUp);
 
 
         bMyReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
                 Intent reservationIntent = new Intent(UserActivity.this, MyReservationActivity.class);
                 UserActivity.this.startActivity(reservationIntent);
+                //spinner.setVisibility(View.GONE);
             }
         });
 
@@ -148,6 +172,12 @@ public class UserActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        spinner.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -156,6 +186,7 @@ public class UserActivity extends AppCompatActivity {
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

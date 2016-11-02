@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static Member user;
     boolean login;
-    private static final String URL= "http://169.46.154.16:8080/members";
+    private static final String URL= "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/members";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,18 +90,10 @@ public class LoginActivity extends AppCompatActivity {
                             InputStream instream = entity.getContent();
                             String result = convertStreamToString(instream);
 
-                            HttpGet request1 = new HttpGet("http://169.46.154.154:8080/members/" + "/" + result);
-
-                            HttpResponse response1;
-
-                            response1 = httpclient.execute(request);
-                            HttpEntity entity1 = response.getEntity();
-                            InputStream instream1 = entity.getContent();
-                            String result1 = convertStreamToString(instream);
 
                             ObjectMapper mapper = new ObjectMapper();
 
-                            user = mapper.readValue(result1, Member.class);
+                            user = mapper.readValue(result, Member.class);
 
                             instream.close();
                            if(password.equals(user.getPassword())) {
