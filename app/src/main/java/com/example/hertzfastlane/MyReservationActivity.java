@@ -41,7 +41,7 @@ public class MyReservationActivity extends AppCompatActivity {
     private Car car;
     private Member member;
     private static String result ="";
-    public static final String URL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/reservations/_find";
+    public static final String URL = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/reservations/_find";
     private static StringEntity entity;
     private Reservation memberReservation;
 
@@ -106,7 +106,7 @@ public class MyReservationActivity extends AppCompatActivity {
                     instream.close();
 
                     //URL CALL FOR CARS DATABASE
-                    String URLGET = "https://169.46.154.154:8080/cars/"
+                    String URLGET = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/cars/"
                             + memberReservation.getCar_Vin();
 
                     HttpGet get = new HttpGet(URLGET);
