@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.appindexing.Action;
@@ -52,7 +53,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static Member user;
     boolean login;
-    private static final String URL= "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/members";
+    private ProgressBar spinner;
+    private static final String URL= "http://169.46.154.154:8080/members";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +66,14 @@ public class LoginActivity extends AppCompatActivity {
         final Button bLogin = (Button) findViewById(b_Login);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
+        spinner =(ProgressBar)findViewById(R.id.progress_loader);
+        spinner.setVisibility(View.GONE);
+
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
 
@@ -89,13 +95,27 @@ public class LoginActivity extends AppCompatActivity {
                             HttpEntity entity = response.getEntity();
                             InputStream instream = entity.getContent();
                             String result = convertStreamToString(instream);
+/*
+                            Log.d("result",result);
 
 
+                            HttpGet request1 = new HttpGet("http://169.46.154.154:8080/members" + "/" + result);
+
+                            HttpResponse response1;
+
+                            response1 = httpclient.execute(request1);
+                            HttpEntity entity1 = response1.getEntity();
+                            InputStream instream1 = entity1.getContent();
+                            String result1 = convertStreamToString(instream1);
+
+                            Log.d("result1", result1);
+*/
                             ObjectMapper mapper = new ObjectMapper();
 
                             user = mapper.readValue(result, Member.class);
 
                             instream.close();
+
                            if(password.equals(user.getPassword())) {
                                login = true;
 
@@ -169,6 +189,12 @@ public class LoginActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        spinner.setVisibility(View.GONE);
     }
 
     private static String convertStreamToString(InputStream is) {
