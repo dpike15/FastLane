@@ -53,8 +53,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private static Member user;
     boolean login;
+
     private ProgressBar spinner;
-    private static final String URL= "http://169.46.154.154:8080/members";
+    private static final String URL= "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/members";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,19 +98,15 @@ public class LoginActivity extends AppCompatActivity {
                             InputStream instream = entity.getContent();
                             String result = convertStreamToString(instream);
 /*
-                            Log.d("result",result);
 
-
-                            HttpGet request1 = new HttpGet("http://169.46.154.154:8080/members" + "/" + result);
+                            HttpGet request1 = new HttpGet("http://169.46.154.154:8080/members/" + "/" + result);
 
                             HttpResponse response1;
 
-                            response1 = httpclient.execute(request1);
-                            HttpEntity entity1 = response1.getEntity();
-                            InputStream instream1 = entity1.getContent();
-                            String result1 = convertStreamToString(instream1);
-
-                            Log.d("result1", result1);
+                            response1 = httpclient.execute(request);
+                            HttpEntity entity1 = response.getEntity();
+                            InputStream instream1 = entity.getContent();
+                            String result1 = convertStreamToString(instream);
 */
                             ObjectMapper mapper = new ObjectMapper();
 
