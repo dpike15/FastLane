@@ -144,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                     builder.setMessage("Login Unsuccessful!");
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
+                    spinner.setVisibility(View.GONE);
                 }
 
             }
