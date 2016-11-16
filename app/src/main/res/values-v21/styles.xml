@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <!--<item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>-->
-        <item name="android:statusBarColor">@color/common_google_signin_btn_text_dark_focused</item>
+        <item name="colorAccent">@color/colorAccent</item>common_google_signin_btn_text_dark_focused-->
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 </resources>
