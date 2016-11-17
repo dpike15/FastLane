@@ -8,19 +8,22 @@
     tools:context="com.example.hertzfastlane.LoginActivity"
     android:background="#0d0f17">
 
+
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/imageView3"
-        android:scaleType="centerCrop"
-        android:src="@drawable/login" />
+        android:scaleType="fitXY"
+        android:src="@drawable/login"
+        android:adjustViewBounds="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         android:paddingTop="20dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -113,5 +116,13 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_loader"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
 
 </RelativeLayout>

@@ -1,144 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hertzfastlane.CarActivity"
-    android:background="#1f1f1f">
+    android:background="#1f1f1f"
+    tools:context="com.example.hertzfastlane.CarActivity">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvCollection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="60dp">
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bottom_border"
+        android:fontFamily="sans-serif-thin"
+        android:padding="20dp"
+        android:text="Prestige Collection"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="22sp" />
+
+    <VideoView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/tvCollection"
+        android:id="@+id/videoView" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:layout_below="@id/tvCollection"
+        android:scaleType="centerInside"
+        android:src="@drawable/cadillac_cts_change"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvMakeModel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/videoView"
+        android:fontFamily="sans-serif-thin"
+        android:padding="10dp"
+        android:text="Make and Model"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="23dp" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvMakeModel"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/divider_2" />
+
+    <TextView
+        android:id="@+id/tvSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView8"
+        android:fontFamily="sans-serif-thin"
+        android:padding="10dp"
+        android:text="Summary"
+        android:textAlignment="center"
+        android:textColor="#b9b9b9"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tvPassenger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSummary"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-thin"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="5 Passenger"
+        android:textColor="#b9b9b9" />
 
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Prestige Collection"
-                android:id="@+id/tvCollection"
-                android:textColor="#b9b9b9"
-                android:textSize="18dp"
-                android:fontFamily="sans-serif-thin"
-                android:textAlignment="center"
-                android:paddingBottom="20dp"
-                android:background="@drawable/bottom_border"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView4"
-                android:src="@drawable/cadillac_cts_change"
-                android:scaleType="centerInside"
-                android:paddingTop="20dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Make and Model"
-                android:id="@+id/tvMakeModel"
-                android:textColor="#b9b9b9"
-                android:textSize="23dp"
-                android:fontFamily="sans-serif-thin"
-                android:textAlignment="center"
-                android:padding="10dp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView8"
-                android:src="@drawable/divider_2"
-                android:scaleType="fitCenter"
-                android:padding="10dp" />
+    <TextView
+        android:id="@+id/tvMPG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSummary"
+        android:layout_toLeftOf="@id/tvPassenger"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-thin"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="34 MPG"
+        android:textColor="#b9b9b9"/>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="34 MPG"
-                    android:id="@+id/tvMPG"
-                    android:textColor="#b9b9b9"
-                    android:fontFamily="sans-serif-thin"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
+    <TextView
+        android:id="@+id/tvSatRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSummary"
+        android:layout_toRightOf="@id/tvPassenger"
+        android:fontFamily="sans-serif-thin"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Sirius XM Radio"
+        android:textColor="#b9b9b9" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5 Passenger"
-                    android:id="@+id/tvPassenger"
-                    android:textColor="#b9b9b9"
-                    android:fontFamily="sans-serif-thin"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sirius XM Radio"
-                    android:id="@+id/tvSatRadio"
-                    android:textColor="#b9b9b9"
-                    android:fontFamily="sans-serif-thin"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
 
-            </LinearLayout>
 
-        </LinearLayout>
+    <TextView
+        android:id="@+id/tvRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPassenger"
+        android:fontFamily="sans-serif-thin"
+        android:padding="10dp"
+        android:text="199.00 USD"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="26dp" />
 
-        <TextView
-            android:text="Summary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvSummary"
-            android:textColor="#b9b9b9"
-            android:textSize="16dp"
-            android:fontFamily="sans-serif-thin"
-            android:textAlignment="center"
-            android:padding="10dp"/>
 
-        <TextView
-            android:text="199.00 USD"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvRate"
-            android:textColor="#b9b9b9"
-            android:textSize="26dp"
-            android:fontFamily="sans-serif-thin"
-            android:textAlignment="center"
-            android:padding="10dp"/>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:text="Select This Vehicle"
-                android:id="@+id/bChooseVehicle"
-                android:background="@drawable/button_border"
-                android:textColor="#fff129"
-                android:layout_weight="1"
-                android:layout_margin="10dp" />
-        </LinearLayout>
-    </LinearLayout>
+    <Button
+        android:id="@+id/bChooseVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvRate"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_border"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Select This Vehicle"
+        android:textColor="#ffd100" />
+
+    <Button
+        android:id="@+id/bScanAgain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bChooseVehicle"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/cancel_button_border"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Scan Another Vehicle"
+        android:textColor="#e34446" />
+
 
 </RelativeLayout>
+    </ScrollView>

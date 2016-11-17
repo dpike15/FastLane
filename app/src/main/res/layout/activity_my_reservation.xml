@@ -22,6 +22,14 @@
         app:titleTextColor="#ffd100"
         android:background="#000001" />
 
+    <ProgressBar
+        android:id="@+id/progress_loader"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -73,20 +81,11 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/cadillac_cts_resized"
-                    android:id="@+id/vehicleImage" />
-
-                <TextView
-                    android:text="Cadillac CTS-V"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvVehicleMakeModel"
-                    android:textAlignment="center"
-                    android:textSize="16dp"
-                    android:textColor="#b9b9b9"
-                    android:fontFamily="sans-serif-thin"
-                    android:padding="10dp"
-                    android:textIsSelectable="false"/>
+                    app:srcCompat="@drawable/prestige_collection"
+                    android:id="@+id/vehicleImage"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="10dp" />
 
             </LinearLayout>
 
