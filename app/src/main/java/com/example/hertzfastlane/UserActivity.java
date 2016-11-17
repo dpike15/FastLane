@@ -245,10 +245,10 @@ public class UserActivity extends AppCompatActivity {
 
     private void addAdrenalineCarList()
     {
-        carsList.add(R.drawable.camaro);
+        carsList.add(R.drawable.g_wagon);
         carsList.add(R.drawable.camaro_front);
         carsList.add(R.drawable.camaro_side);
-        carsList.add(R.drawable.mustang);
+        carsList.add(R.drawable.e_class);
         carsList.add(R.drawable.mustang_closeup);
         //Prestige
         carsList.add(R.drawable.a8);
