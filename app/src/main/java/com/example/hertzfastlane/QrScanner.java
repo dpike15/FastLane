@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.Result;
 
@@ -25,8 +22,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -177,6 +172,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
             builder.setMessage("Reservation Successully Changed!");
             Intent carActivityIntent = new Intent(QrScanner.this, CarActivity.class);
             QrScanner.this.startActivity(carActivityIntent);
+            this.finish();
         }
         else {
             builder.setMessage("Car not included in reservation class!");

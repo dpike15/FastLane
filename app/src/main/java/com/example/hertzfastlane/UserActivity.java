@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,8 +28,11 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.squareup.picasso.Picasso;
 
-
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 
 
 public class UserActivity extends AppCompatActivity {
@@ -44,13 +49,20 @@ public class UserActivity extends AppCompatActivity {
 
     private ProgressBar spinner;
 
+    ArrayList<Integer> carsList = new ArrayList<Integer>();
+    String carClassLog;
+
     Animation animSlideDown, animSlideUp;
 
-
+    private ImageView backgroundView;
+    String TAG = "/UserActivity";
 
 
     final Context context = this;
     Member member;
+
+    int arrayListInt;
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -62,6 +74,8 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        backgroundView = (ImageView) findViewById(R.id.home_bg);
+        displayBackgroundImages();
 
         spinner =(ProgressBar)findViewById(R.id.progress_loader);
         spinner.setVisibility(View.GONE);
@@ -228,5 +242,64 @@ public class UserActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
+
+    private void addAdrenalineCarList()
+    {
+        carsList.add(R.drawable.g_wagon);
+        carsList.add(R.drawable.camaro_front);
+        carsList.add(R.drawable.camaro_side);
+        carsList.add(R.drawable.e_class);
+        carsList.add(R.drawable.mustang_closeup);
+        //Prestige
+        carsList.add(R.drawable.a8);
+        carsList.add(R.drawable.benz);
+        carsList.add(R.drawable.maserati);
+    }
+
+    private void addPrestigeCarList()
+    {
+        carsList.add(R.drawable.a8);
+        carsList.add(R.drawable.benz);
+        carsList.add(R.drawable.maserati);
+
+    }
+    private void loadImages(int index)
+    {
+        //Uri uri = Uri.parse("android.resource://com.example.hertzfastlane/drawable/benz");
+
+
+        Uri uri = Uri.fromFile(new File("android.resource://com.example.hertzfastlane/drawable/" + "benz.jpg"));
+        Picasso.with(context).load(carsList.get(arrayListInt)).into(backgroundView);
+
+
+    }
+
+
+    private void displayBackgroundImages()
+    {
+
+        int classInt = (int) ( Math.random() * 2 + 1); // will return either 1 or 2
+        Random rand = new Random();
+        int adrenalineInt = rand.nextInt(8);
+        int prestigeInt = rand.nextInt(3)+0;
+        int randomInt = (int) ( Math.random() * 2 + 1); // will return either 1 or 2
+
+        if(true)
+        {
+            addAdrenalineCarList();
+            arrayListInt = adrenalineInt;
+            loadImages(adrenalineInt);
+            Log.d(TAG,"Adrenaline: " + adrenalineInt);
+        }
+//        else
+//        {
+//            addPrestigeCarList();
+//            arrayListInt = prestigeInt;
+//            loadImages(prestigeInt);
+//            Log.d(TAG,"Prestige: " + prestigeInt);
+//        }
+        carsList.clear();
+    }
+
 
 }
