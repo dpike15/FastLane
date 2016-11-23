@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.example.hertzfastlane.models.Car;
+import com.example.hertzfastlane.R;
+
 
 public class CarActivity extends AppCompatActivity {
 
@@ -22,12 +25,11 @@ public class CarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
 
-
+        //Video
         VideoView myVideoView = (VideoView) findViewById(R.id.videoView);
         myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.cts));
         myVideoView.start();
         myVideoView.seekTo(5);
-
 
         Car car = QrScanner.getCar();
 

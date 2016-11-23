@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 
 import android.content.Intent;
@@ -15,6 +15,11 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.hertzfastlane.models.Car;
+import com.example.hertzfastlane.models.Info;
+import com.example.hertzfastlane.models.Member;
+import com.example.hertzfastlane.R;
+import com.example.hertzfastlane.models.Reservation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -170,12 +175,6 @@ public class MyReservationActivity extends AppCompatActivity {
             }
         };
 
-//        ImageView carImage=(ImageView)findViewById(vehicleImage);
-//        Picasso.with(getApplicationContext())
-//                .load("http://i.imgur.com/OYMyYcj.png")
-////.resize(283,113)
-//                .error(R.drawable.app_icon)
-//                .into(carImage);
 
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 

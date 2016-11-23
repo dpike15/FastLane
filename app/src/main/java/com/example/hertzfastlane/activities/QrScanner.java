@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.hertzfastlane.models.Member;
+import com.example.hertzfastlane.models.Car;
+import com.example.hertzfastlane.models.Info;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.Result;
 
@@ -31,6 +34,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * Created by Steven J on 9/22/2016.
  */
 public class QrScanner extends Activity implements ZXingScannerView.ResultHandler {
+    //
     private String qrString;
     private boolean scanResult;
     private ZXingScannerView mScannerView;

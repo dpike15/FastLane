@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
@@ -22,18 +22,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
         <activity
-            android:name=".UserActivity"
+            android:name=".activities.UserActivity"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".QrScanner" />
-        <activity android:name=".CheckoutActivity" />
-        <activity android:name=".CarActivity" />
-        <activity android:name=".HelpActivity" />
-        <activity android:name=".MyReservationActivity" />
+        <activity android:name=".activities.QrScanner" />
+        <activity android:name=".activities.CheckoutActivity" />
+        <activity android:name=".activities.CarActivity" />
+        <activity android:name=".activities.HelpActivity" />
+        <activity android:name=".activities.MyReservationActivity" />
         <activity
-            android:name=".MapActivity"
+            android:name=".activities.MapActivity"
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme" />
         <!--
@@ -44,7 +43,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".MapActivity2" />
+        <activity android:name=".activities.MapActivity2" />
     </application>
 
 </manifest>

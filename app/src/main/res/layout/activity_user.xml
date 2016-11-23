@@ -15,7 +15,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hertzfastlane.UserActivity"
+    tools:context="com.example.hertzfastlane.activities.UserActivity"
     android:background="@drawable/gradient_bg_dark">
 
     <android.support.v7.widget.Toolbar
