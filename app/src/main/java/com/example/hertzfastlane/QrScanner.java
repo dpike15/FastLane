@@ -25,7 +25,7 @@ import java.io.InputStream;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-/**
+
 
  /**
  * Created by Steven J on 9/22/2016.
@@ -34,7 +34,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
     private String qrString;
     private boolean scanResult;
     private ZXingScannerView mScannerView;
-    private final String URL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/cars/";
+    private final String URL = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/cars/";
     private Member member;
 
     public static Car getCar() {
@@ -111,7 +111,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
                     Info info = mapper.readValue(carInfoString,Info.class);
                     car.setInfo(info);
 
-                    String reservationURL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/reservations/_find";
+                    String reservationURL = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/reservations/_find";
                     //Getting Reservation Data
                     String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getCustomer_id() + "\"}}";
 
