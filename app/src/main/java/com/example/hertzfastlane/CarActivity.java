@@ -59,8 +59,6 @@ public class CarActivity extends AppCompatActivity {
                 builder.setMessage("Successfully updated reservation! Please proceed to the gate.");
                 alertDialog = builder.create();
                 alertDialog.show();
-                /*Intent home = new Intent(CarActivity.this, UserActivity.class);
-                CarActivity.this.startActivity(home);*/
             }
         });
 
