@@ -169,7 +169,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
         builder.setTitle("Scan result");
         if(scanResult)
         {
-            builder.setMessage("Reservation Successully Changed!");
+            builder.setMessage("Reservation Successfully Changed!");
             Intent carActivityIntent = new Intent(QrScanner.this, CarActivity.class);
             QrScanner.this.startActivity(carActivityIntent);
             this.finish();
