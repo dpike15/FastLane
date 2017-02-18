@@ -6,5 +6,6 @@
 
     <item android:id="@+id/action_maps" android:title="@string/action_map_option" android:orderInCategory="100" app:showAsAction='never' />
     <item android:id="@+id/action_help" android:title="@string/action_help" android:orderInCategory="100" app:showAsAction='never' />
+    <item android:id="@+id/Beacon" android:title="@string/beacon" android:orderInCategory="100" app:showAsAction='never' />
 
 </menu>

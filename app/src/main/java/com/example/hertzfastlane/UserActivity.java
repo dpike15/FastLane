@@ -225,6 +225,9 @@ public class UserActivity extends AppCompatActivity {
             case R.id.action_help:
                 startActivity(new Intent(this, HelpActivity.class));
                 return true;
+            case R.id.Beacon:
+                startActivity(new Intent(this, beacons.class));  // estimote beacons action bar, created string and extra action button
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
