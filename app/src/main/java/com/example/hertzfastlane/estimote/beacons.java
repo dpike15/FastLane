@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.estimote;
 
 /**
  * Created by Steven J on 2/17/2017.
@@ -13,10 +13,9 @@ import android.widget.TextView;
 import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
-import com.example.hertzfastlane.estimote.BeaconID;
-import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
-import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
-import com.example.hertzfastlane.estimote.ProximityContentManager;
+import com.example.hertzfastlane.R;
+import com.example.hertzfastlane.activities.HelpActivity;
+import com.example.hertzfastlane.activities.MapActivity;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,9 +27,9 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-import static com.example.hertzfastlane.MyReservationActivity.convertStreamToString;
+import static com.example.hertzfastlane.activities.MyReservationActivity.convertStreamToString;
+
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com

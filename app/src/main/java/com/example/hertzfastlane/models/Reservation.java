@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.models;
 
 /**
  * Created by dapik on 10/5/2016.

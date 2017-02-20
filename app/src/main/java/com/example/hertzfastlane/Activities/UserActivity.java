@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +24,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hertzfastlane.R;
+import com.example.hertzfastlane.estimote.beacons;
+import com.example.hertzfastlane.models.Member;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -36,32 +39,23 @@ import java.util.Random;
 
 
 public class UserActivity extends AppCompatActivity {
-    //public Button button;
 
     /* hamburger menu variables */
     private ListView mDrawerList;
     private ArrayAdapter<String> mAdapter;
-
     /* hamburger toggle bar variables */
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
-
     private ProgressBar spinner;
-
-    ArrayList<Integer> carsList = new ArrayList<Integer>();
+    private ArrayList<Integer> carsList = new ArrayList<Integer>();
     String carClassLog;
-
-    Animation animSlideDown, animSlideUp;
-
+    private Animation animSlideDown, animSlideUp;
     private ImageView backgroundView;
-    String TAG = "/UserActivity";
-
-
-    final Context context = this;
-    Member member;
-
-    int arrayListInt;
+    private String TAG = "/UserActivity";
+    private final Context context = this;
+    private Member member;
+    private int arrayListInt;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -299,13 +293,7 @@ public class UserActivity extends AppCompatActivity {
             loadImages(adrenalineInt);
             Log.d(TAG,"Adrenaline: " + adrenalineInt);
         }
-//        else
-//        {
-//            addPrestigeCarList();
-//            arrayListInt = prestigeInt;
-//            loadImages(prestigeInt);
-//            Log.d(TAG,"Prestige: " + prestigeInt);
-//        }
+
         carsList.clear();
     }
 

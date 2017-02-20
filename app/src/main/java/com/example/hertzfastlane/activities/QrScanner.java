@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.hertzfastlane.models.Car;
+import com.example.hertzfastlane.models.Info;
+import com.example.hertzfastlane.models.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.Result;
 
@@ -25,12 +28,14 @@ import java.io.InputStream;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+import static com.example.hertzfastlane.activities.MyReservationActivity.convertStreamToString;
 
 
- /**
+/**
  * Created by Steven J on 9/22/2016.
  */
 public class QrScanner extends Activity implements ZXingScannerView.ResultHandler {
+    //
     private String qrString;
     private boolean scanResult;
     private ZXingScannerView mScannerView;
@@ -100,7 +105,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
 
                     HttpEntity entity = response.getEntity();
                     InputStream instreamCar = entity.getContent();
-                    String resultCar = MyReservationActivity.convertStreamToString(instreamCar);
+                    String resultCar = com.example.hertzfastlane.activities.MyReservationActivity.convertStreamToString(instreamCar);
                     JSONObject carJson = new JSONObject(resultCar);
                     JSONObject carInfo = carJson.getJSONObject("info");
                     String carInfoString = carInfo.toString();
@@ -131,7 +136,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
                         HttpEntity resEntity = response.getEntity();
                         InputStream instream = resEntity.getContent();
                         //JSON RESPONSE AS STRING
-                        String result = MyReservationActivity.convertStreamToString(instream);
+                        String result = convertStreamToString(instream);
                         JSONObject json = new JSONObject(result);
                         //RETURNED AS ARRAY OF DOCUMENTS TITLED DOCS
                         JSONArray array = json.getJSONArray("docs");
@@ -170,7 +175,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
         if(scanResult)
         {
             builder.setMessage("Reservation Successfully Changed!");
-            Intent carActivityIntent = new Intent(QrScanner.this, CarActivity.class);
+            Intent carActivityIntent = new Intent(QrScanner.this, com.example.hertzfastlane.activities.CarActivity.class);
             QrScanner.this.startActivity(carActivityIntent);
             this.finish();
         }
