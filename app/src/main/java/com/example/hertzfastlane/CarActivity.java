@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 
+
 public class CarActivity extends AppCompatActivity {
 
     final Context context = this;
@@ -23,10 +24,8 @@ public class CarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_car);
 
 
-        VideoView myVideoView = (VideoView) findViewById(R.id.videoView);
-        myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.cts));
-        myVideoView.start();
-        myVideoView.seekTo(5);
+
+        playVideo();
 
 
         Car car = QrScanner.getCar();
@@ -73,4 +72,12 @@ public class CarActivity extends AppCompatActivity {
         CarActivity.this.startActivity(userActivityIntent);
 
     }
+
+    public void playVideo() {
+        VideoView myVideoView = (VideoView) findViewById(R.id.videoView);
+        myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.cts));
+        myVideoView.start();
+        myVideoView.seekTo(5);
+    }
+
 }

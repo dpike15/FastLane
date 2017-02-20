@@ -69,9 +69,6 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterRequest registerRequest = new RegisterRequest(name, username, password, age, responseListener);
                 RequestQueue queue = newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);
-
-
-
             }
         });
 

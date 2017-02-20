@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
 import com.example.hertzfastlane.estimote.BeaconID;
@@ -16,9 +18,19 @@ import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
 import com.example.hertzfastlane.estimote.ProximityContentManager;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
+import static com.example.hertzfastlane.MyReservationActivity.convertStreamToString;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com
@@ -43,13 +55,16 @@ public class beacons extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EstimoteSDK.initialize(getApplicationContext(), "stevenjoy99-yahoo-com-s-yo-lyx", "0f4d0fa349ea5d6604f52b776a9653c8");
+
         Log.d("Tag", "Beacons");
         setContentView(R.layout.activity_main);
         proximityContentManager = new ProximityContentManager(this,
                 Arrays.asList(
                         // TODO: replace with UUIDs, majors and minors of your own beacons
-                        //new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 32725,55822),
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 20930, 14720)), //20930:14720
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 32725,55822),
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 20930, 14720),
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 226788, 12168)), //
 
                 new EstimoteCloudBeaconDetailsFactory());
         proximityContentManager.setListener(new ProximityContentManager.Listener() {
@@ -57,21 +72,61 @@ public class beacons extends AppCompatActivity {
             public void onContentChanged(Object content) {
                 String text;
                 Integer backgroundColor;
-                if (content != null) {
+
+                if (content != null ) {
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
-                //    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
-
-                    Intent carActivityIntent = new Intent(beacons.this, CarActivity.class);
-                    beacons.this.startActivity(carActivityIntent);
-
+                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
                     backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
-                } else {
-                //    text = "No beacons in range.";
-                    backgroundColor = null;
+
+                    if (beaconDetails.getBeaconName().equals("ice")) {
+
+                        Intent mapActivityIntent = new Intent(beacons.this, MapActivity.class);
+                        beacons.this.startActivity(mapActivityIntent);
+
+                        Runnable runnable = new Runnable(){
+                            @Override
+                            public void run(){
+                                HttpClient httpClient = new DefaultHttpClient();
+
+                                HttpGet request = new HttpGet("https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons");
+
+
+                                HttpResponse response;
+
+                                try{
+                                    response = httpClient.execute(request);
+                                    HttpEntity entity = response.getEntity();
+                                    InputStream instream = entity.getContent();
+                                    String result = convertStreamToString(instream);
+
+
+                                }catch(Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        Thread thread = new Thread(runnable);
+                        thread.start();
+                    }
+                    if (beaconDetails.getBeaconName().equals("blueberry")) {
+                        Intent helpActivityIntent = new Intent(beacons.this, HelpActivity.class);
+                        beacons.this.startActivity(helpActivityIntent);
+                    }
+                    if (beaconDetails.getBeaconName().equals("mint")) {
+                        Intent mappyActivityIntent = new Intent(beacons.this, MapActivity.class);
+                        beacons.this.startActivity(mappyActivityIntent);
+                    }
+
                 }
-               // ((TextView) findViewById(R.id.textView)).setText(text);
-               // findViewById(R.id.relativeLayout).setBackgroundColor(
-               //         backgroundColor != null ? backgroundColor : BACKGROUND_COLOR_NEUTRAL);
+
+
+                     else {
+                        text = "No beacons in range.";
+                        backgroundColor = null;
+                    }
+                 ((TextView) findViewById(R.id.textView)).setText(text);
+                findViewById(R.id.relativeLayout).setBackgroundColor(
+                        backgroundColor != null ? backgroundColor : BACKGROUND_COLOR_NEUTRAL);
             }
         });
     }

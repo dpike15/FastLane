@@ -33,6 +33,8 @@
         <activity android:name=".CarActivity" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".MyReservationActivity" />
+        <activity android:name=".beacons" />
+
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map"
