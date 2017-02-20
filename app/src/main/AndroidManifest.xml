@@ -31,6 +31,7 @@
         <activity android:name=".QrScanner" />
         <activity android:name=".CheckoutActivity" />
         <activity android:name=".CarActivity" />
+        <activity android:name=".beacons" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".MyReservationActivity" />
         <activity android:name=".beacons" />
