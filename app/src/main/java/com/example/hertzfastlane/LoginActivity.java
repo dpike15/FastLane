@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,14 +19,28 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.protocol.HTTP;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.KeyStore;
 
 import static com.example.hertzfastlane.R.id.b_Login;
 import static com.example.hertzfastlane.R.id.et_Password;
@@ -87,8 +102,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         HttpClient httpclient = new DefaultHttpClient();
 
-
                         HttpGet request = new HttpGet(URL + "/" + username);
+                        //HttpGet request = new HttpGet(URL + "/" + username);
 
                         HttpResponse response;
 
@@ -97,10 +112,10 @@ public class LoginActivity extends AppCompatActivity {
                             HttpEntity entity = response.getEntity();
                             InputStream instream = entity.getContent();
                             String result = convertStreamToString(instream);
-
+                            Log.d("Tag",result);
                             ObjectMapper mapper = new ObjectMapper();
 
-                            user = mapper.readValue(result, Member.class);
+                           // user = mapper.readValue(result, Member.class);
 
                             instream.close();
 
@@ -212,4 +227,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         return sb.toString();
     }
+
+
 }

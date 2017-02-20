@@ -16,19 +16,37 @@ import com.estimote.sdk.cloud.model.Color;
 import com.example.hertzfastlane.estimote.BeaconID;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
+import com.example.hertzfastlane.estimote.ExSSLSocketFactory;
 import com.example.hertzfastlane.estimote.ProximityContentManager;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.SocketException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import static com.example.hertzfastlane.MyReservationActivity.convertStreamToString;
 
@@ -86,7 +104,51 @@ public class beacons extends AppCompatActivity {
                         Runnable runnable = new Runnable(){
                             @Override
                             public void run(){
-                                HttpClient httpClient = new DefaultHttpClient();
+                                String resutString = "";
+                                StringBuilder builder = new StringBuilder();
+                                HttpClient client = getHttpsClient(new DefaultHttpClient());
+
+                                try {
+                                    //Add your request URL
+                                    String url = "https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons";
+
+
+                                    HttpGet httpGet = new HttpGet(url);
+
+                                    HttpResponse response = client.execute(httpGet);
+                                    StatusLine statusLine = response.getStatusLine();
+                                    int statusCode = statusLine.getStatusCode();
+
+
+                                    if (statusCode == 200) {
+                                        HttpEntity entityResponse = response.getEntity();
+                                        InputStream content = entityResponse.getContent();
+                                        BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+                                        String line = null;
+                                        while ((line = reader.readLine()) != null) {
+                                            builder.append(line + "\n");
+                                        }
+                                        reader.close();
+                                        resutString = builder.toString();
+                                        Log.d(TAG, "Successfuly :" + resutString);
+                                    } else {
+                                        Log.d(TAG, "Error seding data");
+                                    }
+                                } catch (ConnectTimeoutException e) {
+                                    Log.w("Connection Tome Out", e);
+                                } catch (ClientProtocolException e) {
+                                    Log.w("ClientProtocolException", e);
+                                } catch (SocketException e) {
+                                    Log.w("SocketException", e);
+                                } catch (IOException e) {
+                                    Log.w("IOException", e);
+                                }
+
+
+
+                                /*
+                                HttpClient mClient = new DefaultHttpClient();
+                                mClient.getConnectionManager().getSchemeRegistry().register((new Scheme("SSLSocketFactory", SSLSocketFactory.getSocketFactory(), 443)));
 
                                 HttpGet request = new HttpGet("https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons");
 
@@ -94,7 +156,7 @@ public class beacons extends AppCompatActivity {
                                 HttpResponse response;
 
                                 try{
-                                    response = httpClient.execute(request);
+                                    response = mClient.execute(request);
                                     HttpEntity entity = response.getEntity();
                                     InputStream instream = entity.getContent();
                                     String result = convertStreamToString(instream);
@@ -103,6 +165,7 @@ public class beacons extends AppCompatActivity {
                                 }catch(Exception e){
                                     e.printStackTrace();
                                 }
+                                */
                             }
                         };
                         Thread thread = new Thread(runnable);
@@ -156,5 +219,37 @@ public class beacons extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         proximityContentManager.destroy();
+    }
+
+    public static HttpClient getHttpsClient(HttpClient client) {
+        try{
+            X509TrustManager x509TrustManager = new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {
+                }
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+            };
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, new TrustManager[]{x509TrustManager}, null);
+            SSLSocketFactory sslSocketFactory = new ExSSLSocketFactory(sslContext);
+            sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            ClientConnectionManager clientConnectionManager = client.getConnectionManager();
+            SchemeRegistry schemeRegistry = clientConnectionManager.getSchemeRegistry();
+            schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
+            return new DefaultHttpClient(clientConnectionManager, client.getParams());
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }
