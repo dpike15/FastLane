@@ -5,6 +5,7 @@ package com.example.hertzfastlane;
  */
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -74,15 +75,18 @@ public class beacons extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EstimoteSDK.initialize(getApplicationContext(), "stevenjoy99-yahoo-com-s-yo-lyx", "0f4d0fa349ea5d6604f52b776a9653c8");
+        EstimoteSDK.initialize(getApplicationContext(), "rtrevino821officialapp-lwe", "89622b1ac4af16d91e939910012ae70a");
 
         Log.d("Tag", "Beacons");
         setContentView(R.layout.activity_main);
         proximityContentManager = new ProximityContentManager(this,
                 Arrays.asList(
                         // TODO: replace with UUIDs, majors and minors of your own beacons
+
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 32725,55822),
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 20930, 14720),
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 226788, 12168)), //
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 26788, 12168)), //
+
 
                 new EstimoteCloudBeaconDetailsFactory());
         proximityContentManager.setListener(new ProximityContentManager.Listener() {
@@ -93,7 +97,9 @@ public class beacons extends AppCompatActivity {
 
                 if (content != null ) {
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
+
                     text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
+
                     backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 
                     if (beaconDetails.getBeaconName().equals("ice")) {
@@ -176,8 +182,9 @@ public class beacons extends AppCompatActivity {
                         beacons.this.startActivity(helpActivityIntent);
                     }
                     if (beaconDetails.getBeaconName().equals("mint")) {
-                        Intent mappyActivityIntent = new Intent(beacons.this, MapActivity.class);
-                        beacons.this.startActivity(mappyActivityIntent);
+                        goToUrl("http://dallascowboys.com/");
+                        //Intent mappyActivityIntent = new Intent(beacons.this, MapActivity.class);
+                        //beacons.this.startActivity(mappyActivityIntent);
                     }
 
                 }
@@ -192,6 +199,12 @@ public class beacons extends AppCompatActivity {
                         backgroundColor != null ? backgroundColor : BACKGROUND_COLOR_NEUTRAL);
             }
         });
+    }
+
+    private void goToUrl (String url) {
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
     }
 
     @Override
