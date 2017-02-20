@@ -18,10 +18,19 @@ import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
 import com.example.hertzfastlane.estimote.ProximityContentManager;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.example.hertzfastlane.MyReservationActivity.convertStreamToString;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com
@@ -73,6 +82,31 @@ public class beacons extends AppCompatActivity {
 
                         Intent mapActivityIntent = new Intent(beacons.this, MapActivity.class);
                         beacons.this.startActivity(mapActivityIntent);
+
+                        Runnable runnable = new Runnable(){
+                            @Override
+                            public void run(){
+                                HttpClient httpClient = new DefaultHttpClient();
+
+                                HttpGet request = new HttpGet("https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons");
+
+
+                                HttpResponse response;
+
+                                try{
+                                    response = httpClient.execute(request);
+                                    HttpEntity entity = response.getEntity();
+                                    InputStream instream = entity.getContent();
+                                    String result = convertStreamToString(instream);
+
+
+                                }catch(Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+                        Thread thread = new Thread(runnable);
+                        thread.start();
                     }
                     if (beaconDetails.getBeaconName().equals("blueberry")) {
                         Intent helpActivityIntent = new Intent(beacons.this, HelpActivity.class);
