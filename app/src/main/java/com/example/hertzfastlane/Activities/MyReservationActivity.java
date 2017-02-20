@@ -176,9 +176,11 @@ public class MyReservationActivity extends AppCompatActivity {
         };
 
 
+
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
         executor.scheduleAtFixedRate(runnable , 0, 600, TimeUnit.MILLISECONDS );
+
 
         Thread thread = new Thread(runnable);
         thread.start();

@@ -16,7 +16,8 @@
     <string name="title_activity_map2">MapActivity2</string>
     <string name="action_map_option">Parking Lot Maps</string>
     <string name="action_help">Need Help?</string>
+    <string name="beacon">Beacon</string>
     <string name="drawer_open">Open navigation drawer</string>  <!-- toggle action bar-->
-    <string name="drawer_close">Close navigation drawer</string> <!-- toggle action bar-->
+    <string name="drawer_close">Close navigation drawer</string>
 
 </resources>

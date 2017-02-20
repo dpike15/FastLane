@@ -24,8 +24,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hertzfastlane.models.Member;
 import com.example.hertzfastlane.R;
+import com.example.hertzfastlane.estimote.beacons;
+import com.example.hertzfastlane.models.Member;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -92,6 +93,7 @@ public class UserActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+
         /** toggle hamburger layout   **strings xml added in res folder*/
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
@@ -114,7 +116,11 @@ public class UserActivity extends AppCompatActivity {
             }
         };
 
+        setupDrawer();
+
+
         setupDrawer();  /* function needs to be fixed  currently not in use */
+
 
         /** on click drawer options */
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -212,6 +218,9 @@ public class UserActivity extends AppCompatActivity {
                 return true;
             case R.id.action_help:
                 startActivity(new Intent(this, HelpActivity.class));
+                return true;
+            case R.id.Beacon:
+                startActivity(new Intent(this, beacons.class));  // estimote beacons action bar, created string and extra action button
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

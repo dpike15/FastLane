@@ -12,8 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.example.hertzfastlane.models.Car;
 import com.example.hertzfastlane.R;
+import com.example.hertzfastlane.models.Car;
+
 
 
 public class CarActivity extends AppCompatActivity {
@@ -25,14 +26,10 @@ public class CarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
 
-        //Video
-        VideoView myVideoView = (VideoView) findViewById(R.id.videoView);
-        myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.cts));
-        myVideoView.start();
-        myVideoView.seekTo(5);
+        playVideo();
+
 
         Car car = QrScanner.getCar();
-
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
         carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
 
@@ -61,8 +58,6 @@ public class CarActivity extends AppCompatActivity {
                 builder.setMessage("Successfully updated reservation! Please proceed to the gate.");
                 alertDialog = builder.create();
                 alertDialog.show();
-                /*Intent home = new Intent(CarActivity.this, UserActivity.class);
-                CarActivity.this.startActivity(home);*/
             }
         });
 
@@ -73,8 +68,16 @@ public class CarActivity extends AppCompatActivity {
     {
         Log.d("Message", "OnBackPressed");
         super.onBackPressed();
-        Intent userActivityIntent = new Intent(CarActivity.this, UserActivity.class);
+        Intent userActivityIntent = new Intent(CarActivity.this, com.example.hertzfastlane.activities.UserActivity.class);
         CarActivity.this.startActivity(userActivityIntent);
 
     }
+
+    public void playVideo() {
+        VideoView myVideoView = (VideoView) findViewById(R.id.videoView);
+        myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.cts));
+        myVideoView.start();
+        myVideoView.seekTo(5);
+    }
+
 }

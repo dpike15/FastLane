@@ -85,17 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                             HttpEntity entity = response.getEntity();
                             InputStream instream = entity.getContent();
                             String result = convertStreamToString(instream);
-/*
 
-                            HttpGet request1 = new HttpGet("http://169.46.154.154:8080/members/" + "/" + result);
-
-                            HttpResponse response1;
-
-                            response1 = httpclient.execute(request);
-                            HttpEntity entity1 = response.getEntity();
-                            InputStream instream1 = entity.getContent();
-                            String result1 = convertStreamToString(instream);
-*/
                             ObjectMapper mapper = new ObjectMapper();
 
                             user = mapper.readValue(result, Member.class);

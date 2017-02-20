@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.hertzfastlane.models.Member;
 import com.example.hertzfastlane.models.Car;
 import com.example.hertzfastlane.models.Info;
+import com.example.hertzfastlane.models.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.Result;
 
@@ -28,9 +28,10 @@ import java.io.InputStream;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-/**
+import static com.example.hertzfastlane.activities.MyReservationActivity.convertStreamToString;
 
- /**
+
+/**
  * Created by Steven J on 9/22/2016.
  */
 public class QrScanner extends Activity implements ZXingScannerView.ResultHandler {
@@ -38,7 +39,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
     private String qrString;
     private boolean scanResult;
     private ZXingScannerView mScannerView;
-    private final String URL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/cars/";
+    private final String URL = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/cars/";
     private Member member;
 
     public static Car getCar() {
@@ -104,7 +105,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
 
                     HttpEntity entity = response.getEntity();
                     InputStream instreamCar = entity.getContent();
-                    String resultCar = MyReservationActivity.convertStreamToString(instreamCar);
+                    String resultCar = com.example.hertzfastlane.activities.MyReservationActivity.convertStreamToString(instreamCar);
                     JSONObject carJson = new JSONObject(resultCar);
                     JSONObject carInfo = carJson.getJSONObject("info");
                     String carInfoString = carInfo.toString();
@@ -115,7 +116,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
                     Info info = mapper.readValue(carInfoString,Info.class);
                     car.setInfo(info);
 
-                    String reservationURL = "https://d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix:40448ad9e7403f7b1d2b76e312f1673801f8011aeba32256ff860596465bd17b@d9c29c15-ac06-4a7a-83f6-00e3cd315b1c-bluemix.cloudant.com/reservations/_find";
+                    String reservationURL = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/reservations/_find";
                     //Getting Reservation Data
                     String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getCustomer_id() + "\"}}";
 
@@ -135,7 +136,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
                         HttpEntity resEntity = response.getEntity();
                         InputStream instream = resEntity.getContent();
                         //JSON RESPONSE AS STRING
-                        String result = MyReservationActivity.convertStreamToString(instream);
+                        String result = convertStreamToString(instream);
                         JSONObject json = new JSONObject(result);
                         //RETURNED AS ARRAY OF DOCUMENTS TITLED DOCS
                         JSONArray array = json.getJSONArray("docs");
@@ -173,8 +174,8 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
         builder.setTitle("Scan result");
         if(scanResult)
         {
-            builder.setMessage("Reservation Successully Changed!");
-            Intent carActivityIntent = new Intent(QrScanner.this, CarActivity.class);
+            builder.setMessage("Reservation Successfully Changed!");
+            Intent carActivityIntent = new Intent(QrScanner.this, com.example.hertzfastlane.activities.CarActivity.class);
             QrScanner.this.startActivity(carActivityIntent);
             this.finish();
         }
