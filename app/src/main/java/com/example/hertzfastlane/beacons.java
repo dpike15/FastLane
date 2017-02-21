@@ -85,7 +85,7 @@ public class beacons extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EstimoteSDK.initialize(getApplicationContext(), "stevenjoy99-yahoo-com-s-yo-lyx", "0f4d0fa349ea5d6604f52b776a9653c8");
-        EstimoteSDK.initialize(getApplicationContext(), "rtrevino821officialapp-lwe", "89622b1ac4af16d91e939910012ae70a");
+
 
         Log.d("Tag", "Beacons");
         setContentView(R.layout.activity_main);
@@ -133,19 +133,14 @@ public class beacons extends AppCompatActivity {
                                             result.append(line);
                                         }
                                         String resultString = result.toString();
-                                        JSONObject json = new JSONObject(resultString);
-                                        message = json.get("message");
+                                        Log.d("TAG",(String)message);
                                     } catch (IOException e) {
-                                        e.printStackTrace();
-                                    } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                             }
                         };
                         Thread thread = new Thread(runnable);
                         thread.start();
-
-                        Log.d("TAG",(String)message);
 
                         Intent mapActivityIntent = new Intent(beacons.this, MapActivity.class);
                         beacons.this.startActivity(mapActivityIntent);
