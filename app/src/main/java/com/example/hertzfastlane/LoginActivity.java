@@ -35,6 +35,8 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -61,6 +63,10 @@ public class LoginActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+
+    private StringBuilder result;
+
+    private Car carData;
 
     public static Member getMember() {
         return user;
@@ -104,6 +110,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
+
+
                         HttpClient httpclient = new DefaultHttpClient();
 
                         HttpGet request = new HttpGet(URL + "/" + username);
@@ -131,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                             e.printStackTrace();
 
                         }
+
 
                     }
 

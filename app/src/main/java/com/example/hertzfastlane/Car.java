@@ -14,7 +14,16 @@ public class Car {
     private String vin;
     private List<String> features;
     private String image;
-    private String _id;
+
+    public String getCar_id() {
+        return car_id;
+    }
+
+    public void setCar_id(String car_id) {
+        this.car_id = car_id;
+    }
+
+    private String car_id;
 
     public String getVehicleClass() {
         return vehicleClass;
@@ -28,13 +37,7 @@ public class Car {
 
 
 
-    public String get_id() {
-        return _id;
-    }
 
-    public void set_id(String _id) {
-        this._id = _id;
-    }
 
     public String get_rev() {
         return _rev;

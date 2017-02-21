@@ -124,41 +124,44 @@ public class beacons extends AppCompatActivity {
                         Runnable runnable = new Runnable(){
                             @Override
                             public void run(){
-                                    URL url = null;
-                                    try {
-                                        url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id=2012");
-                                    } catch (MalformedURLException e) {
-                                        e.printStackTrace();
+
+                                URL url = null;
+                                try {
+                                    url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id=2012");
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+                                HttpURLConnection urlConnection = null;
+                                try {
+                                    urlConnection = (HttpURLConnection) url.openConnection();
+                                    BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                                    result = new StringBuilder();
+                                    String line;
+                                    while((line = reader.readLine()) != null) {
+                                        result.append(line);
                                     }
-                                    HttpURLConnection urlConnection = null;
-                                    try {
-                                        urlConnection = (HttpURLConnection) url.openConnection();
-                                        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                                        result = new StringBuilder();
-                                        String line;
-                                        while((line = reader.readLine()) != null) {
-                                            result.append(line);
-                                        }
-                                        String resultString = result.toString();
+                                    String resultString = result.toString();
 
-                                        JSONObject carMap = new JSONObject(resultString);
+                                    JSONObject carMap = new JSONObject(resultString);
 
-                                        JSONObject car = carMap.getJSONObject("Item");
-                                        JSONObject carInfo = car.getJSONObject("info");
+                                    JSONObject car = carMap.getJSONObject("Item");
+                                    JSONObject carInfo = car.getJSONObject("info");
 
-                                        //Deserializing to JSON Car Information
-                                        ObjectMapper mapper = new ObjectMapper();
+                                    //Deserializing to JSON Car Information
+                                    ObjectMapper mapper = new ObjectMapper();
 
-                                        carData = mapper.readValue(car.toString(),Car.class);
+                                    carData = mapper.readValue(car.toString(),Car.class);
 
-                                        Info infoCar = mapper.readValue(carInfo.toString(),Info.class);
-                                        carData.setInfo(infoCar);
+                                    Info infoCar = mapper.readValue(carInfo.toString(),Info.class);
+                                    carData.setInfo(infoCar);
 
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }catch (JSONException e1){
-                                        e1.printStackTrace();
-                                    }
+
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }catch (JSONException e1){
+                                    e1.printStackTrace();
+                                }
                             }
                         };
                         Thread thread = new Thread(runnable);
