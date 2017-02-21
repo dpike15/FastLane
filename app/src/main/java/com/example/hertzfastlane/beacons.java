@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
-import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
 import com.example.hertzfastlane.estimote.BeaconID;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
@@ -33,17 +32,12 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.SocketException;
-import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
@@ -64,10 +58,6 @@ import static com.example.hertzfastlane.MyReservationActivity.convertStreamToStr
 public class beacons extends AppCompatActivity {
 
     private static final String TAG = "beacons";
-
-    private static StringBuilder result;
-
-    private Object message;
 
     private static final Map<Color, Integer> BACKGROUND_COLORS = new HashMap<>();
 
@@ -114,41 +104,78 @@ public class beacons extends AppCompatActivity {
 
                     if (beaconDetails.getBeaconName().equals("ice")) {
 
+                        Intent mapActivityIntent = new Intent(beacons.this, MapActivity.class);
+                        beacons.this.startActivity(mapActivityIntent);
+
                         Runnable runnable = new Runnable(){
                             @Override
                             public void run(){
-                                    URL url = null;
-                                    try {
-                                        url = new URL("https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons");
-                                    } catch (MalformedURLException e) {
-                                        e.printStackTrace();
-                                    }
-                                    HttpURLConnection urlConnection = null;
-                                    try {
-                                        urlConnection = (HttpURLConnection) url.openConnection();
-                                        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                                        result = new StringBuilder();
-                                        String line;
-                                        while((line = reader.readLine()) != null) {
-                                            result.append(line);
+                                String resutString = "";
+                                StringBuilder builder = new StringBuilder();
+                                HttpClient client = getHttpsClient(new DefaultHttpClient());
+
+                                try {
+                                    //Add your request URL
+                                    String url = "https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons";
+
+
+                                    HttpGet httpGet = new HttpGet(url);
+
+                                    HttpResponse response = client.execute(httpGet);
+                                    StatusLine statusLine = response.getStatusLine();
+                                    int statusCode = statusLine.getStatusCode();
+
+
+                                    if (statusCode == 200) {
+                                        HttpEntity entityResponse = response.getEntity();
+                                        InputStream content = entityResponse.getContent();
+                                        BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+                                        String line = null;
+                                        while ((line = reader.readLine()) != null) {
+                                            builder.append(line + "\n");
                                         }
-                                        String resultString = result.toString();
-                                        JSONObject json = new JSONObject(resultString);
-                                        message = json.get("message");
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                                        reader.close();
+                                        resutString = builder.toString();
+                                        Log.d(TAG, "Successfuly :" + resutString);
+                                    } else {
+                                        Log.d(TAG, "Error seding data");
                                     }
+                                } catch (ConnectTimeoutException e) {
+                                    Log.w("Connection Tome Out", e);
+                                } catch (ClientProtocolException e) {
+                                    Log.w("ClientProtocolException", e);
+                                } catch (SocketException e) {
+                                    Log.w("SocketException", e);
+                                } catch (IOException e) {
+                                    Log.w("IOException", e);
+                                }
+
+
+
+                                /*
+                                HttpClient mClient = new DefaultHttpClient();
+                                mClient.getConnectionManager().getSchemeRegistry().register((new Scheme("SSLSocketFactory", SSLSocketFactory.getSocketFactory(), 443)));
+
+                                HttpGet request = new HttpGet("https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons");
+
+
+                                HttpResponse response;
+
+                                try{
+                                    response = mClient.execute(request);
+                                    HttpEntity entity = response.getEntity();
+                                    InputStream instream = entity.getContent();
+                                    String result = convertStreamToString(instream);
+
+
+                                }catch(Exception e){
+                                    e.printStackTrace();
+                                }
+                                */
                             }
                         };
                         Thread thread = new Thread(runnable);
                         thread.start();
-
-                        Log.d("TAG",(String)message);
-
-                        Intent mapActivityIntent = new Intent(beacons.this, MapActivity.class);
-                        beacons.this.startActivity(mapActivityIntent);
                     }
                     if (beaconDetails.getBeaconName().equals("blueberry")) {
                         Intent helpActivityIntent = new Intent(beacons.this, HelpActivity.class);

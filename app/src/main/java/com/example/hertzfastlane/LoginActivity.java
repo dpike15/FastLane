@@ -36,14 +36,10 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.KeyStore;
 
 import static com.example.hertzfastlane.R.id.b_Login;
@@ -119,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("Tag",result);
                             ObjectMapper mapper = new ObjectMapper();
 
-                           user = mapper.readValue(result, Member.class);
+                           // user = mapper.readValue(result, Member.class);
 
                             instream.close();
 
@@ -133,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                     }
-
                 };
                 Thread thread = new Thread(runnable);
                 thread.start();
