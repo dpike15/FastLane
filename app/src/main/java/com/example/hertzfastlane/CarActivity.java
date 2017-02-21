@@ -27,8 +27,9 @@ public class CarActivity extends AppCompatActivity {
 
         playVideo();
 
+        Car car = beacons.getCarData();
 
-        Car car = QrScanner.getCar();
+
 
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
         carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());

@@ -20,6 +20,7 @@ import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
 import com.example.hertzfastlane.estimote.ExSSLSocketFactory;
 import com.example.hertzfastlane.estimote.ProximityContentManager;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -64,6 +65,12 @@ import static com.example.hertzfastlane.MyReservationActivity.convertStreamToStr
 public class beacons extends AppCompatActivity {
 
     private static final String TAG = "beacons";
+
+    public static Car getCarData() {
+        return carData;
+    }
+
+    private static Car carData;
 
     private static StringBuilder result;
 
@@ -119,7 +126,7 @@ public class beacons extends AppCompatActivity {
                             public void run(){
                                     URL url = null;
                                     try {
-                                        url = new URL("https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons");
+                                        url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id=2012");
                                     } catch (MalformedURLException e) {
                                         e.printStackTrace();
                                     }
@@ -133,17 +140,32 @@ public class beacons extends AppCompatActivity {
                                             result.append(line);
                                         }
                                         String resultString = result.toString();
-                                        Log.d("TAG",(String)message);
+
+                                        JSONObject carMap = new JSONObject(resultString);
+
+                                        JSONObject car = carMap.getJSONObject("Item");
+                                        JSONObject carInfo = car.getJSONObject("info");
+
+                                        //Deserializing to JSON Car Information
+                                        ObjectMapper mapper = new ObjectMapper();
+
+                                        carData = mapper.readValue(car.toString(),Car.class);
+
+                                        Info infoCar = mapper.readValue(carInfo.toString(),Info.class);
+                                        carData.setInfo(infoCar);
+
                                     } catch (IOException e) {
                                         e.printStackTrace();
+                                    }catch (JSONException e1){
+                                        e1.printStackTrace();
                                     }
                             }
                         };
                         Thread thread = new Thread(runnable);
                         thread.start();
 
-                        Intent mapActivityIntent = new Intent(beacons.this, MapActivity.class);
-                        beacons.this.startActivity(mapActivityIntent);
+                        Intent carActivityIntent = new Intent(beacons.this, CarActivity.class);
+                        beacons.this.startActivity(carActivityIntent);
                     }
                     if (beaconDetails.getBeaconName().equals("blueberry")) {
                         Intent helpActivityIntent = new Intent(beacons.this, HelpActivity.class);
@@ -156,7 +178,6 @@ public class beacons extends AppCompatActivity {
                     }
 
                 }
-
 
                      else {
                         text = "No beacons in range.";
