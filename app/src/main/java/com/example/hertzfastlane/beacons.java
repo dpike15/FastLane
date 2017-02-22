@@ -74,6 +74,8 @@ public class beacons extends AppCompatActivity {
 
     private static StringBuilder result;
 
+    private Runnable runnable;
+
     private Object message;
 
     private static final Map<Color, Integer> BACKGROUND_COLORS = new HashMap<>();
@@ -121,54 +123,77 @@ public class beacons extends AppCompatActivity {
 
                     if (beaconDetails.getBeaconName().equals("ice")) {
 
+//                        Runnable runnable = new Runnable(){
+//                            @Override
+//                            public void run(){
+//
+//                                URL url = null;
+//                                try {
+//                                    url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id=2012");
+//                                } catch (MalformedURLException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                HttpURLConnection urlConnection = null;
+//                                try {
+//                                    urlConnection = (HttpURLConnection) url.openConnection();
+//                                    BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//                                    result = new StringBuilder();
+//                                    String line;
+//                                    while((line = reader.readLine()) != null) {
+//                                        result.append(line);
+//                                    }
+//                                    String resultString = result.toString();
+//
+//                                    JSONObject carMap = new JSONObject(resultString);
+//
+//                                    JSONObject car = carMap.getJSONObject("Item");
+//                                    JSONObject carInfo = car.getJSONObject("info");
+//
+//                                    //Deserializing to JSON Car Information
+//                                    ObjectMapper mapper = new ObjectMapper();
+//
+//                                    carData = mapper.readValue(car.toString(),Car.class);
+//
+//                                    Info infoCar = mapper.readValue(carInfo.toString(),Info.class);
+//                                    carData.setInfo(infoCar);
+//
+//
+//
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }catch (JSONException e1){
+//                                    e1.printStackTrace();
+//                                }
+//                            }
+//                        };
+//                        Thread thread = new Thread(runnable);
+//                        thread.start();
+//
+//                        try{
+//                            thread.join();
+//                        }catch(Exception e){
+//                            return;
+//                        }
+
                         Runnable runnable = new Runnable(){
                             @Override
                             public void run(){
-
-                                URL url = null;
-                                try {
-                                    url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id=2012");
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
-                                }
-                                HttpURLConnection urlConnection = null;
-                                try {
-                                    urlConnection = (HttpURLConnection) url.openConnection();
-                                    BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                                    result = new StringBuilder();
-                                    String line;
-                                    while((line = reader.readLine()) != null) {
-                                        result.append(line);
-                                    }
-                                    String resultString = result.toString();
-
-                                    JSONObject carMap = new JSONObject(resultString);
-
-                                    JSONObject car = carMap.getJSONObject("Item");
-                                    JSONObject carInfo = car.getJSONObject("info");
-
-                                    //Deserializing to JSON Car Information
-                                    ObjectMapper mapper = new ObjectMapper();
-
-                                    carData = mapper.readValue(car.toString(),Car.class);
-
-                                    Info infoCar = mapper.readValue(carInfo.toString(),Info.class);
-                                    carData.setInfo(infoCar);
-
-
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }catch (JSONException e1){
-                                    e1.printStackTrace();
-                                }
+                                carData = getCarInfo("2012");
                             }
                         };
                         Thread thread = new Thread(runnable);
                         thread.start();
 
+                        try{
+                            thread.join();
+                        }catch(Exception e){
+                            return;
+                        }
+
                         Intent carActivityIntent = new Intent(beacons.this, CarActivity.class);
                         beacons.this.startActivity(carActivityIntent);
+
+
                     }
                     if (beaconDetails.getBeaconName().equals("blueberry")) {
                         Intent helpActivityIntent = new Intent(beacons.this, HelpActivity.class);
@@ -257,4 +282,48 @@ public class beacons extends AppCompatActivity {
             return null;
         }
     }
+
+    private Car getCarInfo(String car_id){
+        Car carInformation = null;
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id="
+                    + car_id);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            result = new StringBuilder();
+            String line;
+            while((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            String resultString = result.toString();
+
+            JSONObject carMap = new JSONObject(resultString);
+
+            JSONObject car = carMap.getJSONObject("Item");
+            JSONObject carInfo = car.getJSONObject("info");
+
+//Deserializing to JSON Car Information
+            ObjectMapper mapper = new ObjectMapper();
+
+            carInformation = mapper.readValue(car.toString(),Car.class);
+
+            Info infoCar = mapper.readValue(carInfo.toString(),Info.class);
+            carInformation.setInfo(infoCar);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (JSONException e1){
+            e1.printStackTrace();
+        }
+
+        return carInformation;
+    }
+
+
 }
