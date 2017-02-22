@@ -4,7 +4,6 @@
     <list default="true" id="3204b9be-ce54-4ab6-a509-8b6eea8f67e9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
     </list>
     <ignored path="FastLane.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,7 +57,7 @@
         </entry>
       </file>
       <file leaf-file-name="CarActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/CarActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/CarActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="35" selection-start-line="0" selection-start-column="35" selection-end-line="0" selection-end-column="35" />
@@ -68,7 +67,7 @@
         </entry>
       </file>
       <file leaf-file-name="QrScanner.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/QrScanner.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/QrScanner.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1088">
               <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
@@ -100,8 +99,8 @@
       <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="2735" column="90" selection-start-line="2735" selection-start-column="80" selection-end-line="2735" selection-end-column="90" />
+            <state relative-caret-position="-80">
+              <caret line="2898" column="56" selection-start-line="2898" selection-start-column="56" selection-end-line="2898" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -121,7 +120,7 @@
         </entry>
       </file>
       <file leaf-file-name="UserActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/UserActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/UserActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1785">
               <caret line="140" column="38" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="38" />
@@ -2265,7 +2264,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -2336,6 +2335,38 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FastLane" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FastLane" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hertzfastlane" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2686,7 +2717,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1604" height="834" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2709,7 +2740,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32988167" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.255829" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.255829" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2745,26 +2776,26 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/LoginActivity.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/UserActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/LoginActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/UserActivity.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/drawable-ldpi/benz.jpg" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/UserActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/UserActivity.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/drawable-ldpi/benz.jpg" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/UserActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/UserActivity.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/drawable-ldpi/benz.jpg" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/drawable-ldpi/benz.jpg" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Connection/Connection.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/connection/Connection.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/models/Info.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/models/Reservation.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/models/Member.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/models/User.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/LoginRequest.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/RegisterRequest.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/CheckoutActivity.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/HelpActivity.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/MapActivity2.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/CheckoutActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/HelpActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/MapActivity2.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/models/Car.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/LoginActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/LoginActivity.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_car.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
@@ -2775,7 +2806,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/MapActivity.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/MapActivity.java" />
     <entry file="file://$PROJECT_DIR$/app/src/test/java/com/example/hertzfastlane/ExampleUnitTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -2812,7 +2843,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/RegisterActivity.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/MyReservationActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/MyReservationActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2244">
           <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
@@ -2820,7 +2851,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/UserActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/UserActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1785">
           <caret line="140" column="38" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="38" />
@@ -2863,7 +2894,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/CarActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/CarActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="35" selection-start-line="0" selection-start-column="35" selection-end-line="0" selection-end-column="35" />
@@ -2871,7 +2902,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/Activities/QrScanner.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/hertzfastlane/activities/QrScanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1088">
           <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
@@ -2897,8 +2928,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="2735" column="90" selection-start-line="2735" selection-start-column="80" selection-end-line="2735" selection-end-column="90" />
+        <state relative-caret-position="-80">
+          <caret line="2898" column="56" selection-start-line="2898" selection-start-column="56" selection-end-line="2898" selection-end-column="56" />
           <folding />
         </state>
       </provider>
