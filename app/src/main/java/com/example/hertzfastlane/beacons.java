@@ -18,7 +18,6 @@ import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
 import com.example.hertzfastlane.estimote.BeaconID;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
-import com.example.hertzfastlane.estimote.ExSSLSocketFactory;
 import com.example.hertzfastlane.estimote.ProximityContentManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -251,37 +250,6 @@ public class beacons extends AppCompatActivity {
         proximityContentManager.destroy();
     }
 
-    public static HttpClient getHttpsClient(HttpClient client) {
-        try{
-            X509TrustManager x509TrustManager = new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {
-                }
-
-                @Override
-                public void checkServerTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {
-                }
-
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-            };
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, new TrustManager[]{x509TrustManager}, null);
-            SSLSocketFactory sslSocketFactory = new ExSSLSocketFactory(sslContext);
-            sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            ClientConnectionManager clientConnectionManager = client.getConnectionManager();
-            SchemeRegistry schemeRegistry = clientConnectionManager.getSchemeRegistry();
-            schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
-            return new DefaultHttpClient(clientConnectionManager, client.getParams());
-        } catch (Exception ex) {
-            return null;
-        }
-    }
 
     private Car getCarInfo(String car_id){
         Car carInformation = null;
