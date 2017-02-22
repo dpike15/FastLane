@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.hertzfastlane.R;
+import com.example.hertzfastlane.estimote.beacons;
 import com.example.hertzfastlane.models.Car;
 
 
@@ -28,8 +29,9 @@ public class CarActivity extends AppCompatActivity {
 
         playVideo();
 
+        Car car = beacons.getCarData();
+        // Car car1 = QrScanner.getCar();
 
-        Car car = QrScanner.getCar();
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
         carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
 
@@ -68,7 +70,7 @@ public class CarActivity extends AppCompatActivity {
     {
         Log.d("Message", "OnBackPressed");
         super.onBackPressed();
-        Intent userActivityIntent = new Intent(CarActivity.this, com.example.hertzfastlane.activities.UserActivity.class);
+        Intent userActivityIntent = new Intent(CarActivity.this, UserActivity.class);
         CarActivity.this.startActivity(userActivityIntent);
 
     }
