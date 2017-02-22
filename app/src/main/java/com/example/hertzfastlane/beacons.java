@@ -14,49 +14,24 @@ import android.widget.TextView;
 import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
-import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
 import com.example.hertzfastlane.estimote.BeaconID;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
-import com.example.hertzfastlane.estimote.ExSSLSocketFactory;
 import com.example.hertzfastlane.estimote.ProximityContentManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.SocketException;
 import java.net.URL;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
-import static com.example.hertzfastlane.MyReservationActivity.convertStreamToString;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com
@@ -71,6 +46,8 @@ public class beacons extends AppCompatActivity {
     }
 
     private static Car carData;
+
+    private Runnable runnable;
 
     private static StringBuilder result;
 
@@ -119,67 +96,54 @@ public class beacons extends AppCompatActivity {
 
                     backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 
+
                     if (beaconDetails.getBeaconName().equals("ice")) {
 
-                        Runnable runnable = new Runnable(){
+                        runnable = new Runnable(){
                             @Override
                             public void run(){
-
-                                URL url = null;
-                                try {
-                                    url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id=2012");
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
-                                }
-                                HttpURLConnection urlConnection = null;
-                                try {
-                                    urlConnection = (HttpURLConnection) url.openConnection();
-                                    BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                                    result = new StringBuilder();
-                                    String line;
-                                    while((line = reader.readLine()) != null) {
-                                        result.append(line);
-                                    }
-                                    String resultString = result.toString();
-
-                                    JSONObject carMap = new JSONObject(resultString);
-
-                                    JSONObject car = carMap.getJSONObject("Item");
-                                    JSONObject carInfo = car.getJSONObject("info");
-
-                                    //Deserializing to JSON Car Information
-                                    ObjectMapper mapper = new ObjectMapper();
-
-                                    carData = mapper.readValue(car.toString(),Car.class);
-
-                                    Info infoCar = mapper.readValue(carInfo.toString(),Info.class);
-                                    carData.setInfo(infoCar);
-
-
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }catch (JSONException e1){
-                                    e1.printStackTrace();
-                                }
+                                carData = getCarInfo("2012");
                             }
                         };
-                        Thread thread = new Thread(runnable);
-                        thread.start();
 
-                        Intent carActivityIntent = new Intent(beacons.this, CarActivity.class);
-                        beacons.this.startActivity(carActivityIntent);
                     }
                     if (beaconDetails.getBeaconName().equals("blueberry")) {
+                        runnable = new Runnable(){
+                            @Override
+                            public void run(){
+                                carData = getCarInfo("1234");
+                            }
+                        };
+                        /*
                         Intent helpActivityIntent = new Intent(beacons.this, HelpActivity.class);
                         beacons.this.startActivity(helpActivityIntent);
+                        */
                     }
                     if (beaconDetails.getBeaconName().equals("mint")) {
+                        runnable = new Runnable(){
+                            @Override
+                            public void run(){
+                                carData = getCarInfo("4321");
+                            }
+                        };
+                        /*
                         goToUrl("http://dallascowboys.com/");
                         //Intent mappyActivityIntent = new Intent(beacons.this, MapActivity.class);
                         //beacons.this.startActivity(mappyActivityIntent);
+                        */
                     }
 
+                    Thread thread = new Thread(runnable);
+                    thread.start();
+
+                    try{
+                        thread.join();
+                    }catch(Exception e){
+                        return;
+                    }
+
+                    Intent carActivityIntent = new Intent(beacons.this, CarActivity.class);
+                    beacons.this.startActivity(carActivityIntent);
                 }
 
                      else {
@@ -226,35 +190,52 @@ public class beacons extends AppCompatActivity {
         proximityContentManager.destroy();
     }
 
-    public static HttpClient getHttpsClient(HttpClient client) {
-        try{
-            X509TrustManager x509TrustManager = new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {
-                }
-
-                @Override
-                public void checkServerTrusted(X509Certificate[] chain,
-                                               String authType) throws CertificateException {
-                }
-
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-            };
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, new TrustManager[]{x509TrustManager}, null);
-            SSLSocketFactory sslSocketFactory = new ExSSLSocketFactory(sslContext);
-            sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-            ClientConnectionManager clientConnectionManager = client.getConnectionManager();
-            SchemeRegistry schemeRegistry = clientConnectionManager.getSchemeRegistry();
-            schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
-            return new DefaultHttpClient(clientConnectionManager, client.getParams());
-        } catch (Exception ex) {
-            return null;
+    /**
+     * Method makes call to AMAZON API Gateway with respective car_id from beacons.
+     *
+     * @param car_id
+     * @return object Car with all information for CarActivity Intent
+     */
+    private Car getCarInfo(String car_id){
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id="
+                            + car_id);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            result = new StringBuilder();
+            String line;
+            while((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            String resultString = result.toString();
+
+            JSONObject carMap = new JSONObject(resultString);
+
+            JSONObject car = carMap.getJSONObject("Item");
+            JSONObject carInfo = car.getJSONObject("info");
+
+            //Deserializing to JSON Car Information
+            ObjectMapper mapper = new ObjectMapper();
+
+            Car carData = mapper.readValue(car.toString(),Car.class);
+
+            Info infoCar = mapper.readValue(carInfo.toString(),Info.class);
+            carData.setInfo(infoCar);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (JSONException e1){
+            e1.printStackTrace();
+        }
+
+        return carData;
     }
+
+
 }
