@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -7,14 +7,16 @@ import android.widget.ImageView;
 
 import android.graphics.drawable.Drawable;
 
+import com.example.hertzfastlane.R;
+
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 public class MapActivity2 extends AppCompatActivity {
 
 
-    ImageView imageView;
-    PhotoViewAttacher mAttacher;
+    private ImageView imageView;
+    private PhotoViewAttacher mAttacher;
 
     @Override // Tampa map
     protected void onCreate(Bundle savedInstanceState) {

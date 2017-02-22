@@ -1,9 +1,9 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
 
+import com.example.hertzfastlane.R;
 
 
 public class CheckoutActivity extends AppCompatActivity {

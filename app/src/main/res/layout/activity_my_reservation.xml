@@ -5,7 +5,7 @@
     android:id="@+id/activity_my_reservation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.hertzfastlane.MyReservationActivity"
+    tools:context="com.example.hertzfastlane.activities.MyReservationActivity"
     android:background="#000001">
 
     <android.support.v7.widget.Toolbar
