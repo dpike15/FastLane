@@ -5,31 +5,39 @@ package com.example.hertzfastlane.estimote;
  */
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
-
 import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
 import com.example.hertzfastlane.R;
 import com.example.hertzfastlane.activities.HelpActivity;
 import com.example.hertzfastlane.activities.MapActivity;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.InputStream;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.example.hertzfastlane.activities.MyReservationActivity.convertStreamToString;
-
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com
@@ -38,6 +46,10 @@ import static com.example.hertzfastlane.activities.MyReservationActivity.convert
 public class beacons extends AppCompatActivity {
 
     private static final String TAG = "beacons";
+
+    private static StringBuilder result;
+
+    private Object message;
 
     private static final Map<Color, Integer> BACKGROUND_COLORS = new HashMap<>();
 
@@ -55,15 +67,18 @@ public class beacons extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EstimoteSDK.initialize(getApplicationContext(), "stevenjoy99-yahoo-com-s-yo-lyx", "0f4d0fa349ea5d6604f52b776a9653c8");
+        EstimoteSDK.initialize(getApplicationContext(), "rtrevino821officialapp-lwe", "89622b1ac4af16d91e939910012ae70a");
 
         Log.d("Tag", "Beacons");
         setContentView(R.layout.activity_main);
         proximityContentManager = new ProximityContentManager(this,
                 Arrays.asList(
                         // TODO: replace with UUIDs, majors and minors of your own beacons
+
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 32725,55822),
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 20930, 14720),
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 226788, 12168)), //
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 26788, 12168)), //
+
 
                 new EstimoteCloudBeaconDetailsFactory());
         proximityContentManager.setListener(new ProximityContentManager.Listener() {
@@ -74,46 +89,57 @@ public class beacons extends AppCompatActivity {
 
                 if (content != null ) {
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
+
                     text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
+
                     backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 
                     if (beaconDetails.getBeaconName().equals("ice")) {
 
-                        Intent mapActivityIntent = new Intent(beacons.this, MapActivity.class);
-                        beacons.this.startActivity(mapActivityIntent);
-
                         Runnable runnable = new Runnable(){
                             @Override
                             public void run(){
-                                HttpClient httpClient = new DefaultHttpClient();
-
-                                HttpGet request = new HttpGet("https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons");
-
-
-                                HttpResponse response;
-
-                                try{
-                                    response = httpClient.execute(request);
-                                    HttpEntity entity = response.getEntity();
-                                    InputStream instream = entity.getContent();
-                                    String result = convertStreamToString(instream);
-
-
-                                }catch(Exception e){
-                                    e.printStackTrace();
-                                }
+                                    URL url = null;
+                                    try {
+                                        url = new URL("https://a83ypd2j44.execute-api.us-east-1.amazonaws.com/prod/testBeacons");
+                                    } catch (MalformedURLException e) {
+                                        e.printStackTrace();
+                                    }
+                                    HttpURLConnection urlConnection = null;
+                                    try {
+                                        urlConnection = (HttpURLConnection) url.openConnection();
+                                        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                                        result = new StringBuilder();
+                                        String line;
+                                        while((line = reader.readLine()) != null) {
+                                            result.append(line);
+                                        }
+                                        String resultString = result.toString();
+                                        JSONObject json = new JSONObject(resultString);
+                                        message = json.get("message");
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                             }
                         };
                         Thread thread = new Thread(runnable);
                         thread.start();
+
+                        Log.d("TAG",(String)message);
+
+                        Intent mapActivityIntent = new Intent(beacons.this, MapActivity.class);
+                        beacons.this.startActivity(mapActivityIntent);
                     }
                     if (beaconDetails.getBeaconName().equals("blueberry")) {
                         Intent helpActivityIntent = new Intent(beacons.this, HelpActivity.class);
                         beacons.this.startActivity(helpActivityIntent);
                     }
                     if (beaconDetails.getBeaconName().equals("mint")) {
-                        Intent mappyActivityIntent = new Intent(beacons.this, MapActivity.class);
-                        beacons.this.startActivity(mappyActivityIntent);
+                        goToUrl("http://dallascowboys.com/");
+                        //Intent mappyActivityIntent = new Intent(beacons.this, MapActivity.class);
+                        //beacons.this.startActivity(mappyActivityIntent);
                     }
 
                 }
@@ -128,6 +154,12 @@ public class beacons extends AppCompatActivity {
                         backgroundColor != null ? backgroundColor : BACKGROUND_COLOR_NEUTRAL);
             }
         });
+    }
+
+    private void goToUrl (String url) {
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        startActivity(launchBrowser);
     }
 
     @Override
@@ -155,5 +187,37 @@ public class beacons extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         proximityContentManager.destroy();
+    }
+
+    public static HttpClient getHttpsClient(HttpClient client) {
+        try{
+            X509TrustManager x509TrustManager = new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] chain,
+                                               String authType) throws CertificateException {
+                }
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+            };
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, new TrustManager[]{x509TrustManager}, null);
+            SSLSocketFactory sslSocketFactory = new ExSSLSocketFactory(sslContext);
+            sslSocketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            ClientConnectionManager clientConnectionManager = client.getConnectionManager();
+            SchemeRegistry schemeRegistry = clientConnectionManager.getSchemeRegistry();
+            schemeRegistry.register(new Scheme("https", sslSocketFactory, 443));
+            return new DefaultHttpClient(clientConnectionManager, client.getParams());
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }
