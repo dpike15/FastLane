@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.estimote;
 
 /**
  * Created by Steven J on 2/17/2017.
@@ -10,52 +10,34 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
-
 import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
-import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
-import com.example.hertzfastlane.estimote.BeaconID;
-import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
-import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
-import com.example.hertzfastlane.estimote.ExSSLSocketFactory;
-import com.example.hertzfastlane.estimote.ProximityContentManager;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
+import com.example.hertzfastlane.R;
+import com.example.hertzfastlane.activities.HelpActivity;
+import com.example.hertzfastlane.activities.MapActivity;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.SocketException;
 import java.net.URL;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
-import static com.example.hertzfastlane.MyReservationActivity.convertStreamToString;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1f1f1f"
-    tools:context="com.example.hertzfastlane.CarActivity">
+    tools:context="com.example.hertzfastlane.activities.CarActivity">
 
     <TextView
         android:id="@+id/tvCollection"

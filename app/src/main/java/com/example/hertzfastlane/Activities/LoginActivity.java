@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.example.hertzfastlane.models.Member;
+import com.example.hertzfastlane.R;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -53,26 +55,13 @@ import static com.example.hertzfastlane.R.id.et_Username;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String TAG = "LoginActivity";
-    String username;
-    String password;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+    //Global Variables variables
     private GoogleApiClient client;
-
-    public static Member getMember() {
-        return user;
-    }
-
-    public void setMember(Member member) {
-        this.user = member;
-    }
-
-    private static Member user;
-    boolean login;
-
+    private String TAG = "LoginActivity";
+    private String username;
+    private String password;
+    private static Member user;// to be used in all accessible in all activites
+    private boolean login;
     private ProgressBar spinner;
     private static final String URL= "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/members";
 
@@ -89,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
 
         spinner =(ProgressBar)findViewById(R.id.progress_loader);
         spinner.setVisibility(View.GONE);
-
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,11 +146,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
+    public static Member getMember() {
+        return user;
+    }
+
+    public void setMember(Member member) {
+        this.user = member;
+    }
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.

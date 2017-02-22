@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.example.hertzfastlane.R;
+import com.example.hertzfastlane.models.Car;
+
 
 
 public class CarActivity extends AppCompatActivity {
@@ -23,13 +26,10 @@ public class CarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
 
-
-
         playVideo();
 
 
         Car car = QrScanner.getCar();
-
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
         carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
 
@@ -68,7 +68,7 @@ public class CarActivity extends AppCompatActivity {
     {
         Log.d("Message", "OnBackPressed");
         super.onBackPressed();
-        Intent userActivityIntent = new Intent(CarActivity.this, UserActivity.class);
+        Intent userActivityIntent = new Intent(CarActivity.this, com.example.hertzfastlane.activities.UserActivity.class);
         CarActivity.this.startActivity(userActivityIntent);
 
     }

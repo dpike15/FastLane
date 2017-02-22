@@ -1,4 +1,4 @@
-package com.example.hertzfastlane;
+package com.example.hertzfastlane.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -10,12 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.example.hertzfastlane.R;
+
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MapActivity extends AppCompatActivity {
 
-    ImageView imageView;
-    PhotoViewAttacher mAttacher;
+    //
+    private ImageView imageView;
+    private PhotoViewAttacher mAttacher;
 
     @Override  // Miami Map
     protected void onCreate(Bundle savedInstanceState) {
