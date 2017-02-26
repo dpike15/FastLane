@@ -34,7 +34,6 @@
         <activity android:name=".beacons" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".MyReservationActivity" />
-        <activity android:name=".beacons" />
 
         <activity
             android:name=".MapActivity"
