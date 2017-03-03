@@ -11,12 +11,14 @@ public class TestingCar {
     private String mModel;
     private String mYear;
     private String mRate;
+    private String mBeaconName;
 
-    public TestingCar(String make, String model, String year, String rate) {
+    public TestingCar(String make, String model, String year, String rate, String name) {
         this.mMake = make;
         this.mModel = model;
         this.mYear = year;
         this.mRate = rate;
+        this.mBeaconName=name;
     }
 
     public String getMake() {
@@ -33,6 +35,9 @@ public class TestingCar {
 
     public String getRate() {
         return mRate;
+    }
+    public String getName() {
+        return mBeaconName;
     }
 
 }

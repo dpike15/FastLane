@@ -99,6 +99,8 @@ public class beacons extends AppCompatActivity {
     TestingCarAdapter adapter;
 
     private SecureRegion secureRegion;
+    private SecureRegion secureRegion2;
+
 
     private static final Region ALL_ESTIMOTE_BEACONS = new Region("rid", ESTIMOTE_PROXIMITY_UUID, null, null);
 
@@ -136,8 +138,10 @@ public class beacons extends AppCompatActivity {
         boolean addDog = false;
         boolean addBlank = false;
 
-        secureRegion = new SecureRegion("Secure region",UUID.fromString("2a725ef0719fed50"), null, null);
+       // proximityUUID=d0d3fa86-ca76-45ec-9bd9-6af49684f729, major=1307, minor=36109
+        secureRegion = new SecureRegion("Secure region",UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"),20930, 14720);
 
+        secureRegion2 = new SecureRegion("Secure region",UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"),26788, 12168);
 
 
 
@@ -154,6 +158,14 @@ public class beacons extends AppCompatActivity {
 
         /** listener used for nearable stickers*/
         beaconManager = new BeaconManager(getApplicationContext());
+
+        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
+            @Override public void onBeaconsDiscovered(Region region, final List beacons) {
+               // Log.d("TAG2", "Ranged beacons: " + beacons);
+            }
+        });
+
+
         beaconManager.setNearableListener(new BeaconManager.NearableListener() {
             @Override
             public void onNearablesDiscovered(List<Nearable> nearables) {
@@ -164,50 +176,65 @@ public class beacons extends AppCompatActivity {
                 //ec9c2da40aa7394f CHAIR
                 int numberScanned = 0;
                 /** loops through nearable ID's*/
-                for (Nearable nearable : nearables) {
+           //     for (Nearable nearable : nearables) {
 //                    if (numberScanned != nearables.size()){
 //                        numberScanned = nearables.size();
 //                        adapter.notifyDataSetChanged();
 //                    }
-                    NearableID nearableID = new NearableID(nearable.identifier);
+             //   Nearable nearable = nearables.identifer;
+              //      NearableID nearableID = new NearableID(nearables.identifier);
 
-                    //if(!(nearable.identifier.contains("624ec2233b5f0546")))
+                  //  if(!(nearable.identifier.contains("624ec2233b5f0546")))
 
-                    if (nearableID.toString().equals("624ec2233b5f0546")) {
-                        for (Nearable nearableTest : nearables) {
-                            if ((nearableTest.identifier.equals("624ec2233b5f0546"))) {
-                                Log.d(TAG, "Fridge Already In");
-                                break;
-                            }
-                            int index = adapter.getItemCount();
-                            mCars.add(0, new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99"));
-                            adapter.notifyItemInserted(0);
-                        }
-                    }
+//                   if (nearableID.toString().equals("624ec2233b5f0546")) {
+//                        for (Nearable nearableTest : nearables) {
+//                            if ((nearableTest.identifier.equals("624ec2233b5f0546"))) {
+//                                Log.d(TAG, "Fridge Already In");
+//                                break;
+//                            }
+//                            int index = adapter.getItemCount();
+//                            mCars.add(0, new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99"));
+//                            adapter.notifyItemInserted(0);
+//                        }
+//                    }
 
-                    else if (nearableID.toString().equals("2a725ef0719fed50")) {
-                        for (Nearable nearableTest : nearables) {
-                            if ((nearableTest.identifier.equals("2a725ef0719fed50"))) {
-                                beaconManager.stopMonitoring(secureRegion);
-                                break;
-                            }
-                            int index = adapter.getItemCount();
-                            mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
-                            adapter.notifyItemInserted(0);
-                        }
-                    }
+//                    if (nearables.toString().contains("dca0942a7d11f901")) {
+//                        //  for (Nearable nearableTest : nearables) {
+//                        //     if ((nearableTest.identifier.equals("2a725ef0719fed50"))) {
+//                        //beaconManager.stopMonitoring(secureRegion);
+//                        //        break;
+//                        //         }
+//                        beaconManager.stopMonitoring(secureRegion);
+//                        int index = adapter.getItemCount();
+//                        mCars.add(0, new TestingCar("Audi A4", "A5 (DOLPHIN)", "2019", "$92.99"));
+//                        adapter.notifyItemInserted(0);
+//                        //    }
+//                    }
+//                    if (nearableID.toString().equals("dca0942a7d11f901")) {
+//                        //  for (Nearable nearableTest : nearables) {
+//                        //     if ((nearableTest.identifier.equals("2a725ef0719fed50"))) {
+//                        //beaconManager.stopMonitoring(secureRegion);
+//                        //        break;
+//                        //         }
+//                        beaconManager.stopNearableDiscovery("dca0942a7d11f90");
+//                        int index = adapter.getItemCount();
+//                        mCars.add(0, new TestingCar("Audi", "A4 (Dog)", "2015", "$95.99"));
+//                        adapter.notifyItemInserted(0);
+//                        //    }
+                   // }
 
-                    else if (nearableID.toString().equals("a8209e97ce7e3ed6")) {
-                        for (Nearable nearableTest : nearables) {
-                            if ((nearableTest.identifier.equals("a8209e97ce7e3ed6"))) {
-                                Log.d(TAG, "Blank Already In");
-                                break;
-                            }
-                            int index = adapter.getItemCount();
-                            mCars.add(0, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
-                            adapter.notifyItemInserted(0);
-                        }
-                    }
+
+//                    else if (nearableID.toString().equals("a8209e97ce7e3ed6")) {
+//                        for (Nearable nearableTest : nearables) {
+//                            if ((nearableTest.identifier.equals("a8209e97ce7e3ed6"))) {
+//                                Log.d(TAG, "Blank Already In");
+//                                break;
+//                            }
+//                            int index = adapter.getItemCount();
+//                            mCars.add(0, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
+//                            adapter.notifyItemInserted(0);
+//                        }
+//                    }
 
 //                    else if(!(nearable.identifier.contains("2a725ef0719fed50"))){
 //                        int index = adapter.getItemCount();
@@ -273,7 +300,7 @@ public class beacons extends AppCompatActivity {
 //                        beaconManager.disconnect();
 //
 //                    }
-                }
+             //   }
 
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
@@ -298,20 +325,50 @@ public class beacons extends AppCompatActivity {
          beaconManager.disconnect();   // Use to disconnect from the signal
 
 //        // Proximity iBeacon listener
-//        proximityContentManager.setListener(new ProximityContentManager.Listener() {
-//            @Override
-//            public void onContentChanged(Object content) {
-//                String text;
+        proximityContentManager.setListener(new ProximityContentManager.Listener() {
+           @Override
+            public void onContentChanged(Object content) {
+///                String text;
 //                Integer backgroundColor;
 //
-//                if (content != null) {
-//                    EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
+               if (content != null) {
+                    EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
 //
 //                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
 //
 //                    backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 //
-//                    if (beaconDetails.getBeaconName().equals("ice")) {
+                    if (beaconDetails.getBeaconName().equals("ice")) {
+                        if (!mCars.contains("ice")) {
+                            mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "ice"));
+                            adapter.notifyItemInserted(0);
+
+                        }
+                   //   mCars.clear();
+                        //adapter.notify();
+
+                     //   beaconManager.stopMonitoring(secureRegion);
+//                        //break;
+//
+                      // int index = adapter.getItemCount();
+                     //  mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
+                     //  adapter.notifyItemInserted(0);
+                   }
+
+                   if (beaconDetails.getBeaconName().equals("mint")) {
+                       if (!mCars.contains("mint")) {
+                           mCars.add(0, new TestingCar("Mercedes", "A33 (CAT)", "2014", "$95.99", "mint"));
+                           adapter.notifyItemInserted(0);
+
+                       }
+//
+//                       int index = adapter.getItemCount();
+//                       mCars.add(0, new TestingCar("Audi", "A4 (Dolphin)", "2015", "$89.99"));
+//                       adapter.notifyItemInserted(0);
+                   }
+
+
+
 //
 //
 //                        Runnable runnable = new Runnable() {
@@ -344,18 +401,15 @@ public class beacons extends AppCompatActivity {
 //                        //beacons.this.startActivity(mappyActivityIntent);
 //                    }
 //
-//                } else {
-//                    text = "No beacons in range.";
+                } else {
+                   //           text = "No beacons in range.";
 //                    backgroundColor = null;
-//                }
+               }
 //                //((TextView) findViewById(R.id.textView)).setText(text);
 //                //findViewById(R.id.relativeLayout).setBackgroundColor(
 //                      //  backgroundColor != null ? backgroundColor : BACKGROUND_COLOR_NEUTRAL);
-//            }
-//        });
-
-
-
+            }
+        });
 
     }
 
