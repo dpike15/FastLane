@@ -37,8 +37,6 @@ public class Car {
 
 
 
-
-
     public String get_rev() {
         return _rev;
     }
