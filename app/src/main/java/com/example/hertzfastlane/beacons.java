@@ -88,6 +88,8 @@ public class beacons extends AppCompatActivity {
 
     private List<TestingCar> mCars;
 
+    private List<String> carIds;
+
     private static StringBuilder result;
 
     private Runnable runnable;
@@ -130,6 +132,8 @@ public class beacons extends AppCompatActivity {
 
         mCars = new ArrayList<>();
         //mCars.add(new TestingCar("Derek's", "Hoopty (Fridge)", "1999", "$Free.99"));
+
+        carIds = new ArrayList<String>();
 
         adapter = new TestingCarAdapter(mCars);
         rvTestingCars.setAdapter(adapter);
@@ -339,9 +343,13 @@ public class beacons extends AppCompatActivity {
 //                    backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 //
                     if (beaconDetails.getBeaconName().equals("ice")) {
-                        if (!mCars.contains("ice")) {
-                            mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "ice"));
-                            adapter.notifyItemInserted(0);
+                            TestingCar car = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "ice","34");
+                        if (!carIds.contains(car.getCar_id())) {
+                            carIds.add(car.getCar_id());
+                            mCars.add(car);
+                            adapter.notifyItemInserted(adapter.getItemCount());
+                            int size = mCars.size();
+                            Log.d("FAG", "mCarsSize: " + size);
 
                         }
                    //   mCars.clear();
@@ -356,9 +364,13 @@ public class beacons extends AppCompatActivity {
                    }
 
                    if (beaconDetails.getBeaconName().equals("mint")) {
-                       if (!mCars.contains("mint")) {
-                           mCars.add(0, new TestingCar("Mercedes", "A33 (CAT)", "2014", "$95.99", "mint"));
-                           adapter.notifyItemInserted(0);
+                       TestingCar car = new TestingCar("Mercedes", "A33 (CAT)", "2014", "$95.99", "mint","23");
+                       if (!carIds.contains(car.getCar_id())) {
+                           carIds.add(car.getCar_id());
+                           mCars.add(car);
+                           adapter.notifyItemInserted(adapter.getItemCount());
+                           int size = mCars.size();
+                           Log.d("FAG", "mCarsSize: " + size);
 
                        }
 //
