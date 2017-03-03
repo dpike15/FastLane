@@ -18,6 +18,7 @@ import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.Nearable;
 import com.estimote.sdk.Region;
+import com.estimote.sdk.SecureRegion;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
 import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
@@ -97,6 +98,8 @@ public class beacons extends AppCompatActivity {
 
     TestingCarAdapter adapter;
 
+    private SecureRegion secureRegion;
+
     private static final Region ALL_ESTIMOTE_BEACONS = new Region("rid", ESTIMOTE_PROXIMITY_UUID, null, null);
 
     private static final Map<Color, Integer> BACKGROUND_COLORS = new HashMap<>();
@@ -133,6 +136,8 @@ public class beacons extends AppCompatActivity {
         boolean addDog = false;
         boolean addBlank = false;
 
+        secureRegion = new SecureRegion("Secure region",UUID.fromString("2a725ef0719fed50"), null, null);
+
 
 
 
@@ -168,20 +173,53 @@ public class beacons extends AppCompatActivity {
 
                     //if(!(nearable.identifier.contains("624ec2233b5f0546")))
 
-                    if(!(nearable.identifier.contains("624ec2233b5f0546"))) {
-                        mCars.add(0, new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99"));
-                        adapter.notifyItemInserted(0);
+                    if (nearableID.toString().equals("624ec2233b5f0546")) {
+                        for (Nearable nearableTest : nearables) {
+                            if ((nearableTest.identifier.equals("624ec2233b5f0546"))) {
+                                Log.d(TAG, "Fridge Already In");
+                                break;
+                            }
+                            int index = adapter.getItemCount();
+                            mCars.add(0, new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99"));
+                            adapter.notifyItemInserted(0);
+                        }
                     }
 
-                    else if(!(nearable.identifier.contains("2a725ef0719fed50"))){
-                        mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
-                        adapter.notifyItemInserted(0);
+                    else if (nearableID.toString().equals("2a725ef0719fed50")) {
+                        for (Nearable nearableTest : nearables) {
+                            if ((nearableTest.identifier.equals("2a725ef0719fed50"))) {
+                                beaconManager.stopMonitoring(secureRegion);
+                                break;
+                            }
+                            int index = adapter.getItemCount();
+                            mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
+                            adapter.notifyItemInserted(0);
+                        }
                     }
 
-                    else if (!(nearable.identifier.contains("a8209e97ce7e3ed6"))){
-                        mCars.add(0, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
-                        adapter.notifyItemInserted(0);
+                    else if (nearableID.toString().equals("a8209e97ce7e3ed6")) {
+                        for (Nearable nearableTest : nearables) {
+                            if ((nearableTest.identifier.equals("a8209e97ce7e3ed6"))) {
+                                Log.d(TAG, "Blank Already In");
+                                break;
+                            }
+                            int index = adapter.getItemCount();
+                            mCars.add(0, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
+                            adapter.notifyItemInserted(0);
+                        }
                     }
+
+//                    else if(!(nearable.identifier.contains("2a725ef0719fed50"))){
+//                        int index = adapter.getItemCount();
+//                        mCars.add(index, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
+//                        adapter.notifyItemInserted(index);
+//                    }
+
+//                    else if (!(nearable.identifier.contains("a8209e97ce7e3ed6"))){
+//                        int index = adapter.getItemCount();
+//                        mCars.add(index, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
+//                        adapter.notifyItemInserted(index);
+//                    }
 
 //                    /** if Id is found do ....*/
 //                    if (nearableID.toString().equals("624ec2233b5f0546")) {
@@ -237,9 +275,6 @@ public class beacons extends AppCompatActivity {
 //                    }
                 }
 
-                if (addFridge){
-
-                }
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
                 Log.d(TAG, "size of list is " + String.valueOf(nearables.size()));
