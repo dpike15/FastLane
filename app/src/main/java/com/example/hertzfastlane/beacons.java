@@ -90,6 +90,8 @@ public class beacons extends AppCompatActivity {
 
     private List<String> carIds;
 
+    private HashMap<String, TestingCar> carsMap;
+
     private static StringBuilder result;
 
     private Runnable runnable;
@@ -130,12 +132,14 @@ public class beacons extends AppCompatActivity {
         RecyclerView rvTestingCars = (RecyclerView) findViewById(R.id.rvTestingCar);
         rvTestingCars.setLayoutManager(new LinearLayoutManager(this));
 
-        mCars = new ArrayList<>();
+       // mCars = new ArrayList<>();
         //mCars.add(new TestingCar("Derek's", "Hoopty (Fridge)", "1999", "$Free.99"));
 
-        carIds = new ArrayList<String>();
+       // carIds = new ArrayList<String>();
 
-        adapter = new TestingCarAdapter(mCars);
+        carsMap = new HashMap<String, TestingCar >();
+
+        adapter = new TestingCarAdapter(carsMap);
         rvTestingCars.setAdapter(adapter);
 
         boolean addFridge = false;
@@ -344,13 +348,19 @@ public class beacons extends AppCompatActivity {
 //
                     if (beaconDetails.getBeaconName().equals("ice")) {
                             TestingCar car = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "ice","34");
-                        if (!carIds.contains(car.getCar_id())) {
+                            String id = car.getCar_id();
+                        if (!carsMap.containsKey(id)) {
+                            /*
                             carIds.add(car.getCar_id());
                             mCars.add(car);
                             adapter.notifyItemInserted(adapter.getItemCount());
                             int size = mCars.size();
                             Log.d("FAG", "mCarsSize: " + size);
-
+                            */
+                            carsMap.put(id, car);
+                            adapter.notifyItemInserted(adapter.getItemCount());
+                            int size = carsMap.size();
+                            Log.d("FAG", "mCarsSize: " + size);
                         }
                    //   mCars.clear();
                         //adapter.notify();
@@ -365,13 +375,20 @@ public class beacons extends AppCompatActivity {
 
                    if (beaconDetails.getBeaconName().equals("mint")) {
                        TestingCar car = new TestingCar("Mercedes", "A33 (CAT)", "2014", "$95.99", "mint","23");
+                      /*
                        if (!carIds.contains(car.getCar_id())) {
                            carIds.add(car.getCar_id());
                            mCars.add(car);
                            adapter.notifyItemInserted(adapter.getItemCount());
                            int size = mCars.size();
                            Log.d("FAG", "mCarsSize: " + size);
-
+                        */
+                       String id = car.getCar_id();
+                       if(!carsMap.containsKey(id)){
+                           carsMap.put(id, car);
+                           adapter.notifyItemInserted(adapter.getItemCount());
+                           int size = carsMap.size();
+                           Log.d("FAG", "mCarsSize: " + size);
                        }
 //
 //                       int index = adapter.getItemCount();

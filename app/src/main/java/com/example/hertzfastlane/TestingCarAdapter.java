@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -40,15 +41,15 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
     }
 
     // Store a member variable for the contacts
-    private List<TestingCar> mCars;
+    private HashMap<String,TestingCar> map;
     // Store the context for easy access
     private Context mContext;
 
     // Pass in the contact array into the constructor
-    public TestingCarAdapter(List<TestingCar> cars) {
+    public TestingCarAdapter(HashMap<String,TestingCar> cars) {
         //mCars = cars;
         //mContext = context;
-        mCars = cars;
+        map = cars;
     }
 
     // Easy access to the context object in the recyclerview
@@ -66,14 +67,14 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
     @Override
     public void onBindViewHolder(TestingCarAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.makeModelTextView.setText(mCars.get(position).getYear() + " " +
-                mCars.get(position).getMake() + " " + mCars.get(position).getModel());
-        viewHolder.dailyRateTextView.setText(mCars.get(position).getRate());
+        viewHolder.makeModelTextView.setText(map.get(position).getYear() + " " +
+                map.get(position).getMake() + " " + map.get(position).getModel());
+        viewHolder.dailyRateTextView.setText(map.get(position).getRate());
     }
 
     @Override
     public int getItemCount() {
-        return mCars.size();
+        return map.size();
     }
 
 }
