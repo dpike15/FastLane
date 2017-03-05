@@ -61,7 +61,6 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -140,8 +139,7 @@ public class beacons extends AppCompatActivity {
 
         carsMap = new HashMap<String, TestingCar >();
 
-
-        adapter = new TestingCarAdapter((TestingCar[]) carsMap.values().toArray());
+        adapter = new TestingCarAdapter(carsMap);
         rvTestingCars.setAdapter(adapter);
 
         boolean addFridge = false;
@@ -361,14 +359,6 @@ public class beacons extends AppCompatActivity {
                             */
                             carsMap.put(id, car);
                             adapter.notifyItemInserted(adapter.getItemCount());
-
-                            Iterator<TestingCar> iterator= carsMap.values().iterator();
-                            while(iterator.hasNext()){
-                                TestingCar testingCar = iterator.next();
-                                Log.d("MAP3",testingCar.getYear());
-                            }
-
-
                             int size = carsMap.size();
                             Log.d("FAG", "mCarsSize: " + size);
                         }
@@ -396,8 +386,7 @@ public class beacons extends AppCompatActivity {
                        String id = car.getCar_id();
                        if(!carsMap.containsKey(id)){
                            carsMap.put(id, car);
-
-                           adapter.notifyItemInserted(Integer.parseInt(id));
+                           adapter.notifyItemInserted(adapter.getItemCount());
                            int size = carsMap.size();
                            Log.d("FAG", "mCarsSize: " + size);
                        }
