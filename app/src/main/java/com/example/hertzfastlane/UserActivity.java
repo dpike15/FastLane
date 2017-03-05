@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hertzfastlane.estimote.TestingQR_Activity;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -227,6 +228,9 @@ public class UserActivity extends AppCompatActivity {
                 return true;
             case R.id.Beacon:
                 startActivity(new Intent(this, beacons.class));  // estimote beacons action bar, created string and extra action button
+                return true;
+            case R.id.QRImage:
+                startActivity(new Intent(this, TestingQR_Activity.class));  // estimote beacons action bar, created string and extra action button
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
