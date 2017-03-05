@@ -2,18 +2,11 @@ package com.example.hertzfastlane.estimote;
 
 
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.widget.ImageView;
 
-import com.example.hertzfastlane.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-import java.awt.image.BufferedImage;
-
-import static com.example.hertzfastlane.R.id.imageView;
 
 /**
  * Created by Zelos on 3/4/2017.
@@ -33,13 +26,6 @@ public class QRGenerator {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-
-
-
-    }
 
     Bitmap encodeAsBitmap(String str) throws WriterException {
         BitMatrix result;

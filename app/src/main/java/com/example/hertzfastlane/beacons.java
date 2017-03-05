@@ -12,65 +12,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.Nearable;
 import com.estimote.sdk.Region;
-import com.estimote.sdk.SecureRegion;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
-import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
 import com.example.hertzfastlane.estimote.BeaconID;
-import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
 import com.example.hertzfastlane.estimote.NearableID;
 import com.example.hertzfastlane.estimote.ProximityContentManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.SocketException;
 import java.net.URL;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import static com.estimote.sdk.internal.utils.EstimoteBeacons.ESTIMOTE_PROXIMITY_UUID;
-import static com.example.hertzfastlane.MyReservationActivity.convertStreamToString;
 
 //
 // Running into any issues? Drop us an email to: contact@estimote.com
@@ -88,8 +58,6 @@ public class beacons extends AppCompatActivity {
 
     private List<TestingCar> mCars;
 
-    private List<String> carIds;
-
     private static StringBuilder result;
 
     private Runnable runnable;
@@ -99,10 +67,6 @@ public class beacons extends AppCompatActivity {
     private BeaconManager beaconManager;
 
     TestingCarAdapter adapter;
-
-    private SecureRegion secureRegion;
-    private SecureRegion secureRegion2;
-
 
     private static final Region ALL_ESTIMOTE_BEACONS = new Region("rid", ESTIMOTE_PROXIMITY_UUID, null, null);
 
@@ -118,11 +82,13 @@ public class beacons extends AppCompatActivity {
 
     private ProximityContentManager proximityContentManager;
 
+    static Map <String, NearableID> nearableMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EstimoteSDK.initialize(getApplicationContext(), "stevenjoy99-yahoo-com-s-yo-lyx", "0f4d0fa349ea5d6604f52b776a9653c8");
 
+        nearableMap = new HashMap<String, NearableID>();
         setContentView(R.layout.car_selection);
 
         Context context = this;
@@ -133,19 +99,13 @@ public class beacons extends AppCompatActivity {
         mCars = new ArrayList<>();
         //mCars.add(new TestingCar("Derek's", "Hoopty (Fridge)", "1999", "$Free.99"));
 
-        carIds = new ArrayList<String>();
-
         adapter = new TestingCarAdapter(mCars);
         rvTestingCars.setAdapter(adapter);
 
-        boolean addFridge = false;
+        final boolean addFridge = false;
         boolean addDog = false;
         boolean addBlank = false;
 
-       // proximityUUID=d0d3fa86-ca76-45ec-9bd9-6af49684f729, major=1307, minor=36109
-        secureRegion = new SecureRegion("Secure region",UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"),20930, 14720);
-
-        secureRegion2 = new SecureRegion("Secure region",UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"),26788, 12168);
 
 
 
@@ -162,14 +122,6 @@ public class beacons extends AppCompatActivity {
 
         /** listener used for nearable stickers*/
         beaconManager = new BeaconManager(getApplicationContext());
-
-        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
-            @Override public void onBeaconsDiscovered(Region region, final List beacons) {
-               // Log.d("TAG2", "Ranged beacons: " + beacons);
-            }
-        });
-
-
         beaconManager.setNearableListener(new BeaconManager.NearableListener() {
             @Override
             public void onNearablesDiscovered(List<Nearable> nearables) {
@@ -180,77 +132,32 @@ public class beacons extends AppCompatActivity {
                 //ec9c2da40aa7394f CHAIR
                 int numberScanned = 0;
                 /** loops through nearable ID's*/
-           //     for (Nearable nearable : nearables) {
+                for (Nearable nearable : nearables) {
+                    if (!nearableMap.containsKey(nearable.identifier)) {
 //                    if (numberScanned != nearables.size()){
 //                        numberScanned = nearables.size();
 //                        adapter.notifyDataSetChanged();
 //                    }
-             //   Nearable nearable = nearables.identifer;
-              //      NearableID nearableID = new NearableID(nearables.identifier);
+                        NearableID nearableID = new NearableID(nearable.identifier);
 
-                  //  if(!(nearable.identifier.contains("624ec2233b5f0546")))
+                        nearableMap.put(nearable.identifier, nearableID);
+                        for (String key : nearableMap.keySet()) {
+                            Log.d("hashkey", key);
 
-//                   if (nearableID.toString().equals("624ec2233b5f0546")) {
-//                        for (Nearable nearableTest : nearables) {
-//                            if ((nearableTest.identifier.equals("624ec2233b5f0546"))) {
-//                                Log.d(TAG, "Fridge Already In");
-//                                break;
-//                            }
-//                            int index = adapter.getItemCount();
-//                            mCars.add(0, new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99"));
-//                            adapter.notifyItemInserted(0);
-//                        }
-//                    }
+                            // ...
+                        }
+                        //if(!(nearable.identifier.contains("624ec2233b5f0546")))
 
-//                    if (nearables.toString().contains("dca0942a7d11f901")) {
-//                        //  for (Nearable nearableTest : nearables) {
-//                        //     if ((nearableTest.identifier.equals("2a725ef0719fed50"))) {
-//                        //beaconManager.stopMonitoring(secureRegion);
-//                        //        break;
-//                        //         }
-//                        beaconManager.stopMonitoring(secureRegion);
-//                        int index = adapter.getItemCount();
-//                        mCars.add(0, new TestingCar("Audi A4", "A5 (DOLPHIN)", "2019", "$92.99"));
-//                        adapter.notifyItemInserted(0);
-//                        //    }
-//                    }
-//                    if (nearableID.toString().equals("dca0942a7d11f901")) {
-//                        //  for (Nearable nearableTest : nearables) {
-//                        //     if ((nearableTest.identifier.equals("2a725ef0719fed50"))) {
-//                        //beaconManager.stopMonitoring(secureRegion);
-//                        //        break;
-//                        //         }
-//                        beaconManager.stopNearableDiscovery("dca0942a7d11f90");
-//                        int index = adapter.getItemCount();
-//                        mCars.add(0, new TestingCar("Audi", "A4 (Dog)", "2015", "$95.99"));
-//                        adapter.notifyItemInserted(0);
-//                        //    }
-                   // }
-
-
-//                    else if (nearableID.toString().equals("a8209e97ce7e3ed6")) {
-//                        for (Nearable nearableTest : nearables) {
-//                            if ((nearableTest.identifier.equals("a8209e97ce7e3ed6"))) {
-//                                Log.d(TAG, "Blank Already In");
-//                                break;
-//                            }
-//                            int index = adapter.getItemCount();
-//                            mCars.add(0, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
-//                            adapter.notifyItemInserted(0);
-//                        }
-//                    }
-
-//                    else if(!(nearable.identifier.contains("2a725ef0719fed50"))){
-//                        int index = adapter.getItemCount();
-//                        mCars.add(index, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
-//                        adapter.notifyItemInserted(index);
-//                    }
-
-//                    else if (!(nearable.identifier.contains("a8209e97ce7e3ed6"))){
-//                        int index = adapter.getItemCount();
-//                        mCars.add(index, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
-//                        adapter.notifyItemInserted(index);
-//                    }
+                        if ((nearable.identifier.contains("9d4fab2125f17c5e"))) {
+                            mCars.add(0, new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99"));
+                            adapter.notifyItemInserted(0);
+                        } else if ((nearable.identifier.contains("1034c6353ab7eef0"))) {
+                            mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
+                            adapter.notifyItemInserted(0);
+                        } else if ((nearable.identifier.contains("a309441d66337041"))) {
+                            mCars.add(0, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
+                            adapter.notifyItemInserted(0);
+                        }
 
 //                    /** if Id is found do ....*/
 //                    if (nearableID.toString().equals("624ec2233b5f0546")) {
@@ -287,7 +194,7 @@ public class beacons extends AppCompatActivity {
 //                    beacons.this.startActivity(carActivityIntent);
 //
 //                    beaconManager.disconnect();
-                    //}
+                        //}
 
 //                    if (nearableID.toString().equals("a8209e97ce7e3ed6")) {
 //                        //     Log.d("Tag", nearableID.toString());
@@ -297,15 +204,18 @@ public class beacons extends AppCompatActivity {
 //
 //                    }
 
-                    /** loads help class, for test purposes*/
+                        /** loads help class, for test purposes*/
 //                    if (nearableID.toString().equals("9684f729051b8d0d")) {
 //                        Intent helper = new Intent(beacons.this, HelpActivity.class);
 //                        beacons.this.startActivity(helper);
 //                        beaconManager.disconnect();
 //
 //                    }
-             //   }
+                    }
+                }
+                if (addFridge){
 
+                }
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
                 Log.d(TAG, "size of list is " + String.valueOf(nearables.size()));
@@ -313,6 +223,11 @@ public class beacons extends AppCompatActivity {
             }
         });
 
+        for (String key : nearableMap.keySet()) {
+            Log.d("hashkey2", key);
+
+            // ...
+        }
         /** Broadcast the nearable beacons signal*/
         beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
             @Override
@@ -326,61 +241,25 @@ public class beacons extends AppCompatActivity {
             }
         });
 
-         beaconManager.disconnect();   // Use to disconnect from the signal
+        beaconManager.disconnect();   // Use to disconnect from the signal
+
+
 
 //        // Proximity iBeacon listener
-        proximityContentManager.setListener(new ProximityContentManager.Listener() {
-           @Override
-            public void onContentChanged(Object content) {
-///                String text;
+//        proximityContentManager.setListener(new ProximityContentManager.Listener() {
+//            @Override
+//            public void onContentChanged(Object content) {
+//                String text;
 //                Integer backgroundColor;
 //
-               if (content != null) {
-                    EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
+//                if (content != null) {
+//                    EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
 //
 //                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
 //
 //                    backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 //
-                    if (beaconDetails.getBeaconName().equals("ice")) {
-                            TestingCar car = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "ice","34");
-                        if (!carIds.contains(car.getCar_id())) {
-                            carIds.add(car.getCar_id());
-                            mCars.add(car);
-                            adapter.notifyItemInserted(adapter.getItemCount());
-                            int size = mCars.size();
-                            Log.d("FAG", "mCarsSize: " + size);
-
-                        }
-                   //   mCars.clear();
-                        //adapter.notify();
-
-                     //   beaconManager.stopMonitoring(secureRegion);
-//                        //break;
-//
-                      // int index = adapter.getItemCount();
-                     //  mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
-                     //  adapter.notifyItemInserted(0);
-                   }
-
-                   if (beaconDetails.getBeaconName().equals("mint")) {
-                       TestingCar car = new TestingCar("Mercedes", "A33 (CAT)", "2014", "$95.99", "mint","23");
-                       if (!carIds.contains(car.getCar_id())) {
-                           carIds.add(car.getCar_id());
-                           mCars.add(car);
-                           adapter.notifyItemInserted(adapter.getItemCount());
-                           int size = mCars.size();
-                           Log.d("FAG", "mCarsSize: " + size);
-
-                       }
-//
-//                       int index = adapter.getItemCount();
-//                       mCars.add(0, new TestingCar("Audi", "A4 (Dolphin)", "2015", "$89.99"));
-//                       adapter.notifyItemInserted(0);
-                   }
-
-
-
+//                    if (beaconDetails.getBeaconName().equals("ice")) {
 //
 //
 //                        Runnable runnable = new Runnable() {
@@ -413,15 +292,18 @@ public class beacons extends AppCompatActivity {
 //                        //beacons.this.startActivity(mappyActivityIntent);
 //                    }
 //
-                } else {
-                   //           text = "No beacons in range.";
+//                } else {
+//                    text = "No beacons in range.";
 //                    backgroundColor = null;
-               }
+//                }
 //                //((TextView) findViewById(R.id.textView)).setText(text);
 //                //findViewById(R.id.relativeLayout).setBackgroundColor(
 //                      //  backgroundColor != null ? backgroundColor : BACKGROUND_COLOR_NEUTRAL);
-            }
-        });
+//            }
+//        });
+
+
+
 
     }
 
