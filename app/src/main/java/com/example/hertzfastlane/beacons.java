@@ -157,7 +157,7 @@ public class beacons extends AppCompatActivity {
                         }
 
                         if ((nearable.identifier.contains("dca0942a7d11f901"))) {
-                            TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99","123");
+                            TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99","1234");
                             String id = tesla.getCar_id();
                             if(!carIds.contains(id)) {
                                 carIds.add(id);
@@ -249,9 +249,24 @@ public class beacons extends AppCompatActivity {
                    //GATE ACTOR
                   if (beaconDetails.getBeaconName().equals("ice")) {
 
-                        String result = checkExitConditions("1");
 
-                        Log.d("result",result);
+                      Runnable runnable = new Runnable() {
+                          @Override
+                          public void run() {
+                              String result = checkExitConditions("1");
+
+                              Log.d("result", result);
+                          }
+                      };
+
+                      Thread thread = new Thread(runnable);
+                        thread.start();
+
+                        try{
+                            thread.join();
+                        }catch(Exception e){
+                            return;
+                        }
 
 
 //                            String id = car.getCar_id();
@@ -314,6 +329,13 @@ public class beacons extends AppCompatActivity {
         });
 
     }
+
+    public static Car getCarData() {
+        Car car123 = new Car();
+
+        return car123;
+    }
+
 
     private void goToUrl(String url) {
         Uri uriUrl = Uri.parse(url);
@@ -395,41 +417,50 @@ public class beacons extends AppCompatActivity {
     }
 
     private String checkExitConditions(String member_id){
-        URL url = null;
-        try {
-            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
-                    + member_id);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        HttpURLConnection urlConnection = null;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            result = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            String resultString = result.toString();
-
-            JSONObject resMap = new JSONObject(resultString);
-
-            JSONArray reses = resMap.getJSONArray("Items");
-            JSONObject res = reses.getJSONObject(0);
-
-            String car_vin = res.getString("car_vin");
-
-            if(carIds.contains(car_vin) && res.getString("status").equals("active")){
-                return "Success!";
-            }
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
+                URL url = null;
+                try {
+                    url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
+                            + member_id);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                HttpURLConnection urlConnection = null;
+                try {
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                    result = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        result.append(line);
+                    }
+                    String resultString = result.toString();
+                    Log.d("TAGGY", result.toString());
+
+                    JSONObject resMap = new JSONObject(resultString);
+
+                    JSONArray reses = resMap.getJSONArray("Items");
+                    JSONObject res = reses.getJSONObject(0);
+
+                    String car_vin = res.getString("car_Vin");
+                    Log.d("result", car_vin);
+                    Log.d("result", res.getString("status"));
+
+                    if (carIds.contains(car_vin) && res.getString("status").equals("active")) {
+
+                        return "Success!";
+                    }
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+
+
         return "FAIL";
     }
 }

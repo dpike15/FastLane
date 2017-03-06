@@ -29,7 +29,7 @@ public class CarActivity extends AppCompatActivity {
        // Car car1 = QrScanner.getCar();
 
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
-        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
+      //  carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
 
         TextView mpg = (TextView) findViewById(R.id.tvMPG);
         mpg.setText(car.getInfo().getMpgCity() + " MPG");
