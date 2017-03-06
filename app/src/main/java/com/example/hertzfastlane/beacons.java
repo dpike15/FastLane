@@ -162,6 +162,7 @@ public class beacons extends AppCompatActivity {
                             if(!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(tesla);
+                                adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("ec9c2da40aa7394"))) {
                             TestingCar bmw = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99","321");
@@ -169,6 +170,7 @@ public class beacons extends AppCompatActivity {
                             if(!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(bmw);
+                                adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("9684f729051b8d0d"))) {
                             TestingCar hoopty = new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99","2012");
@@ -176,9 +178,10 @@ public class beacons extends AppCompatActivity {
                             if(!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(hoopty);
+                                adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         }
-                        adapter.notifyItemInserted(mCars.size() - 1);
+
 
                         /** Loads car class if nearable identification found*/
 //                    Runnable runnable = new Runnable(){
