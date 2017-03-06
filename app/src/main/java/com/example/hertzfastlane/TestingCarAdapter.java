@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static com.example.hertzfastlane.R.styleable.RecyclerView;
+
 /**
  * Created by rodolfotrevino on 3/2/17.
  */

@@ -30,6 +30,7 @@ import com.example.hertzfastlane.estimote.ProximityContentManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,20 +56,15 @@ public class beacons extends AppCompatActivity {
 
     private static final String TAG = "beacons";
 
-    public static Car getCarData() {
-        return carData;
-    }
 
-    private static Car carData;
 
     private List<TestingCar> mCars;
 
-    private List<String> carIds;
+
 
 
     private static StringBuilder result;
 
-    private Runnable runnable;
 
 
     private BeaconManager beaconManager;
@@ -95,6 +91,8 @@ public class beacons extends AppCompatActivity {
 
     static Map <String, String> nearableMap;
 
+    private List<String> carIds;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +105,7 @@ public class beacons extends AppCompatActivity {
         RecyclerView rvTestingCars = (RecyclerView) findViewById(R.id.rvTestingCar);
         rvTestingCars.setLayoutManager(new LinearLayoutManager(this));
 
+        carIds = new ArrayList<String>();
 
         mCars= new ArrayList<>();
         adapter = new TestingCarAdapter(mCars);
@@ -158,16 +157,28 @@ public class beacons extends AppCompatActivity {
                         }
 
                         if ((nearable.identifier.contains("dca0942a7d11f901"))) {
-                            mCars.add(0, new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99"));
-                            adapter.notifyItemInserted(0);
+                            TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99","123");
+                            String id = tesla.getCar_id();
+                            if(!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(tesla);
+                            }
                         } else if ((nearable.identifier.contains("ec9c2da40aa7394"))) {
-                            mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
-                            adapter.notifyItemInserted(0);
+                            TestingCar bmw = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99","321");
+                            String id = bmw.getCar_id();
+                            if(!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(bmw);
+                            }
                         } else if ((nearable.identifier.contains("9684f729051b8d0d"))) {
-                            mCars.add(0, new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99"));
-                            adapter.notifyItemInserted(0);
+                            TestingCar hoopty = new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99","2012");
+                            String id = hoopty.getCar_id();
+                            if(!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(hoopty);
+                            }
                         }
-
+                        adapter.notifyItemInserted(mCars.size() - 1);
 
                         /** Loads car class if nearable identification found*/
 //                    Runnable runnable = new Runnable(){
@@ -222,18 +233,24 @@ public class beacons extends AppCompatActivity {
         proximityContentManager.setListener(new ProximityContentManager.Listener() {
            @Override
             public void onContentChanged(Object content) {
-//                String text;
-//                Integer backgroundColor;
+                String text;
+                Integer backgroundColor;
 //
                if (content != null) {
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
 //
-//                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
+                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
 //
-//                    backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
+                    backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 //
-//                    if (beaconDetails.getBeaconName().equals("ice")) {
-//                            TestingCar car = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99");
+                   //GATE ACTOR
+                  if (beaconDetails.getBeaconName().equals("ice")) {
+
+                        String result = checkExitConditions("1");
+
+                        Log.d("result",result);
+
+
 //                            String id = car.getCar_id();
 //                        if (!carsMap.containsKey(id)) {
 //                            /*
@@ -247,7 +264,7 @@ public class beacons extends AppCompatActivity {
 //                            adapter.notifyItemInserted(adapter.getItemCount());
 //                            int size = carsMap.size();
 //                            Log.d("FAG", "mCarsSize: " + size);
-//                        }
+                        }
 //                      mCars.clear();
 //                        //adapter.notify();
 //
@@ -374,5 +391,42 @@ public class beacons extends AppCompatActivity {
         return carInformation;
     }
 
+    private String checkExitConditions(String member_id){
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
+                    + member_id);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            String resultString = result.toString();
 
+            JSONObject resMap = new JSONObject(resultString);
+
+            JSONArray reses = resMap.getJSONArray("Items");
+            JSONObject res = reses.getJSONObject(0);
+
+            String car_vin = res.getString("car_vin");
+
+            if(carIds.contains(car_vin) && res.getString("status").equals("active")){
+                return "Success!";
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return "FAIL";
+    }
 }

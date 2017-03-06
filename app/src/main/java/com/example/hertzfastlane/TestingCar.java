@@ -12,15 +12,15 @@ public class TestingCar {
     private String mYear;
     private String mRate;
     private String mBeaconName;
-    //private String car_id;
+    private String car_id;
 
-    public TestingCar(String make, String model, String year, String rate) {
+    public TestingCar(String make, String model, String year, String rate,String car_id) {
         this.mMake = make;
         this.mModel = model;
         this.mYear = year;
         this.mRate = rate;
         //this.mBeaconName=name;
-        //this.car_id = car_id;
+        this.car_id = car_id;
     }
 
     public String getMake() {
@@ -42,7 +42,7 @@ public class TestingCar {
         return mBeaconName;
     }
 
-   // public String getCar_id(){return car_id; }
+   public String getCar_id(){return car_id; }
 
 }
 

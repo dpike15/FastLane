@@ -9,7 +9,7 @@ package com.example.hertzfastlane;
  */
 
 public class Member {
-    private String customer_id;
+    private static String customer_id;
     private String _id;
 
     public String getUsername() {
@@ -31,7 +31,7 @@ public class Member {
     private String username;
     private String password;
 
-    public String getCustomer_id() {
+    public static String getCustomer_id() {
         return customer_id;
     }
 
