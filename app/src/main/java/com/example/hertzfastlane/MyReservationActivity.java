@@ -77,7 +77,7 @@ public class MyReservationActivity extends AppCompatActivity {
             public void run() {
                 member = LoginActivity.getMember();
                 //JSON Query Paramaters
-                String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getCustomer_id() + "\"}}";
+                String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getMember_id() + "\"}}";
 
                 HttpClient httpclient = new DefaultHttpClient();
 
