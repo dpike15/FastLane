@@ -148,6 +148,11 @@ public class beacons extends AppCompatActivity {
                 int numberScanned = 0;
 
                 //nearableMap.clear();
+
+                mCars.clear();
+                nearableMap.clear();
+                carIds.clear();
+
                 /** loops through nearable ID's*/
                 for (Nearable nearable : nearables) {
                     if (!nearableMap.containsValue(nearable.identifier)) {
@@ -166,7 +171,7 @@ public class beacons extends AppCompatActivity {
                                 carIds.add(id);
                                 mCars.add(tesla);
                                 nearableMap.put(id, nearable.identifier);
-                                adapter.notifyItemInserted(mCars.size() - 1);
+                                //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("ec9c2da40aa7394"))) {
                             TestingCar bmw = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "321");
@@ -175,7 +180,7 @@ public class beacons extends AppCompatActivity {
                                 carIds.add(id);
                                 mCars.add(bmw);
                                 nearableMap.put(id, nearable.identifier);
-                                adapter.notifyItemInserted(mCars.size() - 1);
+                                //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("9684f729051b8d0d"))) {
                             TestingCar hoopty = new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99", "2012");
@@ -184,7 +189,7 @@ public class beacons extends AppCompatActivity {
                                 carIds.add(id);
                                 mCars.add(hoopty);
                                 nearableMap.put(id, nearable.identifier);
-                                adapter.notifyItemInserted(mCars.size() - 1);
+                                //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("624ec2233b5f0546"))) {
                             TestingCar cadillac = new TestingCar("Cadillac", "Escalade (Fridge)", "2019", "$109.99", "1234");
@@ -192,7 +197,7 @@ public class beacons extends AppCompatActivity {
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(cadillac);
-                                adapter.notifyItemInserted(mCars.size() - 1);
+                                //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("a8209e97ce7e3ed6"))) {
                             TestingCar focus = new TestingCar("Ford", "Focus (Blank)", "2016", "$69.99", "12765");
@@ -200,7 +205,7 @@ public class beacons extends AppCompatActivity {
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(focus);
-                                adapter.notifyItemInserted(mCars.size() - 1);
+                                //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("2a725ef0719fed50"))) {
                             TestingCar m5 = new TestingCar("Mazda", "M5 (Dog)", "2017", "$499.99", "165");
@@ -208,7 +213,7 @@ public class beacons extends AppCompatActivity {
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(m5);
-                                adapter.notifyItemInserted(mCars.size() - 1);
+                               // adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         }
 
@@ -239,32 +244,13 @@ public class beacons extends AppCompatActivity {
                     }
                 }
 
-                boolean changed = false;
-                ArrayList<Integer> removeCars = new ArrayList<Integer>();
-
-                for (String id : carIds) {
-                    if (!nearableMap.containsKey(id)) {
-                        int index = carIds.indexOf(id);
-                        removeCars.add(index);
-                        //mCars.remove(index);
-                        changed = true;
-                    }
-                }
-
-                if (changed) {
-                    Log.d("Tag", "In the Trap");
-                    for(Integer index : removeCars){
-                        carIds.remove(index);
-                        mCars.remove(index);
-                    }
-                    adapter.notifyDataSetChanged();
-                    Log.d("Tag", "Just notified the Adapter");
-                    changed = false;
-                }
+                adapter.notifyDataSetChanged();
 
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
                 Log.d(TAG, "size of list is " + String.valueOf(nearables.size()));
+
+                nearableMap.clear();
 
             }
 
