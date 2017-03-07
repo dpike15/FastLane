@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
     boolean login;
 
     private ProgressBar spinner;
-    private static final String URL= "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/members";
+    private static final String URL= "https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?username=";
 
 
     @Override
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         HttpClient httpclient = new DefaultHttpClient();
 
-                        HttpGet request = new HttpGet(URL + "/" + username);
+                        HttpGet request = new HttpGet(URL +  username);
                         //HttpGet request = new HttpGet(URL + "/" + username);
 
                         HttpResponse response;
@@ -124,10 +124,13 @@ public class LoginActivity extends AppCompatActivity {
                             HttpEntity entity = response.getEntity();
                             InputStream instream = entity.getContent();
                             String result = convertStreamToString(instream);
-                            Log.d("Tag",result);
+                            JSONObject memberItem = new JSONObject(result);
+                            JSONObject member = memberItem.getJSONObject("Item");
+
+                            //Log.d("Tag",result);
                             ObjectMapper mapper = new ObjectMapper();
 
-                           user = mapper.readValue(result, Member.class);
+                           user = mapper.readValue(member.toString(), Member.class);
 
                             instream.close();
 

@@ -9,8 +9,16 @@ package com.example.hertzfastlane;
  */
 
 public class Member {
-    private static String customer_id;
-    private String _id;
+    public static String getMember_id() {
+        return member_id;
+    }
+
+    public static void setMember_id(String member_id) {
+        Member.member_id = member_id;
+    }
+
+    private static String member_id;
+
 
     public String getUsername() {
         return username;
@@ -31,29 +39,8 @@ public class Member {
     private String username;
     private String password;
 
-    public static String getCustomer_id() {
-        return customer_id;
-    }
 
-    public void setCustomer_id(String customer_id) {
-        this.customer_id = customer_id;
-    }
 
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public String get_rev() {
-        return _rev;
-    }
-
-    public void set_rev(String _rev) {
-        this._rev = _rev;
-    }
 
     public String getFirst_NM() {
         return first_NM;
@@ -111,7 +98,7 @@ public class Member {
         this.name_On_Card = name_On_Card;
     }
 
-    private String _rev;
+
 
 
 
