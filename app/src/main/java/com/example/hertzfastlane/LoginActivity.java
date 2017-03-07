@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
     boolean login;
 
     private ProgressBar spinner;
-    private static final String URL= "https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?username=";
+    private static final String URL= "https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readMemberInfo?username=";
 
 
     @Override
@@ -127,10 +127,11 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject memberItem = new JSONObject(result);
                             JSONObject member = memberItem.getJSONObject("Item");
 
-                            //Log.d("Tag",result);
+                            Log.d("Tag", member.toString());
                             ObjectMapper mapper = new ObjectMapper();
 
                            user = mapper.readValue(member.toString(), Member.class);
+                            Log.d("Tag", user.getPassword());
 
                             instream.close();
 

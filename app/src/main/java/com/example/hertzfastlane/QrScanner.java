@@ -113,7 +113,7 @@ public class QrScanner extends Activity implements ZXingScannerView.ResultHandle
 
                     String reservationURL = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/reservations/_find";
                     //Getting Reservation Data
-                    String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getCustomer_id() + "\"}}";
+                    String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getMember_id() + "\"}}";
 
                     HttpClient httpclient = new DefaultHttpClient();
 

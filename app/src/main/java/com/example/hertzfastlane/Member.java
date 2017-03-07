@@ -9,15 +9,15 @@ package com.example.hertzfastlane;
  */
 
 public class Member {
-    public static String getMember_id() {
+    public String getMember_id() {
         return member_id;
     }
 
-    public static void setMember_id(String member_id) {
-        Member.member_id = member_id;
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
     }
 
-    private static String member_id;
+    private String member_id;
 
 
     public String getUsername() {
