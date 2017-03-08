@@ -19,7 +19,7 @@ public class Member {
 
     private String member_id;
 
-
+    //Just a comment
     public String getUsername() {
         return username;
     }
