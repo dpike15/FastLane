@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
     boolean login;
 
     private ProgressBar spinner;
-    private static final String URL= "https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readMemberInfo?username=";
+
 
 
     @Override
@@ -109,42 +109,42 @@ public class LoginActivity extends AppCompatActivity {
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
-
-
-
-                        HttpClient httpclient = new DefaultHttpClient();
-
-                        HttpGet request = new HttpGet(URL +  username);
-                        //HttpGet request = new HttpGet(URL + "/" + username);
-
-                        HttpResponse response;
-
+                        URL url = null;
                         try {
-                            response = httpclient.execute(request);
-                            HttpEntity entity = response.getEntity();
-                            InputStream instream = entity.getContent();
-                            String result = convertStreamToString(instream);
-                            JSONObject memberItem = new JSONObject(result);
+                            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readMemberInfo?username="
+                                    + username);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                        HttpURLConnection urlConnection = null;
+                        try {
+                            urlConnection = (HttpURLConnection) url.openConnection();
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                            result = new StringBuilder();
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                result.append(line);
+                            }
+                            String resultString = result.toString();
+
+                            JSONObject memberItem = new JSONObject(resultString);
                             JSONObject member = memberItem.getJSONObject("Item");
 
                             Log.d("Tag", member.toString());
                             ObjectMapper mapper = new ObjectMapper();
 
-                           user = mapper.readValue(member.toString(), Member.class);
+                            user = mapper.readValue(member.toString(), Member.class);
                             Log.d("Tag", user.getPassword());
 
-                            instream.close();
+                            if(password.equals(user.getPassword())) {
+                                login = true;
+                            }
 
-                           if(password.equals(user.getPassword())) {
-                               login = true;
-
-                           }
-                        } catch (Exception e) {
+                        } catch (IOException e) {
                             e.printStackTrace();
-
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
                         }
-
-
                     }
 
                 };

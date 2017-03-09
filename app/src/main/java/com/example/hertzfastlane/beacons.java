@@ -146,12 +146,12 @@ public class beacons extends AppCompatActivity {
                 //ec9c2da40aa7394f CHAIR
                 int numberScanned = 0;
                 /** loops through nearable ID's*/
+
                 for (Nearable nearable : nearables) {
-                    if (!nearableMap.containsKey(nearable.identifier)) {
+                    if (!nearableMap.containsValue(nearable.identifier)) {
 
                         NearableID nearableID = new NearableID(nearable.identifier);
 
-                        nearableMap.put(nearable.identifier, nearable.identifier);
                         for (String key : nearableMap.keySet()) {
                             Log.d("hashkey", key);
                         }
@@ -162,6 +162,7 @@ public class beacons extends AppCompatActivity {
                             if(!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(tesla);
+                                nearableMap.put(id,nearable.identifier);
                                 adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("ec9c2da40aa7394"))) {
@@ -170,6 +171,7 @@ public class beacons extends AppCompatActivity {
                             if(!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(bmw);
+                                nearableMap.put(id,nearable.identifier );
                                 adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("9684f729051b8d0d"))) {
@@ -178,6 +180,7 @@ public class beacons extends AppCompatActivity {
                             if(!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(hoopty);
+                                nearableMap.put(id,nearable.identifier );
                                 adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         }
@@ -203,10 +206,12 @@ public class beacons extends AppCompatActivity {
 //
 //                    beaconManager.disconnect();
                         //}
+                        //
 
 
                     }
                 }
+
 
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
