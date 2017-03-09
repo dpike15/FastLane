@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.estimote.sdk.BeaconManager;
@@ -215,6 +216,30 @@ public class beacons extends AppCompatActivity {
                                 mCars.add(m5);
                                // adapter.notifyItemInserted(mCars.size() - 1);
                             }
+                        } else if ((nearable.identifier.contains("9d4fab2125f17c5e"))) {
+                            TestingCar m5 = new TestingCar("Jaguar", "F-Type (Bike)", "2017", "$499.99", "165");
+                            String id = m5.getCar_id();
+                            if (!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(m5);
+                                // adapter.notifyItemInserted(mCars.size() - 1);
+                            }
+                        } else if ((nearable.identifier.contains("1034c6353ab7eef0"))) {
+                            TestingCar m5 = new TestingCar("Ford", "F-150 (Bed)", "2017", "$499.99", "165");
+                            String id = m5.getCar_id();
+                            if (!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(m5);
+                                // adapter.notifyItemInserted(mCars.size() - 1);
+                            }
+                        } else if ((nearable.identifier.contains("a309441d66337041"))) {
+                            TestingCar m5 = new TestingCar("Tesla", "P100d (Purse)", "2017", "$499.99", "165");
+                            String id = m5.getCar_id();
+                            if (!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(m5);
+                                // adapter.notifyItemInserted(mCars.size() - 1);
+                            }
                         }
 
 
@@ -245,12 +270,19 @@ public class beacons extends AppCompatActivity {
                 }
 
                 adapter.notifyDataSetChanged();
+                if(!mCars.isEmpty()){
+                    findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
+                    findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
+                } else {
+                    findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
+                    findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
+                }
 
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
                 Log.d(TAG, "size of list is " + String.valueOf(nearables.size()));
 
-                nearableMap.clear();
+                //nearableMap.clear();
 
             }
 

@@ -15,6 +15,12 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.BufferedHttpEntity;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +49,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         public TextView makeModelTextView;
         public TextView dailyRateTextView;
         public ImageView tvImage;
-
+        public ImageView tvBackground;
 
 
         // We also create a constructor that accepts the entire item row
@@ -56,6 +62,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
             makeModelTextView = (TextView) itemView.findViewById(R.id.tvMakeModel);
             dailyRateTextView = (TextView) itemView.findViewById(R.id.tvDailyRate);
             tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
+            tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
         }
     }
 
@@ -90,8 +97,13 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                 mCars.get(position).getMake() + " " + mCars.get(position).getModel());
         viewHolder.dailyRateTextView.setText(mCars.get(position).getRate());
 
-            Uri imgUri= Uri.parse("https://s3.amazonaws.com/testimagesateam/denali+copy.png");
-            viewHolder.tvImage.setImageBitmap(getImageBitmap("https://s3.amazonaws.com/testimagesateam/denali+copy.png"));
+        Picasso.with(mContext)
+                .load("http://s3.amazonaws.com/testimagesateam/denali+copy.png")
+                .config(Bitmap.Config.RGB_565)
+                .error(R.drawable.a8)
+                .fit()
+                .centerInside()
+                .into(viewHolder.tvImage);
 
     }
 
@@ -100,21 +112,5 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         return mCars.size();
     }
 
-    private Bitmap getImageBitmap(String url){
-        Bitmap bm = null;
-        try {
-            URL aURL = new URL(url);
-            URLConnection conn = aURL.openConnection();
-            conn.connect();
-            InputStream is = conn.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is);
-            bm = BitmapFactory.decodeStream(bis);
-            bis.close();
-            is.close();
-        } catch (IOException e) {
-            Log.e("TAG", "Error getting bitmap", e);
-        }
-        return bm;
-    }
 
-}
+    }
