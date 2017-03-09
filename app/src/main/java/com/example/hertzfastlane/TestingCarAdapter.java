@@ -1,9 +1,12 @@
 package com.example.hertzfastlane;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +15,13 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import static com.example.hertzfastlane.R.styleable.RecyclerView;
@@ -83,15 +91,30 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         viewHolder.dailyRateTextView.setText(mCars.get(position).getRate());
 
             Uri imgUri= Uri.parse("https://s3.amazonaws.com/testimagesateam/denali+copy.png");
-            viewHolder.tvImage.setImageURI(imgUri);
-
-
+            viewHolder.tvImage.setImageBitmap(getImageBitmap("https://s3.amazonaws.com/testimagesateam/denali+copy.png"));
 
     }
 
     @Override
     public int getItemCount() {
         return mCars.size();
+    }
+
+    private Bitmap getImageBitmap(String url){
+        Bitmap bm = null;
+        try {
+            URL aURL = new URL(url);
+            URLConnection conn = aURL.openConnection();
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is);
+            bm = BitmapFactory.decodeStream(bis);
+            bis.close();
+            is.close();
+        } catch (IOException e) {
+            Log.e("TAG", "Error getting bitmap", e);
+        }
+        return bm;
     }
 
 }
