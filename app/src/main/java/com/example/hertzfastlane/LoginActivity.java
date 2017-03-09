@@ -115,7 +115,8 @@ public class LoginActivity extends AppCompatActivity {
                             url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readMemberInfo?username="
                                     + username);
 
-                        HttpURLConnection urlConnection = null;
+                            HttpURLConnection urlConnection = null;
+                            HttpURLConnection urlConnection2 = null;
 
                             urlConnection = (HttpURLConnection) url.openConnection();
                             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -125,29 +126,30 @@ public class LoginActivity extends AppCompatActivity {
                                 result.append(line);
                             }
                             String resultString = result.toString();
-
+                            //Log.d("TAG",resultString);
                             JSONObject hash = new JSONObject(resultString);
                             JSONObject hashcode = hash.getJSONObject("Item");
-
+                            //Log.d("TAG",(String)hashcode.get("hash"));
                             url2 = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/hashedLogin?hash=" + hashcode.get("hash"));
                             StringBuilder result2 = null;
-                            urlConnection = (HttpURLConnection) url2.openConnection();
+
+                            urlConnection2 = (HttpURLConnection) url2.openConnection();
                             BufferedReader reader2 = new BufferedReader(new InputStreamReader(url2.openStream()));
                             result2 = new StringBuilder();
                             String line2;
                             while ((line2 = reader2.readLine()) != null) {
-                                result2.append(line);
+                                result2.append(line2);
                             }
                             String resultString2 = result2.toString();
-
+                            //Log.d("TAG",resultString2);
                             JSONObject memberItem = new JSONObject(resultString2);
                             JSONObject member = memberItem.getJSONObject("Item");
 
-                            Log.d("Tag", member.toString());
+                           // Log.d("Tag", member.toString());
                             ObjectMapper mapper = new ObjectMapper();
 
                             user = mapper.readValue(member.toString(), Member.class);
-                            Log.d("Tag", user.getPassword());
+                           // Log.d("Tag", user.getPassword());
 
                             if(password.equals(user.getPassword())) {
                                 login = true;
