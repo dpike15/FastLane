@@ -1,12 +1,19 @@
 package com.example.hertzfastlane;
 
 import android.content.Context;
+import android.media.Image;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static com.example.hertzfastlane.R.styleable.RecyclerView;
@@ -27,6 +34,9 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         // for any view that will be set as you render a row
         public TextView makeModelTextView;
         public TextView dailyRateTextView;
+        public ImageView tvImage;
+
+
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -37,7 +47,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
             makeModelTextView = (TextView) itemView.findViewById(R.id.tvMakeModel);
             dailyRateTextView = (TextView) itemView.findViewById(R.id.tvDailyRate);
-
+            tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
         }
     }
 
@@ -71,6 +81,12 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         viewHolder.makeModelTextView.setText(mCars.get(position).getYear() + " " +
                 mCars.get(position).getMake() + " " + mCars.get(position).getModel());
         viewHolder.dailyRateTextView.setText(mCars.get(position).getRate());
+
+            Uri imgUri= Uri.parse("https://s3.amazonaws.com/testimagesateam/denali+copy.png");
+            viewHolder.tvImage.setImageURI(imgUri);
+
+
+
     }
 
     @Override
