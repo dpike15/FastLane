@@ -110,14 +110,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         URL url = null;
+                        URL url2 = null;
                         try {
                             url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readMemberInfo?username="
                                     + username);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
+
                         HttpURLConnection urlConnection = null;
-                        try {
+
                             urlConnection = (HttpURLConnection) url.openConnection();
                             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
                             result = new StringBuilder();
@@ -127,7 +126,21 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             String resultString = result.toString();
 
-                            JSONObject memberItem = new JSONObject(resultString);
+                            JSONObject hash = new JSONObject(resultString);
+                            JSONObject hashcode = hash.getJSONObject("Item");
+
+                            url2 = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/hashedLogin?hash=" + hashcode.get("hash"));
+                            StringBuilder result2 = null;
+                            urlConnection = (HttpURLConnection) url2.openConnection();
+                            BufferedReader reader2 = new BufferedReader(new InputStreamReader(url2.openStream()));
+                            result2 = new StringBuilder();
+                            String line2;
+                            while ((line2 = reader2.readLine()) != null) {
+                                result2.append(line);
+                            }
+                            String resultString2 = result2.toString();
+
+                            JSONObject memberItem = new JSONObject(resultString2);
                             JSONObject member = memberItem.getJSONObject("Item");
 
                             Log.d("Tag", member.toString());
