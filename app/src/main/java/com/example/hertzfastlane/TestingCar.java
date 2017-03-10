@@ -14,11 +14,22 @@ public class TestingCar {
     private String mBeaconName;
     private String car_id;
 
-    public TestingCar(String make, String model, String year, String rate,String car_id) {
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    private String imageURL;
+
+    public TestingCar(String make, String model, String year, String rate,String car_id,String imageURL) {
         this.mMake = make;
         this.mModel = model;
         this.mYear = year;
         this.mRate = rate;
+        this.imageURL = imageURL;
         //this.mBeaconName=name;
         this.car_id = car_id;
     }

@@ -188,7 +188,7 @@ public class beacons extends AppCompatActivity {
                         }
 
                         if ((nearable.identifier.contains("dca0942a7d11f901"))) {
-                            TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99", "1234");
+                            TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99", "424","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = tesla.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -197,7 +197,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("ec9c2da40aa7394"))) {
-                            TestingCar bmw = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "321");
+                            TestingCar bmw = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "321","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = bmw.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -206,7 +206,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("9684f729051b8d0d"))) {
-                            TestingCar hoopty = new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99", "2012");
+                            TestingCar hoopty = new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99", "2012","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = hoopty.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -215,7 +215,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("624ec2233b5f0546"))) {
-                            TestingCar cadillac = new TestingCar("Cadillac", "Escalade (Fridge)", "2019", "$109.99", "1234");
+                            TestingCar cadillac = new TestingCar("Cadillac", "Escalade (Fridge)", "2019", "$109.99", "1234","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = cadillac.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -223,7 +223,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("a8209e97ce7e3ed6"))) {
-                            TestingCar focus = new TestingCar("Ford", "Focus (Blank)", "2016", "$69.99", "63633");
+                            TestingCar focus = new TestingCar("Ford", "Focus (Blank)", "2016", "$69.99", "63633","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = focus.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -231,7 +231,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("2a725ef0719fed50"))) {
-                            TestingCar m5 = new TestingCar("Mazda", "M5 (Dog)", "2017", "$499.99", "165");
+                            TestingCar m5 = new TestingCar("Mazda", "M5 (Dog)", "2017", "$499.99", "165","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = m5.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -239,7 +239,7 @@ public class beacons extends AppCompatActivity {
                                // adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("9d4fab2125f17c5e"))) {
-                            TestingCar m5 = new TestingCar("Jaguar", "F-Type (Bike)", "2017", "$499.99", "165");
+                            TestingCar m5 = new TestingCar("Jaguar", "F-Type (Bike)", "2017", "$499.99", "141241","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = m5.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -247,7 +247,7 @@ public class beacons extends AppCompatActivity {
                                 // adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("1034c6353ab7eef0"))) {
-                            TestingCar m5 = new TestingCar("Ford", "F-150 (Bed)", "2017", "$499.99", "165");
+                            TestingCar m5 = new TestingCar("Ford", "F-150 (Bed)", "2017", "$499.99", "16725","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = m5.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -255,7 +255,7 @@ public class beacons extends AppCompatActivity {
                                 // adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("a309441d66337041"))) {
-                            TestingCar m5 = new TestingCar("Tesla", "P100d (Purse)", "2017", "$499.99", "165");
+                            TestingCar m5 = new TestingCar("Tesla", "P100d (Purse)", "2017", "$499.99", "93855","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = m5.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);

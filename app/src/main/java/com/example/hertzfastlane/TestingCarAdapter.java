@@ -117,7 +117,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
         //Image from S3 Bucket
         Picasso.with(mContext)
-                .load("http://s3.amazonaws.com/testimagesateam/denali+copy.png")
+                .load(mCars.get(position).getImageURL())
                 .config(Bitmap.Config.RGB_565)
                 .error(R.drawable.a8)
                 .fit()

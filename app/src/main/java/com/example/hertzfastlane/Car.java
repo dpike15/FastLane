@@ -15,6 +15,16 @@ public class Car {
     private List<String> features;
     private String image;
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    private String imageURL;
+
     public String getSummary() {
         return summary;
     }
