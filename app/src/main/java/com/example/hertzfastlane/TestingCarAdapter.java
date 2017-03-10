@@ -42,50 +42,10 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 // Note that we specify the custom ViewHolder which gives us access to our views
 
 
-    // Provide a direct reference to each of the views within a data item
-    // Used to cache the views within the item layout for fast access
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
-        public TextView makeModelTextView;
-        public TextView dailyRateTextView;
-        public ImageView tvImage;
-        public ImageView tvBackground;
 
-
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
-        public ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
-            super(itemView);
-
-            makeModelTextView = (TextView) itemView.findViewById(R.id.tvMakeModel);
-            dailyRateTextView = (TextView) itemView.findViewById(R.id.tvDailyRate);
-            tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
-            tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
-
-            //OnClickListener
-            itemView.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    List<Car> mCars = beacons.getmCars();
-                    //Looks id up in mCars from beacons
-                    beacons.setCar_id(mCars.get(pos).getCar_id());
-                    //Launch CarActivity
-                    Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
-                    beacons.getContext().startActivity(userActivityIntent);
-                }
-            });
-
-
-        }
-    }
 
     // Store a member variable for the contacts
-    private List<Car> mCars;
+    private static List<Car> mCars;
     // Store the context for easy access
     private Context mContext;
 
@@ -131,6 +91,48 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         return mCars.size();
     }
 
+
+    // Provide a direct reference to each of the views within a data item
+    // Used to cache the views within the item layout for fast access
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        // Your holder should contain a member variable
+        // for any view that will be set as you render a row
+        public TextView makeModelTextView;
+        public TextView dailyRateTextView;
+        public ImageView tvImage;
+        public ImageView tvBackground;
+
+
+        // We also create a constructor that accepts the entire item row
+        // and does the view lookups to find each subview
+        public ViewHolder(View itemView) {
+            // Stores the itemView in a public final member variable that can be used
+            // to access the context from any ViewHolder instance.
+            super(itemView);
+
+            makeModelTextView = (TextView) itemView.findViewById(R.id.tvMakeModel);
+            dailyRateTextView = (TextView) itemView.findViewById(R.id.tvDailyRate);
+            tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
+            tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
+
+            //OnClickListener
+            itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    Car car  = TestingCarAdapter.mCars.get(pos);
+                    //Looks id up in mCars from beacons
+                    beacons.setCar_id(car.getCar_id());
+                    //Launch CarActivity
+                    Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
+                    beacons.getContext().startActivity(userActivityIntent);
+                }
+            });
+
+
+        }
+    }
 
 
 }
