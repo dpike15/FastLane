@@ -1,5 +1,6 @@
 package com.example.hertzfastlane;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,9 +10,11 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -43,21 +46,28 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
 
 
+    public static List<Car> getmCars() {
+        return mCars;
+    }
 
     // Store a member variable for the contacts
     private static List<Car> mCars;
+
+
     // Store the context for easy access
-    private Context mContext;
+    private static Context mContext;
 
     // Pass in the contact array into the constructor
     public TestingCarAdapter(List<Car> cars) {
         //mCars = cars;
-        //mContext = context;
+        //mContext = this.getContext();
         mCars = cars;
+
+
     }
 
     // Easy access to the context object in the recyclerview
-    private Context getContext() {
+    private static Context getContext() {
         return mContext;
     }
 
@@ -66,11 +76,13 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         //Context context = parent.getContext();
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.testing_car, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(v);
+
+
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(TestingCarAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final TestingCarAdapter.ViewHolder viewHolder, final int position) {
         viewHolder.makeModelTextView.setText(mCars.get(position).getInfo().getYear() + " " +
                 mCars.get(position).getInfo().getMake() + " " + mCars.get(position).getInfo().getModel());
         viewHolder.dailyRateTextView.setText(mCars.get(position).getInfo().getRate());
@@ -83,6 +95,24 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                 .fit()
                 .centerInside()
                 .into(viewHolder.tvImage);
+
+        //OnClickListener
+       viewHolder.tvImage.setOnTouchListener(new View.OnTouchListener(){
+
+           @Override
+           public boolean onTouch(View v, MotionEvent event) {
+               ProgressDialog dialog = new ProgressDialog(v.getContext());
+               dialog.setMessage("Working....");
+               dialog.show();
+               beacons.pos = position;
+               //Launch CarActivity
+               Intent userActivityIntent = new Intent(viewHolder.tvImage.getContext(),CarActivity.class);
+               viewHolder.tvImage.getContext().startActivity(userActivityIntent);
+
+               return true;
+           }
+
+        });
 
     }
 
@@ -115,20 +145,6 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
             tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
             tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
 
-            //OnClickListener
-            itemView.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    Car car  = TestingCarAdapter.mCars.get(pos);
-                    //Looks id up in mCars from beacons
-                    beacons.setCar_id(car.getCar_id());
-                    //Launch CarActivity
-                    Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
-                    beacons.getContext().startActivity(userActivityIntent);
-                }
-            });
 
 
         }

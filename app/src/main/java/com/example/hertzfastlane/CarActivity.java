@@ -27,21 +27,11 @@ public class CarActivity extends AppCompatActivity {
         playVideo();
 
         //Gathers respective Car data
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                String carID = beacons.getCar_id();
-                car = beacons.getCarInfo(carID);
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
 
-        try {
-            thread.join();
-        } catch (Exception e) {
-            return;
-        }
+        //String carID = beacons.getCar_id();
+        //car = beacons.getCarInfo(carID);
+        car = TestingCarAdapter.getmCars().get(beacons.pos);
+
         // Car car1 = QrScanner.getCar();
 
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
@@ -82,7 +72,7 @@ public class CarActivity extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("Message", "OnBackPressed");
         super.onBackPressed();
-        Intent userActivityIntent = new Intent(CarActivity.this, UserActivity.class);
+        Intent userActivityIntent = new Intent(CarActivity.this, beacons.class);
         CarActivity.this.startActivity(userActivityIntent);
 
     }

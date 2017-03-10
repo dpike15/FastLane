@@ -61,7 +61,6 @@ public class beacons extends AppCompatActivity {
 
     private static final String TAG = "beacons";
 
-
     public static List<Car> getmCars() {
         return mCars;
     }
@@ -115,7 +114,7 @@ public class beacons extends AppCompatActivity {
     private static Context context = null;
 
 
-
+    public static int pos;
     private List<String> carIds;
 
     @Override
