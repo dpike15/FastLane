@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -89,19 +90,17 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                 .into(viewHolder.tvImage);
 
         //OnClickListener
-       viewHolder.tvImage.setOnClickListener(new View.OnClickListener(){
+       viewHolder.tvImage.setOnTouchListener(new View.OnTouchListener(){
 
-            @Override
-            public void onClick(View v) {
+           @Override
+           public boolean onTouch(View v, MotionEvent event) {
+               beacons.pos = position;
+               //Launch CarActivity
+               Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
+               beacons.getContext().startActivity(userActivityIntent);
+               return true;
+           }
 
-                Car car  = TestingCarAdapter.mCars.get(position);
-                //Looks id up in mCars from beacons
-                //beacons.setCar_id(car.getCar_id());
-                beacons.pos = position;
-                //Launch CarActivity
-                Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
-                beacons.getContext().startActivity(userActivityIntent);
-            }
         });
 
     }
