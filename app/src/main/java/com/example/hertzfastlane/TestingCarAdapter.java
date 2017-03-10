@@ -1,5 +1,6 @@
 package com.example.hertzfastlane;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -43,6 +45,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 // Note that we specify the custom ViewHolder which gives us access to our views
 
 
+
     public static List<Car> getmCars() {
         return mCars;
     }
@@ -59,6 +62,8 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         //mCars = cars;
         //mContext = this.getContext();
         mCars = cars;
+
+
     }
 
     // Easy access to the context object in the recyclerview
@@ -71,6 +76,8 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         //Context context = parent.getContext();
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.testing_car, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(v);
+
+
         return viewHolder;
     }
 
@@ -94,10 +101,14 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
            @Override
            public boolean onTouch(View v, MotionEvent event) {
+               ProgressDialog dialog = new ProgressDialog(v.getContext());
+               dialog.setMessage("Working....");
+               dialog.show();
                beacons.pos = position;
                //Launch CarActivity
                Intent userActivityIntent = new Intent(viewHolder.tvImage.getContext(),CarActivity.class);
                viewHolder.tvImage.getContext().startActivity(userActivityIntent);
+
                return true;
            }
 
@@ -133,7 +144,6 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
             dailyRateTextView = (TextView) itemView.findViewById(R.id.tvDailyRate);
             tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
             tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
-
 
 
 

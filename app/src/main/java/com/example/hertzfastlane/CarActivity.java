@@ -28,9 +28,9 @@ public class CarActivity extends AppCompatActivity {
 
         //Gathers respective Car data
 
-                //String carID = beacons.getCar_id();
-                //car = beacons.getCarInfo(carID);
-                car = TestingCarAdapter.getmCars().get(beacons.pos);
+        //String carID = beacons.getCar_id();
+        //car = beacons.getCarInfo(carID);
+        car = TestingCarAdapter.getmCars().get(beacons.pos);
 
         // Car car1 = QrScanner.getCar();
 
