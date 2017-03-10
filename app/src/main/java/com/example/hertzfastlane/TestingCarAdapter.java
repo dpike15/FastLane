@@ -52,17 +52,17 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
 
     // Store the context for easy access
-    private Context mContext;
+    private static Context mContext;
 
     // Pass in the contact array into the constructor
     public TestingCarAdapter(List<Car> cars) {
         //mCars = cars;
-        //mContext = context;
+        //mContext = this.getContext();
         mCars = cars;
     }
 
     // Easy access to the context object in the recyclerview
-    private Context getContext() {
+    private static Context getContext() {
         return mContext;
     }
 
@@ -75,7 +75,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(TestingCarAdapter.ViewHolder viewHolder,final int position) {
+    public void onBindViewHolder(final TestingCarAdapter.ViewHolder viewHolder, final int position) {
         viewHolder.makeModelTextView.setText(mCars.get(position).getInfo().getYear() + " " +
                 mCars.get(position).getInfo().getMake() + " " + mCars.get(position).getInfo().getModel());
         viewHolder.dailyRateTextView.setText(mCars.get(position).getInfo().getRate());
@@ -96,8 +96,8 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
            public boolean onTouch(View v, MotionEvent event) {
                beacons.pos = position;
                //Launch CarActivity
-               Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
-               beacons.getContext().startActivity(userActivityIntent);
+               Intent userActivityIntent = new Intent(viewHolder.tvImage.getContext(),CarActivity.class);
+               viewHolder.tvImage.getContext().startActivity(userActivityIntent);
                return true;
            }
 
