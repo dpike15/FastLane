@@ -42,10 +42,14 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 // Note that we specify the custom ViewHolder which gives us access to our views
 
 
-
+    public static List<Car> getmCars() {
+        return mCars;
+    }
 
     // Store a member variable for the contacts
     private static List<Car> mCars;
+
+
     // Store the context for easy access
     private Context mContext;
 
@@ -123,7 +127,8 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                     int pos = getAdapterPosition();
                     Car car  = TestingCarAdapter.mCars.get(pos);
                     //Looks id up in mCars from beacons
-                    beacons.setCar_id(car.getCar_id());
+                   //beacons.setCar_id(car.getCar_id());
+                    beacons.pos = pos;
                     //Launch CarActivity
                     Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
                     beacons.getContext().startActivity(userActivityIntent);

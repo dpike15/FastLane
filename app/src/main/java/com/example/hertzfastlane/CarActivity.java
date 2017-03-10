@@ -30,8 +30,9 @@ public class CarActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                String carID = beacons.getCar_id();
-                car = beacons.getCarInfo(carID);
+                //String carID = beacons.getCar_id();
+                //car = beacons.getCarInfo(carID);
+                car = TestingCarAdapter.getmCars().get(beacons.pos);
             }
         };
         Thread thread = new Thread(runnable);
