@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,12 +30,15 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -76,7 +80,12 @@ public class MyReservationActivity extends AppCompatActivity {
             @Override
             public void run() {
                 member = LoginActivity.getMember();
-                //JSON Query Paramaters
+
+               Reservation memberReservation = getReservation(member);
+
+                //OLD BLUEMIX CODE (GAY)
+                /*
+                    //JSON Query Paramaters
                 String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getMember_id() + "\"}}";
 
                 HttpClient httpclient = new DefaultHttpClient();
@@ -139,6 +148,8 @@ public class MyReservationActivity extends AppCompatActivity {
                     Info infoCar = mapper.readValue(infoString,Info.class);
                     car.setInfo(infoCar);
 
+                    */
+
                     //Setting textViews with Dynamic Data
 
                     //Car name
@@ -147,7 +158,7 @@ public class MyReservationActivity extends AppCompatActivity {
 
                     //Confirmation Number
                     TextView confirmation = (TextView) findViewById(R.id.tvConfirmationNumber);
-                    confirmation.setText((memberReservation.getReservation_Num()));
+                    confirmation.setText((memberReservation.getReservation_id()));
 
                     //Pick up Location
                     TextView pickupLocation = (TextView) findViewById(R.id.tvPickUpLocation);
@@ -161,14 +172,12 @@ public class MyReservationActivity extends AppCompatActivity {
                     TextView reservationDate = (TextView) findViewById(R.id.tvReservationDate);
                     reservationDate.setText("Reservation Date: " + memberReservation.getPick_Up_Date());
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+
+
 
                 }
-
-
-            }
-        };
+        };  //END RUNNABLE
 
   /*      ImageView carImage=(ImageView)findViewById(vehicleImage);
         Picasso.with(getApplicationContext())
@@ -294,6 +303,93 @@ public class MyReservationActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         spinner.setVisibility(View.GONE);
+    }
+
+    private Reservation getReservation(Member member){
+        StringBuilder result = null;
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
+                    + member.getMember_id());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            String resultString = result.toString();
+            Log.d("TAGGY", result.toString());
+
+            JSONObject resMap = new JSONObject(resultString);
+
+            JSONArray reses = resMap.getJSONArray("Items");
+            JSONObject res = reses.getJSONObject(0);
+
+            //Deserializing to JSON Car Information
+            ObjectMapper mapper = new ObjectMapper();
+
+            Reservation reservation  = mapper.readValue(res.toString(), Reservation.class);
+
+            return reservation;
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(JSONException e1){
+            e1.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+    private Car getCarInfo(String car_id) {
+        StringBuilder result = null;
+        Car carInformation = null;
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id="
+                    + car_id);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            String resultString = result.toString();
+
+            JSONObject carMap = new JSONObject(resultString);
+
+            JSONObject car = carMap.getJSONObject("Item");
+            JSONObject carInfo = car.getJSONObject("info");
+
+            //Deserializing to JSON Car Information
+            ObjectMapper mapper = new ObjectMapper();
+
+            carInformation = mapper.readValue(car.toString(), Car.class);
+
+            Info infoCar = mapper.readValue(carInfo.toString(), Info.class);
+            carInformation.setInfo(infoCar);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+
+        return carInformation;
     }
 
     public static String convertStreamToString(InputStream is) {

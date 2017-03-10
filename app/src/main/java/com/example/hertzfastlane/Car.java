@@ -15,6 +15,55 @@ public class Car {
     private List<String> features;
     private String image;
 
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    private String summary;
+
+    public String getAirport() {
+        return airport;
+    }
+
+    public void setAirport(String airport) {
+        this.airport = airport;
+    }
+
+    public String getAirportCode() {
+        return airportCode;
+    }
+
+    public void setAirportCode(String airportCode) {
+        this.airportCode = airportCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    private String airport;
+    private String airportCode;
+    private String city;
+    private String state;
+
+
+
     public String getCar_id() {
         return car_id;
     }

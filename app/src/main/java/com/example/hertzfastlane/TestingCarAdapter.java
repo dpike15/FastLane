@@ -1,6 +1,7 @@
 package com.example.hertzfastlane;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
@@ -63,6 +64,23 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
             dailyRateTextView = (TextView) itemView.findViewById(R.id.tvDailyRate);
             tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
             tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
+
+            //OnClickListener
+            itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    List<TestingCar> mCars = beacons.getmCars();
+                    //Looks id up in mCars from beacons
+                    beacons.setCar_id(mCars.get(pos).getCar_id());
+                    //Launch CarActivity
+                    Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
+                    beacons.getContext().startActivity(userActivityIntent);
+                }
+            });
+
+
         }
     }
 
@@ -97,6 +115,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                 mCars.get(position).getMake() + " " + mCars.get(position).getModel());
         viewHolder.dailyRateTextView.setText(mCars.get(position).getRate());
 
+        //Image from S3 Bucket
         Picasso.with(mContext)
                 .load("http://s3.amazonaws.com/testimagesateam/denali+copy.png")
                 .config(Bitmap.Config.RGB_565)
@@ -113,4 +132,5 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
     }
 
 
-    }
+
+}

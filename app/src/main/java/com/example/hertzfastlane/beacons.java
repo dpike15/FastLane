@@ -62,7 +62,21 @@ public class beacons extends AppCompatActivity {
     private static final String TAG = "beacons";
 
 
-    private List<TestingCar> mCars;
+    public static List<TestingCar> getmCars() {
+        return mCars;
+    }
+
+    public static String getCar_id() {
+        return car_id;
+    }
+
+    public static void setCar_id(String car_id) {
+        beacons.car_id = car_id;
+    }
+
+    private static String car_id;
+
+    private static List<TestingCar> mCars;
 
 
     private static StringBuilder result;
@@ -92,6 +106,14 @@ public class beacons extends AppCompatActivity {
 
     static Map<String, String> nearableMap;
 
+    public static Context getContext() {
+        return context;
+    }
+
+    private static Context context = null;
+
+
+
     private List<String> carIds;
 
     @Override
@@ -101,7 +123,7 @@ public class beacons extends AppCompatActivity {
 
         nearableMap = new HashMap<String, String>();
         setContentView(R.layout.car_selection);
-        Context context = this;
+        context = this;
 
         RecyclerView rvTestingCars = (RecyclerView) findViewById(R.id.rvTestingCar);
         rvTestingCars.setLayoutManager(new LinearLayoutManager(this));
@@ -201,7 +223,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("a8209e97ce7e3ed6"))) {
-                            TestingCar focus = new TestingCar("Ford", "Focus (Blank)", "2016", "$69.99", "12765");
+                            TestingCar focus = new TestingCar("Ford", "Focus (Blank)", "2016", "$69.99", "63633");
                             String id = focus.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -444,7 +466,7 @@ public class beacons extends AppCompatActivity {
     }
 
 
-    private Car getCarInfo(String car_id) {
+    public static Car getCarInfo(String car_id) {
         Car carInformation = null;
         URL url = null;
         try {

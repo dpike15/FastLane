@@ -2,6 +2,8 @@ package com.example.hertzfastlane;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -24,13 +26,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -278,9 +286,11 @@ public class UserActivity extends AppCompatActivity {
 
         Uri uri = Uri.fromFile(new File("android.resource://com.example.hertzfastlane/drawable/" + "benz.jpg"));
         Picasso.with(context).load(carsList.get(arrayListInt)).into(backgroundView);
-
+       // Picasso.with(context).load("https://s3.amazonaws.com/testimagesateam/denali+copy.png").into(backgroundView);
 
     }
+
+
 
 
     private void displayBackgroundImages()
