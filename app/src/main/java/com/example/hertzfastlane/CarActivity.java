@@ -13,10 +13,11 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 
-
 public class CarActivity extends AppCompatActivity {
 
     final Context context = this;
+
+    Car car;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +26,26 @@ public class CarActivity extends AppCompatActivity {
 
         playVideo();
 
-        Car car = beacons.getCarData();
-       // Car car1 = QrScanner.getCar();
+        //Gathers respective Car data
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                String carID = beacons.getCar_id();
+                car = beacons.getCarInfo(carID);
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+
+        try {
+            thread.join();
+        } catch (Exception e) {
+            return;
+        }
+        // Car car1 = QrScanner.getCar();
 
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
-      //  carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
+        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
 
         TextView mpg = (TextView) findViewById(R.id.tvMPG);
         mpg.setText(car.getInfo().getMpgCity() + " MPG");
@@ -37,11 +53,12 @@ public class CarActivity extends AppCompatActivity {
         TextView passengers = (TextView) findViewById(R.id.tvPassenger);
         passengers.setText("Passengers: " + car.getInfo().getPassengers());
 
-        TextView features= (TextView) findViewById(R.id.tvSatRadio);
+        TextView features = (TextView) findViewById(R.id.tvSatRadio);
         features.setText(car.getFeatures().get(0));
 
         TextView summary = (TextView) findViewById(R.id.tvSummary);
-        summary.setText("The Cadillac 2016 CTS Sedan turns every drive into a masterful experience with assured performance and ingenious technology.");
+        // summary.setText("The Cadillac 2016 CTS Sedan turns every drive into a masterful experience with assured performance and ingenious technology.");
+        summary.setText(car.getSummary());
 
         TextView rate = (TextView) findViewById(R.id.tvRate);
         rate.setText(car.getInfo().getRate() + " USD");
@@ -62,8 +79,7 @@ public class CarActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         Log.d("Message", "OnBackPressed");
         super.onBackPressed();
         Intent userActivityIntent = new Intent(CarActivity.this, UserActivity.class);

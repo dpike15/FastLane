@@ -1,12 +1,34 @@
 package com.example.hertzfastlane;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.BufferedHttpEntity;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 
 import static com.example.hertzfastlane.R.styleable.RecyclerView;
@@ -27,6 +49,9 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         // for any view that will be set as you render a row
         public TextView makeModelTextView;
         public TextView dailyRateTextView;
+        public ImageView tvImage;
+        public ImageView tvBackground;
+
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -37,17 +62,35 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
             makeModelTextView = (TextView) itemView.findViewById(R.id.tvMakeModel);
             dailyRateTextView = (TextView) itemView.findViewById(R.id.tvDailyRate);
+            tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
+            tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
+
+            //OnClickListener
+            itemView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    List<Car> mCars = beacons.getmCars();
+                    //Looks id up in mCars from beacons
+                    beacons.setCar_id(mCars.get(pos).getCar_id());
+                    //Launch CarActivity
+                    Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
+                    beacons.getContext().startActivity(userActivityIntent);
+                }
+            });
+
 
         }
     }
 
     // Store a member variable for the contacts
-    private List<TestingCar> mCars;
+    private List<Car> mCars;
     // Store the context for easy access
     private Context mContext;
 
     // Pass in the contact array into the constructor
-    public TestingCarAdapter(List<TestingCar> cars) {
+    public TestingCarAdapter(List<Car> cars) {
         //mCars = cars;
         //mContext = context;
         mCars = cars;
@@ -68,14 +111,26 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
     @Override
     public void onBindViewHolder(TestingCarAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.makeModelTextView.setText(mCars.get(position).getYear() + " " +
-                mCars.get(position).getMake() + " " + mCars.get(position).getModel());
-        viewHolder.dailyRateTextView.setText(mCars.get(position).getRate());
+        viewHolder.makeModelTextView.setText(mCars.get(position).getInfo().getYear() + " " +
+                mCars.get(position).getInfo().getMake() + " " + mCars.get(position).getInfo().getModel());
+        viewHolder.dailyRateTextView.setText(mCars.get(position).getInfo().getRate());
+
+        //Image from S3 Bucket
+        Picasso.with(mContext)
+                .load(mCars.get(position).getImageURL())
+                .config(Bitmap.Config.RGB_565)
+                .error(R.drawable.a8)
+                .fit()
+                .centerInside()
+                .into(viewHolder.tvImage);
+
     }
 
     @Override
     public int getItemCount() {
         return mCars.size();
     }
+
+
 
 }

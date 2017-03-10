@@ -5,44 +5,13 @@ package com.example.hertzfastlane;
  */
 
 public class Reservation {
-    private String _id;
-    private String _rev;
-    private String reservation_Num;
-    private String number_Of_Rental_Days;
-    private String pick_Up;
 
-    public String getVehicleClass() {
-        return vehicleClass;
+    public String getReservation_id() {
+        return reservation_id;
     }
 
-    public void setVehicleClass(String vehicleClass) {
-        this.vehicleClass = vehicleClass;
-    }
-
-    private String vehicleClass;
-
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public String get_rev() {
-        return _rev;
-    }
-
-    public void set_rev(String _rev) {
-        this._rev = _rev;
-    }
-
-    public String getReservation_Num() {
-        return reservation_Num;
-    }
-
-    public void setReservation_Num(String reservation_Num) {
-        this.reservation_Num = reservation_Num;
+    public void setReservation_id(String reservation_id) {
+        this.reservation_id = reservation_id;
     }
 
     public String getNumber_Of_Rental_Days() {
@@ -61,12 +30,22 @@ public class Reservation {
         this.pick_Up = pick_Up;
     }
 
-    public String getCustomer_Id() {
-        return customer_Id;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCustomer_Id(String customer_Id) {
-        this.customer_Id = customer_Id;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+
+    public String getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
     }
 
     public String getCar_Vin() {
@@ -93,7 +72,21 @@ public class Reservation {
         this.pick_Up_Date = pick_Up_Date;
     }
 
-    private String customer_Id;
+    private String reservation_id;
+    private String number_Of_Rental_Days;
+    private String pick_Up;
+    private String status;
+
+    public String getVehicleClass() {
+        return vehicleClass;
+    }
+
+    public void setVehicleClass(String vehicleClass) {
+        this.vehicleClass = vehicleClass;
+    }
+
+    private String vehicleClass;
+    private String member_id;
     private String car_Vin;
     private String returnLocation;
     private String pick_Up_Date;

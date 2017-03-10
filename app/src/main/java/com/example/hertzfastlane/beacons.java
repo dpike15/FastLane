@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.estimote.sdk.BeaconManager;
@@ -61,7 +62,23 @@ public class beacons extends AppCompatActivity {
     private static final String TAG = "beacons";
 
 
-    private List<TestingCar> mCars;
+    public static List<Car> getmCars() {
+        return mCars;
+    }
+
+    public static String getCar_id() {
+        return car_id;
+    }
+
+    public static void setCar_id(String car_id) {
+        beacons.car_id = car_id;
+    }
+
+    private static String car_id;
+
+    private String nearableId;
+
+    private static List<Car> mCars;
 
 
     private static StringBuilder result;
@@ -91,6 +108,14 @@ public class beacons extends AppCompatActivity {
 
     static Map<String, String> nearableMap;
 
+    public static Context getContext() {
+        return context;
+    }
+
+    private static Context context = null;
+
+
+
     private List<String> carIds;
 
     @Override
@@ -100,7 +125,7 @@ public class beacons extends AppCompatActivity {
 
         nearableMap = new HashMap<String, String>();
         setContentView(R.layout.car_selection);
-        Context context = this;
+        context = this;
 
         RecyclerView rvTestingCars = (RecyclerView) findViewById(R.id.rvTestingCar);
         rvTestingCars.setLayoutManager(new LinearLayoutManager(this));
@@ -164,8 +189,30 @@ public class beacons extends AppCompatActivity {
                             Log.d("hashkey", key);
                         }
 
+                        nearableId = nearable.identifier;
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                String id = getCar_ID(nearableId);
+                                carIds.add(id);
+                                nearableMap.put(id,nearableId);
+                                Car car = getCarInfo(id);
+                                mCars.add(car);
+                            }
+                        };
+
+                        Thread thread = new Thread(runnable);
+                        thread.start();
+
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        /*
                         if ((nearable.identifier.contains("dca0942a7d11f901"))) {
-                            TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99", "1234");
+                            TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99", "424","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = tesla.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -174,7 +221,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("ec9c2da40aa7394"))) {
-                            TestingCar bmw = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "321");
+                            TestingCar bmw = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "321","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = bmw.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -183,7 +230,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("9684f729051b8d0d"))) {
-                            TestingCar hoopty = new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99", "2012");
+                            TestingCar hoopty = new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99", "2012","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = hoopty.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -192,7 +239,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("624ec2233b5f0546"))) {
-                            TestingCar cadillac = new TestingCar("Cadillac", "Escalade (Fridge)", "2019", "$109.99", "1234");
+                            TestingCar cadillac = new TestingCar("Cadillac", "Escalade (Fridge)", "2019", "$109.99", "1234","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = cadillac.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -200,7 +247,7 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("a8209e97ce7e3ed6"))) {
-                            TestingCar focus = new TestingCar("Ford", "Focus (Blank)", "2016", "$69.99", "12765");
+                            TestingCar focus = new TestingCar("Ford", "Focus (Blank)", "2016", "$69.99", "63633","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = focus.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
@@ -208,14 +255,39 @@ public class beacons extends AppCompatActivity {
                                 //adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         } else if ((nearable.identifier.contains("2a725ef0719fed50"))) {
-                            TestingCar m5 = new TestingCar("Mazda", "M5 (Dog)", "2017", "$499.99", "165");
+                            TestingCar m5 = new TestingCar("Mazda", "M5 (Dog)", "2017", "$499.99", "165","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = m5.getCar_id();
                             if (!carIds.contains(id)) {
                                 carIds.add(id);
                                 mCars.add(m5);
                                // adapter.notifyItemInserted(mCars.size() - 1);
                             }
+                        } else if ((nearable.identifier.contains("9d4fab2125f17c5e"))) {
+                            TestingCar m5 = new TestingCar("Jaguar", "F-Type (Bike)", "2017", "$499.99", "141241","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
+                            String id = m5.getCar_id();
+                            if (!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(m5);
+                                // adapter.notifyItemInserted(mCars.size() - 1);
+                            }
+                        } else if ((nearable.identifier.contains("1034c6353ab7eef0"))) {
+                            TestingCar m5 = new TestingCar("Ford", "F-150 (Bed)", "2017", "$499.99", "16725","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
+                            String id = m5.getCar_id();
+                            if (!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(m5);
+                                // adapter.notifyItemInserted(mCars.size() - 1);
+                            }
+                        } else if ((nearable.identifier.contains("a309441d66337041"))) {
+                            TestingCar m5 = new TestingCar("Tesla", "P100d (Purse)", "2017", "$499.99", "93855","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
+                            String id = m5.getCar_id();
+                            if (!carIds.contains(id)) {
+                                carIds.add(id);
+                                mCars.add(m5);
+                                // adapter.notifyItemInserted(mCars.size() - 1);
+                            }
                         }
+                        */
 
 
     /** Loads car class if nearable identification found*/
@@ -245,12 +317,19 @@ public class beacons extends AppCompatActivity {
                 }
 
                 adapter.notifyDataSetChanged();
+                if(!mCars.isEmpty()){
+                    findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
+                    findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
+                } else {
+                    findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
+                    findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
+                }
 
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
                 Log.d(TAG, "size of list is " + String.valueOf(nearables.size()));
 
-                nearableMap.clear();
+                //nearableMap.clear();
 
             }
 
@@ -412,7 +491,7 @@ public class beacons extends AppCompatActivity {
     }
 
 
-    private Car getCarInfo(String car_id) {
+    public static Car getCarInfo(String car_id) {
         Car carInformation = null;
         URL url = null;
         try {
@@ -499,5 +578,43 @@ public class beacons extends AppCompatActivity {
 
 
         return "FAIL";
+    }
+
+    private String getCar_ID(String beacon_id){
+
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/beaconMap?id="
+                    + beacon_id);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            String resultString = result.toString();
+            Log.d("TAGGY", result.toString());
+
+            JSONObject map = new JSONObject(resultString);
+
+            JSONObject hash = map.getJSONObject("Item");
+
+
+            String car_id = hash.getString("car_id");
+
+            return car_id;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return null;
     }
 }
