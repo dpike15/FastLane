@@ -74,7 +74,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(TestingCarAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(TestingCarAdapter.ViewHolder viewHolder,final int position) {
         viewHolder.makeModelTextView.setText(mCars.get(position).getInfo().getYear() + " " +
                 mCars.get(position).getInfo().getMake() + " " + mCars.get(position).getInfo().getModel());
         viewHolder.dailyRateTextView.setText(mCars.get(position).getInfo().getRate());
@@ -87,6 +87,22 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                 .fit()
                 .centerInside()
                 .into(viewHolder.tvImage);
+
+        //OnClickListener
+       viewHolder.tvImage.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                Car car  = TestingCarAdapter.mCars.get(position);
+                //Looks id up in mCars from beacons
+                //beacons.setCar_id(car.getCar_id());
+                beacons.pos = position;
+                //Launch CarActivity
+                Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
+                beacons.getContext().startActivity(userActivityIntent);
+            }
+        });
 
     }
 
@@ -119,21 +135,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
             tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
             tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
 
-            //OnClickListener
-            itemView.setOnClickListener(new View.OnClickListener(){
 
-                @Override
-                public void onClick(View v) {
-                    int pos = getAdapterPosition();
-                    Car car  = TestingCarAdapter.mCars.get(pos);
-                    //Looks id up in mCars from beacons
-                   //beacons.setCar_id(car.getCar_id());
-                    beacons.pos = pos;
-                    //Launch CarActivity
-                    Intent userActivityIntent = new Intent(beacons.getContext(),CarActivity.class);
-                    beacons.getContext().startActivity(userActivityIntent);
-                }
-            });
 
 
         }
