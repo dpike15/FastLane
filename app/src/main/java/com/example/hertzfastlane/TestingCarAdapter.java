@@ -71,7 +71,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
-                    List<TestingCar> mCars = beacons.getmCars();
+                    List<Car> mCars = beacons.getmCars();
                     //Looks id up in mCars from beacons
                     beacons.setCar_id(mCars.get(pos).getCar_id());
                     //Launch CarActivity
@@ -85,12 +85,12 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
     }
 
     // Store a member variable for the contacts
-    private List<TestingCar> mCars;
+    private List<Car> mCars;
     // Store the context for easy access
     private Context mContext;
 
     // Pass in the contact array into the constructor
-    public TestingCarAdapter(List<TestingCar> cars) {
+    public TestingCarAdapter(List<Car> cars) {
         //mCars = cars;
         //mContext = context;
         mCars = cars;
@@ -111,9 +111,9 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
 
     @Override
     public void onBindViewHolder(TestingCarAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.makeModelTextView.setText(mCars.get(position).getYear() + " " +
-                mCars.get(position).getMake() + " " + mCars.get(position).getModel());
-        viewHolder.dailyRateTextView.setText(mCars.get(position).getRate());
+        viewHolder.makeModelTextView.setText(mCars.get(position).getInfo().getYear() + " " +
+                mCars.get(position).getInfo().getMake() + " " + mCars.get(position).getInfo().getModel());
+        viewHolder.dailyRateTextView.setText(mCars.get(position).getInfo().getRate());
 
         //Image from S3 Bucket
         Picasso.with(mContext)

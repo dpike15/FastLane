@@ -62,7 +62,7 @@ public class beacons extends AppCompatActivity {
     private static final String TAG = "beacons";
 
 
-    public static List<TestingCar> getmCars() {
+    public static List<Car> getmCars() {
         return mCars;
     }
 
@@ -76,7 +76,9 @@ public class beacons extends AppCompatActivity {
 
     private static String car_id;
 
-    private static List<TestingCar> mCars;
+    private String nearableId;
+
+    private static List<Car> mCars;
 
 
     private static StringBuilder result;
@@ -187,6 +189,28 @@ public class beacons extends AppCompatActivity {
                             Log.d("hashkey", key);
                         }
 
+                        nearableId = nearable.identifier;
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                String id = getCar_ID(nearableId);
+                                carIds.add(id);
+                                nearableMap.put(id,nearableId);
+                                Car car = getCarInfo(id);
+                                mCars.add(car);
+                            }
+                        };
+
+                        Thread thread = new Thread(runnable);
+                        thread.start();
+
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        /*
                         if ((nearable.identifier.contains("dca0942a7d11f901"))) {
                             TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99", "424","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
                             String id = tesla.getCar_id();
@@ -263,6 +287,7 @@ public class beacons extends AppCompatActivity {
                                 // adapter.notifyItemInserted(mCars.size() - 1);
                             }
                         }
+                        */
 
 
     /** Loads car class if nearable identification found*/
@@ -553,5 +578,43 @@ public class beacons extends AppCompatActivity {
 
 
         return "FAIL";
+    }
+
+    private String getCar_ID(String beacon_id){
+
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/beaconMap?id="
+                    + beacon_id);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            String resultString = result.toString();
+            Log.d("TAGGY", result.toString());
+
+            JSONObject map = new JSONObject(resultString);
+
+            JSONObject hash = map.getJSONObject("Item");
+
+
+            String car_id = hash.getString("car_id");
+
+            return car_id;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return null;
     }
 }
