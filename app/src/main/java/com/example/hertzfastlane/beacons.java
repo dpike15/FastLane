@@ -141,10 +141,10 @@ public class beacons extends AppCompatActivity {
             @Override
             public void onNearablesDiscovered(List<Nearable> nearables) {
 
-                //dca0942a7d11f901 Car
+                //dca0942a7d11f901 Car tesla
                 //ead27db3f0fc1775 SHOE
                 //9684f729051b8d0d DOOR
-                //ec9c2da40aa7394f CHAIR
+                //ec9c2da40aa7394f CHAIR bmw
                 int numberScanned = 0;
 
                 //nearableMap.clear();

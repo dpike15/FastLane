@@ -19,7 +19,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
  * Created by stevenjoy on 2/19/17.
  */
 
-public class testLogin {
+public class TestLogin {
 
     @Rule
     public IntentsTestRule<LoginActivity> nLoginRule =
@@ -31,6 +31,7 @@ public class testLogin {
         onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.b_Login)).perform(click());
         intended(hasComponent(new ComponentName(getTargetContext(), UserActivity.class)));
+
     }
 }
 
