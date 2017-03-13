@@ -34,7 +34,7 @@ public class ActionBarTest {
             new IntentsTestRule<LoginActivity>(LoginActivity.class);
 
 
-    @Test
+    @Test // method to test if helpActivity loads from actionBar
     public void testActionBar() throws Exception {
         // logs in loads UserActivity class
         onView(withId(R.id.et_Username)).perform(typeText("dpike15")).perform(ViewActions.closeSoftKeyboard());

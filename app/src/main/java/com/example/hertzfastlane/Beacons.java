@@ -239,6 +239,15 @@ public class Beacons extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Log.d("Message", "OnBackPressed");
+        super.onBackPressed();
+        Intent userActivityIntent = new Intent(Beacons.this, UserActivity.class);
+        Beacons.this.startActivity(userActivityIntent);
+
+    }
+
     public void setBeaconBackground() {
         if(!mCars.isEmpty()){
             findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);

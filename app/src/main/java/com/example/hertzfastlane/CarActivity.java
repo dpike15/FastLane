@@ -32,6 +32,11 @@ public class CarActivity extends YouTubeBaseActivity {
         videoURL = url;
     }
 
+//    public CarActivity() {  // maybe dont need
+//
+//        car = new Car();
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
