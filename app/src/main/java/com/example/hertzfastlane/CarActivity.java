@@ -28,9 +28,9 @@ public class CarActivity extends AppCompatActivity {
 
         //Gathers respective Car data
 
-        //String carID = beacons.getCar_id();
-        //car = beacons.getCarInfo(carID);
-        car = TestingCarAdapter.getmCars().get(beacons.pos);
+        //String carID = Beacons.getCar_id();
+        //car = Beacons.getCarInfo(carID);
+        car = TestingCarAdapter.getmCars().get(Beacons.pos);
 
         // Car car1 = QrScanner.getCar();
 
@@ -72,7 +72,7 @@ public class CarActivity extends AppCompatActivity {
     public void onBackPressed() {
         Log.d("Message", "OnBackPressed");
         super.onBackPressed();
-        Intent userActivityIntent = new Intent(CarActivity.this, beacons.class);
+        Intent userActivityIntent = new Intent(CarActivity.this, Beacons.class);
         CarActivity.this.startActivity(userActivityIntent);
 
     }

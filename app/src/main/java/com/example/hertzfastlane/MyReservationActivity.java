@@ -22,13 +22,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -211,8 +205,8 @@ public class MyReservationActivity extends AppCompatActivity {
 
 
 
-        Button bScanVehicle = (Button) findViewById(R.id.bScanVehicle);
-        bScanVehicle.setOnClickListener(new View.OnClickListener() {
+        Button bSelectVehicle = (Button) findViewById(R.id.bSelectVehicle);
+        bSelectVehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 spinner.setVisibility(View.VISIBLE);

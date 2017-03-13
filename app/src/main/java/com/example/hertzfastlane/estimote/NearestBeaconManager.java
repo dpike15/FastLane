@@ -15,7 +15,7 @@ public class NearestBeaconManager {
 
     private static final String TAG = "NearestBeaconManager";
 
-    private static final Region ALL_ESTIMOTE_BEACONS = new Region("all Estimote beacons", null, null, null);
+    private static final Region ALL_ESTIMOTE_BEACONS = new Region("all Estimote Beacons", null, null, null);
 
     private List<BeaconID> beaconIDs;
 

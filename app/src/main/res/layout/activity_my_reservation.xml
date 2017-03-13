@@ -166,14 +166,14 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/bSelectVehicle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="Scan Vehicle"
-            android:id="@+id/bScanVehicle"
+            android:layout_margin="10dp"
             android:background="@drawable/button_border"
-            android:textColor="#ffd100"
-            android:layout_margin="10dp" />
+            android:fontFamily="sans-serif-condensed"
+            android:text="Select Vehicle"
+            android:textColor="#ffd100" />
 
     </LinearLayout>
 

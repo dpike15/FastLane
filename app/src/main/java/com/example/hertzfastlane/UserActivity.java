@@ -2,8 +2,6 @@ package com.example.hertzfastlane;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -26,19 +24,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -234,7 +226,7 @@ public class UserActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HelpActivity.class));
                 return true;
             case R.id.Beacon:
-                startActivity(new Intent(this, beacons.class));  // estimote beacons action bar, created string and extra action button
+                startActivity(new Intent(this, Beacons.class));  // estimote Beacons action bar, created string and extra action button
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

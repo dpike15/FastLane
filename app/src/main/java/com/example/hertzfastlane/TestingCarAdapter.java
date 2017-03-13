@@ -4,37 +4,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.BufferedHttpEntity;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
-
-import static com.example.hertzfastlane.R.styleable.RecyclerView;
 
 /**
  * Created by rodolfotrevino on 3/2/17.
@@ -104,7 +84,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                ProgressDialog dialog = new ProgressDialog(v.getContext());
                dialog.setMessage("Working....");
                dialog.show();
-               beacons.pos = position;
+               Beacons.pos = position;
                //Launch CarActivity
                Intent userActivityIntent = new Intent(viewHolder.tvImage.getContext(),CarActivity.class);
                viewHolder.tvImage.getContext().startActivity(userActivityIntent);

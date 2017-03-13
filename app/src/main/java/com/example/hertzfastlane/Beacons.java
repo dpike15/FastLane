@@ -8,13 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.EstimoteSDK;
@@ -23,7 +21,6 @@ import com.estimote.sdk.Region;
 import com.estimote.sdk.SecureRegion;
 import com.estimote.sdk.SystemRequirementsChecker;
 import com.estimote.sdk.cloud.model.Color;
-import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.JsonObject;
 import com.example.hertzfastlane.estimote.BeaconID;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetails;
 import com.example.hertzfastlane.estimote.EstimoteCloudBeaconDetailsFactory;
@@ -46,20 +43,17 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.UUID;
 
 
 import static com.estimote.sdk.internal.utils.EstimoteBeacons.ESTIMOTE_PROXIMITY_UUID;
 
-public class beacons extends AppCompatActivity {
+public class Beacons extends AppCompatActivity {
 
-    private static final String TAG = "beacons";
+    private static final String TAG = "Beacons";
 
     public static List<Car> getmCars() {
         return mCars;
@@ -70,7 +64,7 @@ public class beacons extends AppCompatActivity {
     }
 
     public static void setCar_id(String car_id) {
-        beacons.car_id = car_id;
+        Beacons.car_id = car_id;
     }
 
     private static String car_id;
@@ -136,14 +130,14 @@ public class beacons extends AppCompatActivity {
         rvTestingCars.setAdapter(adapter);
 
 
-        // use for proximity beacons STOP RANGING
+        // use for proximity Beacons STOP RANGING
         secureRegion = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 20930, 14720);
         secureRegion2 = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 26788, 12168);
 
         Log.d("Tag", "Beacons");
         proximityContentManager = new ProximityContentManager(this,
                 Arrays.asList(
-                        /** Proximity beacons Identifier, minor and major*/
+                        /** Proximity Beacons Identifier, minor and major*/
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 32725, 55822),
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 20930, 14720),
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 26788, 12168)), //
@@ -153,189 +147,32 @@ public class beacons extends AppCompatActivity {
         /** listener used for nearable stickers*/
         beaconManager = new BeaconManager(getApplicationContext());
 
-        beaconManager.setRangingListener(new BeaconManager.RangingListener() {
-            @Override
-            public void onBeaconsDiscovered(Region region, final List beacons) {
-                // Log.d("TAG2", "Ranged beacons: " + beacons);
-            }
-        });
-
-
         beaconManager.setNearableListener(new BeaconManager.NearableListener() {
             @Override
             public void onNearablesDiscovered(List<Nearable> nearables) {
 
-                //dca0942a7d11f901 Car tesla
-                //ead27db3f0fc1775 SHOE
-                //9684f729051b8d0d DOOR
-                //ec9c2da40aa7394f CHAIR bmw
-                int numberScanned = 0;
-
-                //nearableMap.clear();
-
-                mCars.clear();
-                nearableMap.clear();
-                carIds.clear();
+                clearList();
 
                 /** loops through nearable ID's*/
                 for (Nearable nearable : nearables) {
                     if (!nearableMap.containsValue(nearable.identifier)) {
-
-                        NearableID nearableID = new NearableID(nearable.identifier);
-
-
-                        for (String key : nearableMap.keySet()) {
-                            Log.d("hashkey", key);
-                        }
-
-                        nearableId = nearable.identifier;
-                        Runnable runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                String id = getCar_ID(nearableId);
-                                carIds.add(id);
-                                nearableMap.put(id,nearableId);
-                                Car car = getCarInfo(id);
-                                mCars.add(car);
-                            }
-                        };
-
-                        Thread thread = new Thread(runnable);
-                        thread.start();
-
-                        try {
-                            thread.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        /*
-                        if ((nearable.identifier.contains("dca0942a7d11f901"))) {
-                            TestingCar tesla = new TestingCar("Tesla", "P100 (Fridge)", "2017", "$89.99", "424","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = tesla.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(tesla);
-                                nearableMap.put(id, nearable.identifier);
-                                //adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        } else if ((nearable.identifier.contains("ec9c2da40aa7394"))) {
-                            TestingCar bmw = new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99", "321","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = bmw.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(bmw);
-                                nearableMap.put(id, nearable.identifier);
-                                //adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        } else if ((nearable.identifier.contains("9684f729051b8d0d"))) {
-                            TestingCar hoopty = new TestingCar("Derek's", "Hoopty (Blank)", "1999", "$Free.99", "2012","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = hoopty.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(hoopty);
-                                nearableMap.put(id, nearable.identifier);
-                                //adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        } else if ((nearable.identifier.contains("624ec2233b5f0546"))) {
-                            TestingCar cadillac = new TestingCar("Cadillac", "Escalade (Fridge)", "2019", "$109.99", "1234","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = cadillac.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(cadillac);
-                                //adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        } else if ((nearable.identifier.contains("a8209e97ce7e3ed6"))) {
-                            TestingCar focus = new TestingCar("Ford", "Focus (Blank)", "2016", "$69.99", "63633","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = focus.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(focus);
-                                //adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        } else if ((nearable.identifier.contains("2a725ef0719fed50"))) {
-                            TestingCar m5 = new TestingCar("Mazda", "M5 (Dog)", "2017", "$499.99", "165","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = m5.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(m5);
-                               // adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        } else if ((nearable.identifier.contains("9d4fab2125f17c5e"))) {
-                            TestingCar m5 = new TestingCar("Jaguar", "F-Type (Bike)", "2017", "$499.99", "141241","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = m5.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(m5);
-                                // adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        } else if ((nearable.identifier.contains("1034c6353ab7eef0"))) {
-                            TestingCar m5 = new TestingCar("Ford", "F-150 (Bed)", "2017", "$499.99", "16725","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = m5.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(m5);
-                                // adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        } else if ((nearable.identifier.contains("a309441d66337041"))) {
-                            TestingCar m5 = new TestingCar("Tesla", "P100d (Purse)", "2017", "$499.99", "93855","http://s3.amazonaws.com/testimagesateam/denali+copy.png");
-                            String id = m5.getCar_id();
-                            if (!carIds.contains(id)) {
-                                carIds.add(id);
-                                mCars.add(m5);
-                                // adapter.notifyItemInserted(mCars.size() - 1);
-                            }
-                        }
-                        */
-
-
-    /** Loads car class if nearable identification found*/
-// Runnable runnable = new Runnable(){
-// @Override
-// public void run(){
-// carData = getCarInfo("2012");
-// }
-// };
-// Thread thread = new Thread(runnable);
-// thread.start();
-//
-// try{
-// thread.join();
-// }catch(Exception e){
-// return;
-// }
-// Intent carActivityIntent = new Intent(beacons.this, CarActivity.class);
-// beacons.this.startActivity(carActivityIntent);
-//
-// beaconManager.disconnect();
-//}
-//
-
-
+                        beaconsInRange(nearable);
                     }
                 }
 
                 adapter.notifyDataSetChanged();
-                if(!mCars.isEmpty()){
-                    findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
-                    findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
-                } else {
-                    findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
-                    findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
-                }
+
+                setBeaconBackground();
 
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
                 Log.d(TAG, "size of list is " + String.valueOf(nearables.size()));
-
-                //nearableMap.clear();
-
             }
 
         });
 
 
-        /** Broadcast the nearable beacons signal*/
+        /** Broadcast the nearable Beacons signal*/
         beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
             @Override
             public void onServiceReady() {
@@ -355,14 +192,14 @@ public class beacons extends AppCompatActivity {
             public void onContentChanged(Object content) {
                 String text;
                 Integer backgroundColor;
-//
+
                 if (content != null) {
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
-//
+
                     text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
-//
+
                     backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
-//
+
                     //GATE ACTOR
                     if (beaconDetails.getBeaconName().equals("ice")) {
 
@@ -385,66 +222,22 @@ public class beacons extends AppCompatActivity {
                             return;
                         }
 
-
-//                            String id = car.getCar_id();
-//                        if (!carsMap.containsKey(id)) {
-//                            /*
-//                            carIds.add(car.getCar_id());
-//                            mCars.add(car);
-//                            adapter.notifyItemInserted(adapter.getItemCount());
-//                            int size = mCars.size();
-//                            Log.d("FAG", "mCarsSize: " + size);
-//                            */
-//                            carsMap.put(id, car);
-//                            adapter.notifyItemInserted(adapter.getItemCount());
-//                            int size = carsMap.size();
-//                            Log.d("FAG", "mCarsSize: " + size);
                     }
-//                      mCars.clear();
-//                        //adapter.notify();
-//
-//                        beaconManager.stopMonitoring(secureRegion);
-//                        //break;
-//
-//                       int index = adapter.getItemCount();
-//                       mCars.add(0, new TestingCar("BWM", "M5 (Dog)", "2017", "$99.99"));
-//                       adapter.notifyItemInserted(0);
-//                   }
 
-//                   if (beaconDetails.getBeaconName().equals("mint")) {
-//                       TestingCar car = new TestingCar("Mercedes", "A33 (CAT)", "2014", "$95.99");
-//                      /*
-//                       if (!carIds.contains(car.getCar_id())) {
-//                           carIds.add(car.getCar_id());
-//                           mCars.add(car);
-//                           adapter.notifyItemInserted(adapter.getItemCount());
-//                           int size = mCars.size();
-//                           Log.d("FAG", "mCarsSize: " + size);
-//                        */
-//                       String id = car.getCar_id();
-//                       if(!carsMap.containsKey(id)){
-//                           carsMap.put(id, car);
-//                           adapter.notifyItemInserted(adapter.getItemCount());
-//                           int size = carsMap.size();
-//                           Log.d("FAG", "mCarsSize: " + size);
-//                       }
-//
-//                       int index = adapter.getItemCount();
-//                       mCars.add(0, new TestingCar("Audi", "A4 (Dolphin)", "2015", "$89.99"));
-//                       adapter.notifyItemInserted(0);
-//                   }
-
-
-                } else {
-//                         text = "No beacons in range.";
-//                         backgroundColor = null;
                 }
-//                //((TextView) findViewById(R.id.textView)).setText(text);
-//                //findViewById(R.id.relativeLayout).setBackgroundColor(
-//                      //  backgroundColor != null ? backgroundColor : BACKGROUND_COLOR_NEUTRAL);
             }
         });
 
+    }
+
+    public void setBeaconBackground() {
+        if(!mCars.isEmpty()){
+            findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
+            findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
+            findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
+        }
     }
 
     public static Car getCarData() {
@@ -465,7 +258,7 @@ public class beacons extends AppCompatActivity {
         super.onResume();
 
         if (!SystemRequirementsChecker.checkWithDefaultDialogs(this)) {
-            Log.e(TAG, "Can't scan for beacons, some pre-conditions were not met");
+            Log.e(TAG, "Can't scan for Beacons, some pre-conditions were not met");
             Log.e(TAG, "Read more about what's required at: http://estimote.github.io/Android-SDK/JavaDocs/com/estimote/sdk/SystemRequirementsChecker.html");
             Log.e(TAG, "If this is fixable, you should see a popup on the app's screen right now, asking to enable what's necessary");
         } else {
@@ -615,5 +408,34 @@ public class beacons extends AppCompatActivity {
             e1.printStackTrace();
         }
         return null;
+    }
+
+    public void clearList () {
+        mCars.clear();
+        nearableMap.clear();
+        carIds.clear();
+    }
+
+    public void beaconsInRange(Nearable nearable){
+        nearableId = nearable.identifier;
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                String id = getCar_ID(nearableId);
+                carIds.add(id);
+                nearableMap.put(id,nearableId);
+                Car car = getCarInfo(id);
+                mCars.add(car);
+            }
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
