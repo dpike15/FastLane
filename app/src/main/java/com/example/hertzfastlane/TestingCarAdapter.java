@@ -84,7 +84,8 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                ProgressDialog dialog = new ProgressDialog(v.getContext());
                dialog.setMessage("Working....");
                dialog.show();
-               Beacons.pos = position;
+               //Beacons.pos = position;
+               Car car = mCars.get(position);
                //Launch CarActivity
                Intent userActivityIntent = new Intent(viewHolder.tvImage.getContext(),CarActivity.class);
                viewHolder.tvImage.getContext().startActivity(userActivityIntent);

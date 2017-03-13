@@ -26,6 +26,11 @@ public class CarActivity extends YouTubeBaseActivity {
     final Context context = this;
 
     Car car;
+    String videoURL = "X6BwCS9ORGk";
+
+    public CarActivity (String url) {
+        videoURL = url;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +40,7 @@ public class CarActivity extends YouTubeBaseActivity {
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo("X6BwCS9ORGk");
+                youTubePlayer.loadVideo(videoURL);
             }
 
             @Override
@@ -44,17 +49,9 @@ public class CarActivity extends YouTubeBaseActivity {
             }
         };
 
-        youTubePlayerView.initialize(PlayerConfig.API_KEY, onInitializedListener);
+        playVideo();
 
-        //playVideo();
-
-        //Gathers respective Car data
-
-        //String carID = Beacons.getCar_id();
-        //car = Beacons.getCarInfo(carID);
         car = TestingCarAdapter.getmCars().get(Beacons.pos);
-
-        // Car car1 = QrScanner.getCar();
 
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
         carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
@@ -101,10 +98,6 @@ public class CarActivity extends YouTubeBaseActivity {
 
     public void playVideo() {
         youTubePlayerView.initialize(PlayerConfig.API_KEY, onInitializedListener);
-//        VideoView myVideoView = (VideoView) findViewById(R.id.videoView);
-//        myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.cts));
-//        myVideoView.start();
-//        myVideoView.seekTo(5);
     }
 
 }
