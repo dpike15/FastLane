@@ -23,7 +23,7 @@ import static junit.framework.Assert.assertTrue;
 
 
 /**
- * Created by stevenjoy on 3/9/17.
+ * Created by stevenjoy and rtreving on 3/9/17.
  */
 @RunWith(AndroidJUnit4.class)
 public class BeaconsTest {
@@ -33,9 +33,6 @@ public class BeaconsTest {
     @Rule
     public ActivityTestRule<Beacons> nBeaconsActivityTestRule =
             new ActivityTestRule<Beacons>(Beacons.class);
-
-
-    private String beaconIdentifier = "";
 
     @Test
     public void run() {
@@ -50,10 +47,7 @@ public class BeaconsTest {
                 assertTrue(beacon1.nearableMap.containsValue(nearables));
             }
         });
-
-
     }
-
 }
 
 

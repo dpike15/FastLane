@@ -12,8 +12,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 
-public class CarActivity extends AppCompatActivity {
+
+public class CarActivity extends YouTubeBaseActivity {
+
+    YouTubePlayerView youTubePlayerView;
+    YouTubePlayer.OnInitializedListener onInitializedListener;
 
     final Context context = this;
 
@@ -23,8 +31,22 @@ public class CarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
+        youTubePlayerView = (YouTubePlayerView) findViewById(R.id.videoView);
+        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                youTubePlayer.loadVideo("X6BwCS9ORGk");
+            }
 
-        playVideo();
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        };
+
+        youTubePlayerView.initialize(PlayerConfig.API_KEY, onInitializedListener);
+
+        //playVideo();
 
         //Gathers respective Car data
 
@@ -78,10 +100,11 @@ public class CarActivity extends AppCompatActivity {
     }
 
     public void playVideo() {
-        VideoView myVideoView = (VideoView) findViewById(R.id.videoView);
-        myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.cts));
-        myVideoView.start();
-        myVideoView.seekTo(5);
+        youTubePlayerView.initialize(PlayerConfig.API_KEY, onInitializedListener);
+//        VideoView myVideoView = (VideoView) findViewById(R.id.videoView);
+//        myVideoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.cts));
+//        myVideoView.start();
+//        myVideoView.seekTo(5);
     }
 
 }
