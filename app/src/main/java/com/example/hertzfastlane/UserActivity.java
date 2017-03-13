@@ -59,7 +59,17 @@ public class UserActivity extends AppCompatActivity {
 
 
     final Context context = this;
-    Member member;
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    private Member member;
+
 
     int arrayListInt;
 

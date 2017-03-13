@@ -42,8 +42,6 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         //mCars = cars;
         //mContext = this.getContext();
         mCars = cars;
-
-
     }
 
     // Easy access to the context object in the recyclerview
@@ -56,7 +54,6 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         //Context context = parent.getContext();
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.testing_car, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(v);
-
 
         return viewHolder;
     }
@@ -125,8 +122,6 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
             dailyRateTextView = (TextView) itemView.findViewById(R.id.tvDailyRate);
             tvImage = (ImageView) itemView.findViewById(R.id.tvCarImage);
             tvBackground = (ImageView) itemView.findViewById(R.id.rvTestingCar);
-
-
 
         }
     }

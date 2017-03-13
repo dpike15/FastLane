@@ -39,7 +39,15 @@ public class Member {
     private String username;
     private String password;
 
+    public int getLoyaltyPoints() {
+        return loyaltyPoints;
+    }
 
+    public void setLoyaltyPoints(int loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
+    }
+
+    private int loyaltyPoints;
 
 
     public String getFirst_NM() {

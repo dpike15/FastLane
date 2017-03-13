@@ -25,6 +25,16 @@ public class Car {
 
     private String imageURL;
 
+    public String getVideoURL() {
+        return videoURL;
+    }
+
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
+    }
+
+    private String videoURL;
+
     public String getSummary() {
         return summary;
     }
