@@ -156,7 +156,8 @@ public class Beacons extends AppCompatActivity {
                 /** loops through nearable ID's*/
                 for (Nearable nearable : nearables) {
                     if (!nearableMap.containsValue(nearable.identifier)) {
-                        beaconsInRange(nearable);
+                       nearableId = nearable.identifier;
+                        beaconsInRange(nearableId);
                     }
                 }
 
@@ -416,8 +417,8 @@ public class Beacons extends AppCompatActivity {
         carIds.clear();
     }
 
-    public void beaconsInRange(Nearable nearable){
-        nearableId = nearable.identifier;
+    public void beaconsInRange(String nearable){
+        nearableId = nearable;
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

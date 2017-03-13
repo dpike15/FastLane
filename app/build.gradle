@@ -82,6 +82,7 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
     compile 'com.android.support:multidex:1.0.0'
 
+    androidTestCompile 'junit:junit:4.12'
 }
 
 
