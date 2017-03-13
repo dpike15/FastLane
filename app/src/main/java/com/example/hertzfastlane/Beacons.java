@@ -53,6 +53,8 @@ import static com.estimote.sdk.internal.utils.EstimoteBeacons.ESTIMOTE_PROXIMITY
 
 public class Beacons extends AppCompatActivity {
 
+
+
     private static final String TAG = "Beacons";
 
     public static List<Car> getmCars() {
@@ -110,6 +112,12 @@ public class Beacons extends AppCompatActivity {
 
     public static int pos;
     private List<String> carIds;
+
+    public Beacons (){
+        carIds = new ArrayList<String>();
+        mCars = new ArrayList<>();
+        nearableMap = new HashMap<String, String>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
