@@ -35,20 +35,16 @@ import static junit.framework.Assert.assertTrue;
 @SmallTest
 @RunWith(AndroidJUnit4.class)
 public class QrTest {
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private CarActivity cars;
+    private Intent intent;
 
-    public QrTest() {
-        cars = new CarActivity();
-
-    }
-
-    private Handler mHandler = new Handler(Looper.getMainLooper());
 
 
     @Rule
     public ActivityTestRule<CarActivity> nLoginRule =
-            new ActivityTestRule<CarActivity>(CarActivity.class, true, false); //{
+            new ActivityTestRule<CarActivity>(CarActivity.class); //{
 //                @Override
 //                protected Intent getActivityIntent() {
 //                    Context targetContext = InstrumentationRegistry.getInstrumentation()
@@ -74,13 +70,14 @@ public class QrTest {
         Intent intent = new Intent(targetContext, CarActivity.class);
         intent.putExtra("car", car);
 
-        nLoginRule.launchActivity(intent);
 
-        assertEquals(CarActivity.getCar().getVideoURL(), "X6BwCS90RGk" );
 
         /* Your activity is initialized and ready to go. */
                           }
         });
+        nLoginRule.launchActivity(intent);
+
+        assertEquals(CarActivity.getCar().getVideoURL(), "X6BwCS90RGk" );
     }
 }
 

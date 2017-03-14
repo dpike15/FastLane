@@ -1,9 +1,10 @@
-package com.example.hertzfastlane;
-
-/**
- * Created by stevenjoy on 3/13/17.
- */
-
+//package com.example.hertzfastlane;
+//
+///**
+// * Created by stevenjoy on 3/13/17.
+// */
+//
+//import android.content.Intent;
 //import android.support.test.rule.ActivityTestRule;
 //import android.support.test.runner.AndroidJUnit4;
 //
@@ -28,6 +29,10 @@ package com.example.hertzfastlane;
 //    @Test
 //    public void test() throws Exception {
 //        // Type text and then press the button.
+//        Car car = new Car();
+//        //Launch CarActivity
+//        Intent userActivityIntent = new Intent(VideoTest.this, CarActivity.class);
+//        userActivityIntent.putExtra("car", car);
 //        onView(withId(R.id.imageView6)).check(matches(isDisplayed()));
 //
 //    }
