@@ -1,5 +1,6 @@
 package com.example.hertzfastlane;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -12,7 +13,7 @@ import android.widget.ImageView;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends Activity {// AppCompatActivity {
 
     ImageView imageView;
     PhotoViewAttacher mAttacher;
@@ -22,8 +23,8 @@ public class MapActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map2);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+       // Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+       // setSupportActionBar(myToolbar);
 
         imageView = (ImageView) findViewById(R.id.imageView6);
         Drawable bitmap = ContextCompat.getDrawable(this, R.drawable.lot_map_2);
@@ -32,24 +33,24 @@ public class MapActivity extends AppCompatActivity {
         mAttacher = new PhotoViewAttacher(imageView);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_maps:
-                startActivity(new Intent(this, MapActivity.class));
-                return true;
-            case R.id.action_help:
-                startActivity(new Intent(this, HelpActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_maps:
+//                startActivity(new Intent(this, MapActivity.class));
+//                return true;
+//            case R.id.action_help:
+//                startActivity(new Intent(this, HelpActivity.class));
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
 }

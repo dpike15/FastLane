@@ -39,7 +39,9 @@ public class HamburgerTest {
         try {
             openDrawer(R.id.navList);
             onView(withText("Menu One")).perform(click());
-            onView(allOf(withId(R.id.drawer_layout), withText("Profile"))).check(matches(isDisplayed()));
+            onView(allOf(withId(R.id.drawer_layout), withText("Profile")));//.check(matches(isDisplayed()));
+            onView(withText("Thank You For Using Hertz!")).check(matches(isDisplayed()));
+
         }
         catch (Exception e) {
 

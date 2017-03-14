@@ -29,7 +29,6 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".QrScanner" />
-        <activity android:name=".CheckoutActivity" />
         <activity android:name=".CarActivity" />
         <activity android:name=".Beacons" />
         <activity android:name=".HelpActivity" />
@@ -47,7 +46,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".MapActivity2" />
     </application>
 
 </manifest>

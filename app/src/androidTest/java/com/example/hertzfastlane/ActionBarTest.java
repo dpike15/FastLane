@@ -9,8 +9,10 @@ import android.support.test.InstrumentationRegistry;
 
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,9 +31,10 @@ import static org.hamcrest.Matchers.anyOf;
 @RunWith(AndroidJUnit4.class)
 public class ActionBarTest {
 
+
     @Rule
-    public IntentsTestRule<LoginActivity> nActionBarRule =
-            new IntentsTestRule<LoginActivity>(LoginActivity.class);
+    public IntentsTestRule<UserActivity> nActionBarRule =
+            new IntentsTestRule<UserActivity>(UserActivity.class);
 
 
     @Test // method to test if helpActivity loads from actionBar
@@ -48,4 +51,6 @@ public class ActionBarTest {
         onView(anyOf(withText("Need Help?"), withId(R.id.action_help))).perform(click());
         intended(hasComponent(new ComponentName(getTargetContext(), HelpActivity.class)));
     }
+
+
 }

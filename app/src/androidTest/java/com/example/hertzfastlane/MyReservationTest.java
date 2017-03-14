@@ -36,4 +36,18 @@ public class MyReservationTest {
         intended(hasComponent(new ComponentName(getTargetContext(), MyReservationActivity.class)));
     }
 
+    @Test
+    public void testQR_Scanner() {
+
+        onView(withId(R.id.et_Username)).perform(typeText("dpike15")).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.b_Login)).perform(click());
+
+        onView(withId(R.id.bMyReservation)).perform(click());
+
+        onView(withId(R.id.bSelectVehicle)).perform(click());
+        intended(hasComponent(new ComponentName(getTargetContext(), QrScanner.class)));
+
+    }
+
 }

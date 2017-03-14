@@ -14,6 +14,8 @@ import static android.support.test.espresso.Espresso.openActionBarOverflowOrOpti
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.intent.Intents.intended;
@@ -52,6 +54,20 @@ public class TestLogin {
         pressBack();
         onData(is(instanceOf(LoginActivity.class)));
     }
+
+    @Test // method test if login failed
+    public void testLoginButtonFailed() throws Exception {
+
+        onView(withId(R.id.et_Username)).perform(typeText("Not dpike15")).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(R.id.b_Login)).perform(click());
+        onView(withText("Login Unsuccessful!")).check(matches(isDisplayed()));
+
+       // intended(hasComponent(new ComponentName(getTargetContext(), UserActivity.class)));
+
+    }
+
+
 
 
 }

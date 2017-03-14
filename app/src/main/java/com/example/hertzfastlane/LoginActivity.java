@@ -87,6 +87,10 @@ public class LoginActivity extends AppCompatActivity {
 
     final Context context = this;
 
+//    public LoginActivity() {
+//        Member member = new Member();
+//
+//    }
 
 
     @Override
