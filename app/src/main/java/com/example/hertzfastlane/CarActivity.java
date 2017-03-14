@@ -37,6 +37,10 @@ public class CarActivity extends YouTubeBaseActivity {
 
         Intent intent = getIntent();
         car = (Car) intent.getSerializableExtra("car");
+
+        TextView classTitle = (TextView) findViewById(R.id.tvCollection);
+        classTitle.setText(car.getVehicleClass());
+
 //
 //        TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
 //        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
@@ -97,7 +101,9 @@ public class CarActivity extends YouTubeBaseActivity {
     }
 
     public void playVideo() {
-        youTubePlayerView.initialize(PlayerConfig.API_KEY, onInitializedListener);
+        //youTubePlayerView.initialize(PlayerConfig.API_KEY, onInitializedListener);
+        youTubePlayerView.initialize("AIzaSyADBw6Hhc3WXE7GZ4U9CpA1Lyweneq15YI", onInitializedListener);
+
     }
 
     public static Car getCar() {

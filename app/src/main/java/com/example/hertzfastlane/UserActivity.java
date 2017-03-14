@@ -49,6 +49,7 @@ public class UserActivity extends AppCompatActivity {
 
     private ProgressBar spinner;
     private Member member;
+    private TextView loyalityPoints;
 
     ArrayList<Integer> carsList = new ArrayList<Integer>();
     String carClassLog;
@@ -91,6 +92,9 @@ public class UserActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         member = (Member) intent.getSerializableExtra("member");
+
+        loyalityPoints = (TextView) findViewById(R.id.tvPoints);
+        loyalityPoints.setText(member.getLoyaltyPoints() + " Points");
 
         backgroundView = (ImageView) findViewById(R.id.home_bg);
         displayBackgroundImages();
@@ -300,12 +304,14 @@ public class UserActivity extends AppCompatActivity {
         int prestigeInt = rand.nextInt(3)+0;
         int randomInt = (int) ( Math.random() * 2 + 1); // will return either 1 or 2
 
-        if(true)
+        if(member.getLoyaltyPoints() < 275)
         {
             addAdrenalineCarList();
             arrayListInt = adrenalineInt;
             loadImages(adrenalineInt);
             Log.d(TAG,"Adrenaline: " + adrenalineInt);
+        }else {
+            backgroundView.setImageResource(R.drawable.login_bg_dark_6);
         }
         carsList.clear();
     }

@@ -66,16 +66,17 @@ public class QrTest {
                 .getTargetContext();
         Car car = new Car();
         car.setVideoURL("X6BwCS90RGk");
+        car.setVehicleClass("Economy");
 
         Intent intent = new Intent(targetContext, CarActivity.class);
         intent.putExtra("car", car);
 
 
-
+                              nLoginRule.launchActivity(intent);
         /* Your activity is initialized and ready to go. */
                           }
         });
-        nLoginRule.launchActivity(intent);
+
 
         assertEquals(CarActivity.getCar().getVideoURL(), "X6BwCS90RGk" );
     }
