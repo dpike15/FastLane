@@ -16,6 +16,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static com.example.hertzfastlane.EspressoTestsMatchers.withDrawable;
 
 /**
  * Created by rodolfotrevino on 3/14/17.
@@ -33,7 +34,7 @@ public class ImageLoadingTest {
         onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.b_Login)).perform(click());
 // Type text and then press the button.
-        assertEquals(R.drawable.login_bg_dark_6, )
+        onView(withId(R.id.home_bg)).check(matches(withDrawable(R.drawable.login_bg_dark_6)));
         //ViewInteraction check = onView(withId(R.id.home_bg)).check(matches(withId(R.drawable.login_bg_dark_6)));
 
     }
