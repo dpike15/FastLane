@@ -1,11 +1,13 @@
 package com.example.hertzfastlane;
 
+import java.io.Serializable;
+
 /**
  * Created by dapik on 10/5/2016.
  */
 
 
-public class Info {
+public class Info implements Serializable{
     public String getYear() {
         return year;
     }

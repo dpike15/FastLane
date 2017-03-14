@@ -85,6 +85,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                Car car = mCars.get(position);
                //Launch CarActivity
                Intent userActivityIntent = new Intent(viewHolder.tvImage.getContext(),CarActivity.class);
+               userActivityIntent.putExtra("car", car);
                viewHolder.tvImage.getContext().startActivity(userActivityIntent);
 
                return true;

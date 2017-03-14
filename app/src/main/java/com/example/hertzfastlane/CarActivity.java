@@ -28,35 +28,17 @@ public class CarActivity extends YouTubeBaseActivity {
     Car car;
     String videoURL = "X6BwCS9ORGk";
 
-    public CarActivity (String url) {
-        videoURL = url;
+    public CarActivity () {
+        Car car = new Car();
     }
-
-//    public CarActivity() {  // maybe dont need
-//
-//        car = new Car();
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
-        youTubePlayerView = (YouTubePlayerView) findViewById(R.id.videoView);
-        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo(videoURL);
-            }
 
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-            }
-        };
-
-        playVideo();
-
-        car = TestingCarAdapter.getmCars().get(Beacons.pos);
+        Intent intent = getIntent();
+        car = (Car) intent.getSerializableExtra("car");
 
         TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
         carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
@@ -76,6 +58,21 @@ public class CarActivity extends YouTubeBaseActivity {
 
         TextView rate = (TextView) findViewById(R.id.tvRate);
         rate.setText(car.getInfo().getRate() + " USD");
+
+        youTubePlayerView = (YouTubePlayerView) findViewById(R.id.videoView);
+        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                youTubePlayer.loadVideo(car.getVideoURL());
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        };
+
+        playVideo();
 
         Button chooseButton = (Button) findViewById(R.id.bChooseVehicle);
         chooseButton.setOnClickListener(new View.OnClickListener() {

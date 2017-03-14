@@ -181,6 +181,9 @@ public class LoginActivity extends AppCompatActivity {
                 //If login success proceed to application
                 if (login) {
                     Intent userActivityIntent = new Intent(LoginActivity.this, UserActivity.class);
+                    Member member = new Member();
+                    member = user;
+                    userActivityIntent.putExtra("member", member);
                     LoginActivity.this.startActivity(userActivityIntent);
                 } else {
                     builder.setMessage("Login Unsuccessful!");

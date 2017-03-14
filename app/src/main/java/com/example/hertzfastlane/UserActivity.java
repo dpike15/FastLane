@@ -48,6 +48,7 @@ public class UserActivity extends AppCompatActivity {
     private String mActivityTitle;
 
     private ProgressBar spinner;
+    private Member member;
 
     ArrayList<Integer> carsList = new ArrayList<Integer>();
     String carClassLog;
@@ -61,14 +62,14 @@ public class UserActivity extends AppCompatActivity {
     final Context context = this;
 
     public Member getMember() {
-        return member;
+        return this.member;
     }
 
     public void setMember(Member member) {
         this.member = member;
     }
 
-    private Member member;
+
 
 
     int arrayListInt;
@@ -79,10 +80,17 @@ public class UserActivity extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
+    public void UserActivity (){
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        Intent intent = getIntent();
+        member = (Member) intent.getSerializableExtra("member");
 
         backgroundView = (ImageView) findViewById(R.id.home_bg);
         displayBackgroundImages();
@@ -151,7 +159,7 @@ public class UserActivity extends AppCompatActivity {
         final TextView tvWelcome = (TextView) findViewById(R.id.tv_welcome);
         final Button bMyReservation = (Button) findViewById(R.id.bMyReservation);
 
-        member = LoginActivity.getMember();
+        //member = LoginActivity.getMember();
 
  //       String name = member.getFirst_NM();
         tvWelcome.setText("Welcome " + member.getFirst_NM() + ",\nLet us know how we can help.");
@@ -274,22 +282,10 @@ public class UserActivity extends AppCompatActivity {
         carsList.add(R.drawable.maserati);
     }
 
-    private void addPrestigeCarList()
-    {
-        carsList.add(R.drawable.a8);
-        carsList.add(R.drawable.benz);
-        carsList.add(R.drawable.maserati);
-
-    }
     private void loadImages(int index)
     {
-        //Uri uri = Uri.parse("android.resource://com.example.hertzfastlane/drawable/benz");
-
-
         Uri uri = Uri.fromFile(new File("android.resource://com.example.hertzfastlane/drawable/" + "benz.jpg"));
         Picasso.with(context).load(carsList.get(arrayListInt)).into(backgroundView);
-       // Picasso.with(context).load("https://s3.amazonaws.com/testimagesateam/denali+copy.png").into(backgroundView);
-
     }
 
 
@@ -311,13 +307,6 @@ public class UserActivity extends AppCompatActivity {
             loadImages(adrenalineInt);
             Log.d(TAG,"Adrenaline: " + adrenalineInt);
         }
-//        else
-//        {
-//            addPrestigeCarList();
-//            arrayListInt = prestigeInt;
-//            loadImages(prestigeInt);
-//            Log.d(TAG,"Prestige: " + prestigeInt);
-//        }
         carsList.clear();
     }
 

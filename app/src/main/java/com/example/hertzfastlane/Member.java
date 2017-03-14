@@ -1,6 +1,7 @@
 package com.example.hertzfastlane;
 
 
+import java.io.Serializable;
 
 /**
  * Created by dapik on 9/22/2016.
@@ -8,7 +9,20 @@ package com.example.hertzfastlane;
  * Class Member that maps JSON data from table members
  */
 
-public class Member {
+public class Member implements Serializable {
+
+    private String first_NM;
+    private String middle_NM;
+    private String last_NM;
+    private String gender;
+    private String email;
+    private String sms_Text;
+    private String name_On_Card;
+    private String member_id;
+    private String username;
+    private String password;
+    private int loyaltyPoints;
+
     public String getMember_id() {
         return member_id;
     }
@@ -17,9 +31,6 @@ public class Member {
         this.member_id = member_id;
     }
 
-    private String member_id;
-
-    //Just a comment
     public String getUsername() {
         return username;
     }
@@ -36,9 +47,6 @@ public class Member {
         this.password = password;
     }
 
-    private String username;
-    private String password;
-
     public int getLoyaltyPoints() {
         return loyaltyPoints;
     }
@@ -46,9 +54,6 @@ public class Member {
     public void setLoyaltyPoints(int loyaltyPoints) {
         this.loyaltyPoints = loyaltyPoints;
     }
-
-    private int loyaltyPoints;
-
 
     public String getFirst_NM() {
         return first_NM;
@@ -105,18 +110,6 @@ public class Member {
     public void setName_On_Card(String name_On_Card) {
         this.name_On_Card = name_On_Card;
     }
-
-
-
-
-
-    private String first_NM;
-    private String middle_NM;
-    private String last_NM;
-    private String gender;
-    private String email;
-    private String sms_Text;
-    private String name_On_Card;
 
 }
 

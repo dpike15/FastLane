@@ -1,5 +1,6 @@
 package com.example.hertzfastlane;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,10 +11,22 @@ import java.util.List;
 /*
  * Deserializer class Car for database "Cars"
  */
-public class Car {
+public class Car implements Serializable{
     private String vin;
     private List<String> features;
     private String image;
+    private String videoURL;
+    private String summary;
+    private String imageURL;
+    private String airport;
+    private String airportCode;
+    private String city;
+    private String state;
+    private String car_id;
+    private String _rev;
+    private String status;
+    private Info info;
+    private String vehicleClass;
 
     public String getImageURL() {
         return imageURL;
@@ -23,8 +36,6 @@ public class Car {
         this.imageURL = imageURL;
     }
 
-    private String imageURL;
-
     public String getVideoURL() {
         return videoURL;
     }
@@ -33,8 +44,6 @@ public class Car {
         this.videoURL = videoURL;
     }
 
-    private String videoURL;
-
     public String getSummary() {
         return summary;
     }
@@ -42,8 +51,6 @@ public class Car {
     public void setSummary(String summary) {
         this.summary = summary;
     }
-
-    private String summary;
 
     public String getAirport() {
         return airport;
@@ -77,13 +84,6 @@ public class Car {
         this.state = state;
     }
 
-    private String airport;
-    private String airportCode;
-    private String city;
-    private String state;
-
-
-
     public String getCar_id() {
         return car_id;
     }
@@ -91,8 +91,6 @@ public class Car {
     public void setCar_id(String car_id) {
         this.car_id = car_id;
     }
-
-    private String car_id;
 
     public String getVehicleClass() {
         return vehicleClass;
@@ -102,10 +100,6 @@ public class Car {
         this.vehicleClass = vehicleClass;
     }
 
-    private String vehicleClass;
-
-
-
     public String get_rev() {
         return _rev;
     }
@@ -113,11 +107,6 @@ public class Car {
     public void set_rev(String _rev) {
         this._rev = _rev;
     }
-
-    private String _rev;
-
-    private String status;
-    private Info info;
 
     public List<String> getFeatures() {
         return features;
