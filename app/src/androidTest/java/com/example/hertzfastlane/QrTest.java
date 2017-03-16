@@ -13,6 +13,7 @@ import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.test.ActivityUnitTestCase;
 import android.util.Log;
 import android.view.View;
 

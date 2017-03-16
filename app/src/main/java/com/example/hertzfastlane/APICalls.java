@@ -1,5 +1,8 @@
 package com.example.hertzfastlane;
 
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
