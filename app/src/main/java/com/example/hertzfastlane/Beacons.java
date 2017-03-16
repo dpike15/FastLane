@@ -299,9 +299,10 @@ public class Beacons extends AppCompatActivity {
         proximityContentManager.destroy();
         beaconManager.disconnect();
     }
+    /*
 
+    public static String getCarDataString(String car_id){
 
-    public static Car getCarInfo(String car_id) {
         Car carInformation = null;
         URL url = null;
         try {
@@ -326,6 +327,42 @@ public class Beacons extends AppCompatActivity {
             JSONObject car = carMap.getJSONObject("Item");
             JSONObject carInfo = car.getJSONObject("info");
 
+            return car.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e1) {
+            e1.printStackTrace();
+        }
+        return null;
+    }
+*/
+
+    public static Car getCarInfo(String car_id) throws IOException, JSONException {
+        Car carInformation = null;
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id="
+                    + car_id);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection urlConnection = null;
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            result = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            String resultString = result.toString();
+
+            JSONObject carMap = new JSONObject(resultString);
+
+            JSONObject car = carMap.getJSONObject("Item");
+            JSONObject carInfo = car.getJSONObject("info");
+
             //Deserializing to JSON Car Information
             ObjectMapper mapper = new ObjectMapper();
 
@@ -333,12 +370,6 @@ public class Beacons extends AppCompatActivity {
 
             Info infoCar = mapper.readValue(carInfo.toString(), Info.class);
             carInformation.setInfo(infoCar);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
 
         return carInformation;
     }
@@ -442,7 +473,14 @@ public class Beacons extends AppCompatActivity {
                 String id = getCar_ID(nearableId);
                 carIds.add(id);
                 nearableMap.put(id,nearableId);
-                Car car = getCarInfo(id);
+                Car car = null;
+                try {
+                    car = getCarInfo(id);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 mCars.add(car);
             }
         };

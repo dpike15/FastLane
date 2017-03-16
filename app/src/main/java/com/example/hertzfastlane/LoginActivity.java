@@ -119,56 +119,12 @@ public class LoginActivity extends AppCompatActivity {
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
-                        URL url = null;
-                        URL url2 = null;
                         try {
-                            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readMemberInfo?username="
-                                    + username);
-
-                            HttpURLConnection urlConnection = null;
-                            HttpURLConnection urlConnection2 = null;
-
-                            urlConnection = (HttpURLConnection) url.openConnection();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                            result = new StringBuilder();
-                            String line;
-                            while ((line = reader.readLine()) != null) {
-                                result.append(line);
-                            }
-                            String resultString = result.toString();
-                            //Log.d("TAG",resultString);
-                            JSONObject hash = new JSONObject(resultString);
-                            JSONObject hashcode = hash.getJSONObject("Item");
-                            //Log.d("TAG",(String)hashcode.get("hash"));
-                            url2 = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/hashedLogin?hash=" + hashcode.get("hash"));
-                            StringBuilder result2 = null;
-
-                            urlConnection2 = (HttpURLConnection) url2.openConnection();
-                            BufferedReader reader2 = new BufferedReader(new InputStreamReader(url2.openStream()));
-                            result2 = new StringBuilder();
-                            String line2;
-                            while ((line2 = reader2.readLine()) != null) {
-                                result2.append(line2);
-                            }
-                            String resultString2 = result2.toString();
-                            //Log.d("TAG",resultString2);
-                            JSONObject memberItem = new JSONObject(resultString2);
-                            JSONObject member = memberItem.getJSONObject("Item");
-
-                           // Log.d("Tag", member.toString());
-                            ObjectMapper mapper = new ObjectMapper();
-
-                            user = mapper.readValue(member.toString(), Member.class);
-                           // Log.d("Tag", user.getPassword());
-
-                            if(password.equals(user.getPassword())) {
-                                login = true;
-                            }
-
+                            login = APICalls.login(username,password);
                         } catch (IOException e) {
                             e.printStackTrace();
-                        } catch (JSONException e1) {
-                            e1.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
 
@@ -186,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (login) {
                     Intent userActivityIntent = new Intent(LoginActivity.this, UserActivity.class);
                     Member member = new Member();
-                    member = user;
+                    member = APICalls.getUser();
                     userActivityIntent.putExtra("member", member);
                     LoginActivity.this.startActivity(userActivityIntent);
                 } else {
@@ -247,32 +203,8 @@ public class LoginActivity extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
     }
 
-    private static String convertStreamToString(InputStream is) {
-	    /*
-	     * To convert the InputStream to String we use the BufferedReader.readLine()
-	     * method. We iterate until the BufferedReader return null which means
-	     * there's no more data to read. Each line will appended to a StringBuilder
-	     * and returned as String.
-	     */
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
 
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
+
 
 
 }

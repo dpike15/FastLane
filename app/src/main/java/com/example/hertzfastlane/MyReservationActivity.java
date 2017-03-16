@@ -73,9 +73,16 @@ public class MyReservationActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                member = LoginActivity.getMember();
+                member = APICalls.getUser();
 
-               Reservation memberReservation = getReservation(member);
+                Reservation memberReservation = null;
+                try {
+                    memberReservation = getReservation(member);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 //OLD BLUEMIX CODE (GAY)
                 /*
@@ -299,7 +306,7 @@ public class MyReservationActivity extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
     }
 
-    private Reservation getReservation(Member member){
+    private Reservation getReservation(Member member) throws JSONException, IOException {
         StringBuilder result = null;
         URL url = null;
         try {
@@ -310,7 +317,7 @@ public class MyReservationActivity extends AppCompatActivity {
         }
 
         HttpURLConnection urlConnection = null;
-        try {
+
             urlConnection = (HttpURLConnection) url.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             result = new StringBuilder();
@@ -333,13 +340,9 @@ public class MyReservationActivity extends AppCompatActivity {
 
             return reservation;
 
-        }catch(IOException e){
-            e.printStackTrace();
-        }catch(JSONException e1){
-            e1.printStackTrace();
-        }
 
-        return null;
+
+
 
     }
 
