@@ -166,7 +166,7 @@ public class APICalls {
             result.append(line);
         }
         String resultString = result.toString();
-        Log.d("TAGGY", result.toString());
+       // Log.d("TAGGY", result.toString());
 
         JSONObject resMap = new JSONObject(resultString);
 

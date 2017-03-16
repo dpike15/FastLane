@@ -1,13 +1,15 @@
 package com.example.hertzfastlane;
 
-import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+//import android.support.test.espresso.intent.rule.IntentsTestRule;
+//import android.support.test.rule.ActivityTestRule;
+//import android.support.test.runner.AndroidJUnit4;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.Api;
 
 import junit.framework.TestCase;
+import junit.textui.TestRunner;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,17 +30,29 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Created by dapik on 3/15/2017.
  */
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.mockito.Mockito.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import android.content.SharedPreferences;
 
-@RunWith(AndroidJUnit4.class)
-public class ApiTest extends TestCase {
+@RunWith(MockitoJUnitRunner.class)
+public class ApiTest {
 
-//    @Rule
-//    public ActivityTestRule<APICalls> nActionBarRule =
-//            new ActivityTestRule<APICalls>(APICalls.class);
+//    @Mock
+//    Context mMockContext;
 
     @Test
     public void testLoginApi() throws IOException, JSONException {
+
+//        APICalls result = new APICalls();
+//        String result2 = String.valueOf(APICalls.login("dpike15","test"));
+
         assertTrue(APICalls.login("dpike15","test"));
+
     }
 
     @Test

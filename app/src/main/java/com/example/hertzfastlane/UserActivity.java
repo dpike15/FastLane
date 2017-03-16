@@ -163,7 +163,7 @@ public class UserActivity extends AppCompatActivity {
         final TextView tvWelcome = (TextView) findViewById(R.id.tv_welcome);
         final Button bMyReservation = (Button) findViewById(R.id.bMyReservation);
 
-        member = LoginActivity.getMember();
+        member = APICalls.getUser();
 
         String name = member.getFirst_NM();
         tvWelcome.setText("Welcome " + member.getFirst_NM() + ",\nLet us know how we can help.");
