@@ -65,7 +65,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
         viewHolder.dailyRateTextView.setText(mCars.get(position).getInfo().getRate());
 
         //Image from S3 Bucket
-        Picasso.with(mContext)
+        Picasso.with(viewHolder.makeModelTextView.getContext())
                 .load(mCars.get(position).getImageURL())
                 .config(Bitmap.Config.RGB_565)
                 .error(R.drawable.a8)

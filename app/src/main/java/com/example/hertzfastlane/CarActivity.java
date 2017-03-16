@@ -39,27 +39,27 @@ public class CarActivity extends YouTubeBaseActivity {
         car = (Car) intent.getSerializableExtra("car");
 
         TextView classTitle = (TextView) findViewById(R.id.tvCollection);
-        classTitle.setText(car.getVehicleClass());
+        classTitle.setText(car.getVehicleClass().toUpperCase());
 
 //
-//        TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
-//        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
-//
-//        TextView mpg = (TextView) findViewById(R.id.tvMPG);
-//        mpg.setText(car.getInfo().getMpgCity() + " MPG");
-//
-//        TextView passengers = (TextView) findViewById(R.id.tvPassenger);
-//        passengers.setText("Passengers: " + car.getInfo().getPassengers());
-//
-//        TextView features = (TextView) findViewById(R.id.tvSatRadio);
-//        features.setText(car.getFeatures().get(0));
-//
-//        TextView summary = (TextView) findViewById(R.id.tvSummary);
-//        // summary.setText("The Cadillac 2016 CTS Sedan turns every drive into a masterful experience with assured performance and ingenious technology.");
-//        summary.setText(car.getSummary());
-//
-//        TextView rate = (TextView) findViewById(R.id.tvRate);
-//        rate.setText(car.getInfo().getRate() + " USD");
+        TextView carTitle = (TextView) findViewById(R.id.tvMakeModel);
+        carTitle.setText(car.getInfo().getYear() + " " + car.getInfo().getMake() + " " + car.getInfo().getModel());
+
+        TextView mpg = (TextView) findViewById(R.id.tvMPG);
+        mpg.setText(car.getInfo().getMpgCity() + " MPG");
+
+        TextView passengers = (TextView) findViewById(R.id.tvPassenger);
+        passengers.setText("Passengers: " + car.getInfo().getPassengers());
+
+        TextView features = (TextView) findViewById(R.id.tvSatRadio);
+        features.setText(car.getFeatures().get(0));
+
+        TextView summary = (TextView) findViewById(R.id.tvSummary);
+        // summary.setText("The Cadillac 2016 CTS Sedan turns every drive into a masterful experience with assured performance and ingenious technology.");
+        summary.setText(car.getSummary());
+
+        TextView rate = (TextView) findViewById(R.id.tvRate);
+        rate.setText(car.getInfo().getRate() + " USD");
 
         youTubePlayerView = (YouTubePlayerView) findViewById(R.id.videoView);
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {

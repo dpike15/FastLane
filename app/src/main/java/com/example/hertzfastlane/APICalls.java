@@ -1,8 +1,5 @@
 package com.example.hertzfastlane;
 
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
@@ -16,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Created by dapik on 3/15/2017.
@@ -166,7 +165,7 @@ public class APICalls {
             result.append(line);
         }
         String resultString = result.toString();
-        Log.d("TAGGY", result.toString());
+
 
         JSONObject resMap = new JSONObject(resultString);
 
@@ -203,7 +202,7 @@ public class APICalls {
             result.append(line);
         }
         String resultString = result.toString();
-        Log.d("TAGGY", result.toString());
+
 
         JSONObject resMap = new JSONObject(resultString);
 
@@ -250,6 +249,59 @@ public class APICalls {
 
             return car_id;
 
+    }
+
+    public static JSONArray findFleet(String city,String carType)throws IOException, JSONException{
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/findFleet?city="
+                    + city + "&carType=" + carType);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection urlConnection = null;
+
+        urlConnection = (HttpURLConnection) url.openConnection();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        StringBuilder result = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            result.append(line);
+        }
+        String resultString = result.toString();
+
+        JSONObject map = new JSONObject(resultString);
+
+        JSONArray cars = map.getJSONArray("Items");
+
+        return cars;
+
+    }
+
+    public static JSONArray findFleetAirportCode(String airportCode)throws IOException, JSONException{
+        URL url = null;
+        try {
+            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/findFleetAirport?airportCode="
+                    + airportCode);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection urlConnection = null;
+
+        urlConnection = (HttpURLConnection) url.openConnection();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        StringBuilder result = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            result.append(line);
+        }
+        String resultString = result.toString();
+
+        JSONObject map = new JSONObject(resultString);
+
+        JSONArray cars = map.getJSONArray("Items");
+
+        return cars;
     }
 
 

@@ -47,6 +47,7 @@ configurations.all {
 
 apply plugin: 'jacoco'
 dependencies {
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
@@ -77,6 +78,8 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     androidTestCompile 'junit:junit:4.12'
     compile files('libs/YouTubeAndroidPlayerApi.jar')
+    testCompile 'org.json:json:20140107'
+    testCompile files('libs/json.jar')
 }
 
 

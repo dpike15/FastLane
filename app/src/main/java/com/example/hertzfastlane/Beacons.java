@@ -112,13 +112,13 @@ public class Beacons extends AppCompatActivity {
 
     public static int pos;
     private List<String> carIds;
-
+/*
     public Beacons (){
         carIds = new ArrayList<String>();
         mCars = new ArrayList<>();
         nearableMap = new HashMap<String, String>();
     }
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,7 +133,7 @@ public class Beacons extends AppCompatActivity {
 
         carIds = new ArrayList<String>();
 
-        mCars = new ArrayList<>();
+        mCars = new ArrayList<Car>();
         adapter = new TestingCarAdapter(mCars);
         rvTestingCars.setAdapter(adapter);
 
@@ -161,17 +161,43 @@ public class Beacons extends AppCompatActivity {
 
                 clearList();
 
+
                 /** loops through nearable ID's*/
                 for (Nearable nearable : nearables) {
                     if (!nearableMap.containsValue(nearable.identifier)) {
                        nearableId = nearable.identifier;
-                        beaconsInRange(nearableId);
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    beaconsInRange(nearableId);
+                                   //adapter.notifyDataSetChanged();
+
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+                        Thread thread = new Thread(runnable);
+                        thread.start();
+
+                        try {
+                            thread.join();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }
 
+                setBeaconBackground();
                 adapter.notifyDataSetChanged();
 
-                setBeaconBackground();
+
 
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
@@ -465,33 +491,17 @@ public class Beacons extends AppCompatActivity {
         carIds.clear();
     }
 
-    public void beaconsInRange(String nearable){
+    public void beaconsInRange(String nearable)throws IOException,JSONException{
         nearableId = nearable;
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
+
                 String id = getCar_ID(nearableId);
                 carIds.add(id);
                 nearableMap.put(id,nearableId);
                 Car car = null;
-                try {
-                    car = getCarInfo(id);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
+                car = getCarInfo(id);
+
                 mCars.add(car);
             }
-        };
 
-        Thread thread = new Thread(runnable);
-        thread.start();
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }
