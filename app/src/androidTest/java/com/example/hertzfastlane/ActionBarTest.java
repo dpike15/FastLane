@@ -33,8 +33,8 @@ public class ActionBarTest {
 
 
     @Rule
-    public IntentsTestRule<UserActivity> nActionBarRule =
-            new IntentsTestRule<UserActivity>(UserActivity.class);
+    public IntentsTestRule<LoginActivity> nActionBarRule =
+            new IntentsTestRule<LoginActivity>(LoginActivity.class);
 
 
     @Test // method to test if helpActivity loads from actionBar

@@ -33,9 +33,8 @@ public class ImageLoadingTest {
         onView(withId(R.id.et_Username)).perform(typeText("dpike15")).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
         onView(withId(R.id.b_Login)).perform(click());
-// Type text and then press the button.
+        // Type text and then press the button.
         onView(withId(R.id.home_bg)).check(matches(withDrawable(R.drawable.login_bg_dark_6)));
         //ViewInteraction check = onView(withId(R.id.home_bg)).check(matches(withId(R.drawable.login_bg_dark_6)));
-
     }
 }

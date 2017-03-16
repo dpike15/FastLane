@@ -3,6 +3,7 @@ package com.example.hertzfastlane;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
@@ -18,8 +19,10 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.widget.GridLayout.HORIZONTAL;
@@ -48,13 +51,15 @@ public class BeaconsTest {
                 String nearables = "624ec2233b5f0546";
                 Beacons beacon1 = new Beacons();
                 beacon1.beaconsInRange(nearables);
+               // onView(withId(R.id.rvTestingCar)).perform(RecyclerViewActions.scrollToPosition(3));
+
 
                 Log.d("TestingTag", "mCars = " + beacon1.nearableMap.containsValue(nearables));
                 assertTrue(beacon1.nearableMap.containsValue(nearables));
+
             }
         });
     }
-
 
 }
 
