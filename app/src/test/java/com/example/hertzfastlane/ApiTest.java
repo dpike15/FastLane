@@ -25,20 +25,20 @@ public class ApiTest {
         assertEquals(member.getFirst_NM(),"Derek");
     }
 
-    @Test(timeout = 500)
+    @Test(timeout = 1000)
     public void testLoginApi2() throws IOException, JSONException {
         assertFalse(APICalls.login("dpike15","da"));
     }
 
 
 
-    @Test(expected = IOException.class,timeout = 500)
+    @Test(expected = IOException.class,timeout = 1000)
     public void testLoginApi3() throws IOException, JSONException {
         assertFalse(APICalls.login("",""));
     }
 
 
-    @Test(expected = JSONException.class,timeout = 500)
+    @Test(expected = JSONException.class,timeout = 1000)
     public void testLoginApi4() throws IOException, JSONException {
         assertFalse(APICalls.login("daps",""));
     }
@@ -169,7 +169,7 @@ public class ApiTest {
         assertEquals(3,APICalls.findFleet(city,carType).length());
     }
 
-    @Test(expected=IOException.class,timeout = 900)
+    @Test(expected=IOException.class,timeout = 1700)
     public void testFleetCityCarTypeFail()throws JSONException,IOException{
         String city = "Nashville";
         String carType = "";

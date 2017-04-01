@@ -32,28 +32,12 @@ public class APICalls {
     }
 
     public static boolean login(String username, String password) throws IOException, JSONException {
-        URL url = null;
+
         URL url2 = null;
-
-        url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readMemberInfo?username="
-                + username);
-
-        HttpURLConnection urlConnection = null;
         HttpURLConnection urlConnection2 = null;
 
-        urlConnection = (HttpURLConnection) url.openConnection();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder result = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
-        }
-        String resultString = result.toString();
-        //Log.d("TAG",resultString);
-        JSONObject hash = new JSONObject(resultString);
-        JSONObject hashcode = hash.getJSONObject("Item");
-        //Log.d("TAG",(String)hashcode.get("hash"));
-        url2 = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/hashedLogin?hash=" + hashcode.get("hash"));
+
+        url2 = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/hashedLogin?hash=" + username);
         StringBuilder result2 = null;
 
         urlConnection2 = (HttpURLConnection) url2.openConnection();
