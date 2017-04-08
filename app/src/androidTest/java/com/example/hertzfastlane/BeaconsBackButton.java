@@ -45,7 +45,7 @@ public class BeaconsBackButton {
 
         } catch (Exception e) {
         }  // clicks on need help, loads intented help activity
- //       onView(anyOf(withText("Beacon"), withId(R.id.Beacon))).perform(click());
+         onView(anyOf(withText("Beacon"), withId(R.id.Beacon))).perform(click());
 
         pressBack();
         onData(is(instanceOf(UserActivity.class)));

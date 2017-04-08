@@ -41,7 +41,7 @@ public class QrTesting {
             public void run() {
                 String nearables = "624ec2233b5f0546";
                 Beacons beacon1 = new Beacons();
-                beacon1.beaconsInRange(nearables);
+                beacon1.nearableMap.put("624ec2233b5f0546","624ec2233b5f0546");
 
                 Log.d("TestingTag", "mCars = " + beacon1.nearableMap.containsValue(nearables));
                 assertTrue(beacon1.nearableMap.containsValue(nearables));

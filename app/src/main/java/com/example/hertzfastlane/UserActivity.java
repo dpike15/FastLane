@@ -304,7 +304,7 @@ public class UserActivity extends AppCompatActivity {
         int prestigeInt = rand.nextInt(3)+0;
         int randomInt = (int) ( Math.random() * 2 + 1); // will return either 1 or 2
 
-        if(member.getLoyaltyPoints() > 275)
+        if(member.getLoyaltyPoints() < 275)
         {
             addAdrenalineCarList();
             arrayListInt = adrenalineInt;

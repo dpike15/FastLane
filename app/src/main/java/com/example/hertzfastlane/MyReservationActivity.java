@@ -40,18 +40,8 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MyReservationActivity extends AppCompatActivity {
-    private Car car;
     private Member member;
-    private static String result ="";
-    public static final String URL = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/reservations/_find";
-    private static StringEntity entity;
-    private Reservation memberReservation;
     private ProgressBar spinner;
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     private GoogleApiClient client;
 
     @Override
@@ -66,10 +56,6 @@ public class MyReservationActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         //Getting user information from login
-
-
-
-
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -84,73 +70,6 @@ public class MyReservationActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                //OLD BLUEMIX CODE (GAY)
-                /*
-                    //JSON Query Paramaters
-                String selectorRes = "{\"selector\": {\"customer_Id\": \"" + member.getMember_id() + "\"}}";
-
-                HttpClient httpclient = new DefaultHttpClient();
-
-
-                HttpPost request = new HttpPost(URL);
-
-                try {
-                    entity = new StringEntity(selectorRes);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                request.setEntity(entity);
-                request.setHeader("Accept", "application/json");
-                request.setHeader("Content-type", "application/json");
-
-                HttpResponse response;
-
-                //Get RESERVATION INFORMATION
-                try {
-                    response = httpclient.execute(request);
-                    HttpEntity entity = response.getEntity();
-                    InputStream instream = entity.getContent();
-                    //JSON RESPONSE AS STRING
-                    String result = convertStreamToString(instream);
-                    JSONObject json = new JSONObject(result);
-                    //RETURNED AS ARRAY OF DOCUMENTS TITLED DOCS
-                    JSONArray array = json.getJSONArray("docs");
-                    JSONObject jsonRes = (JSONObject) array.get(0);
-                    String reservation = jsonRes.toString();
-                    ObjectMapper mapperReservation = new ObjectMapper();
-                    //PULL CAR VIN FROM RESERVATION NUMBER
-                    memberReservation = mapperReservation.readValue(reservation, Reservation.class);
-                    instream.close();
-
-                    //URL CALL FOR CARS DATABASE
-                    String URLGET = "https://cad91ce6-3bd7-475a-97ed-7fb3dfe82486-bluemix.cloudant.com/cars/"
-                            + memberReservation.getCar_Vin();
-
-                    HttpGet get = new HttpGet(URLGET);
-
-                    //Web Service
-                    HttpResponse responseCar = httpclient.execute(get);
-                    HttpEntity entityCar = responseCar.getEntity();
-                    InputStream instreamCar = entityCar.getContent();
-                    String resultCar = convertStreamToString(instreamCar);
-
-                    //Deserializing
-                    JSONObject cars = new JSONObject(resultCar);
-                    JSONObject info = cars.getJSONObject("info");
-                    String infoString = info.toString();
-                    instreamCar.close();
-
-                    //Deserializing to JSON Car Information
-                    ObjectMapper mapper = new ObjectMapper();
-
-                    car = mapper.readValue(resultCar, Car.class);
-
-                    Info infoCar = mapper.readValue(infoString,Info.class);
-                    car.setInfo(infoCar);
-
-                    */
-
                     //Setting textViews with Dynamic Data
 
                     //Car name
@@ -159,19 +78,19 @@ public class MyReservationActivity extends AppCompatActivity {
 
                     //Confirmation Number
                     TextView confirmation = (TextView) findViewById(R.id.tvConfirmationNumber);
-                    confirmation.setText((memberReservation.getReservation_id()));
+                    //confirmation.setText((memberReservation.getReservation_id()));
 
                     //Pick up Location
                     TextView pickupLocation = (TextView) findViewById(R.id.tvPickUpLocation);
-                    pickupLocation.setText(memberReservation.getPick_Up());
+                    //pickupLocation.setText(memberReservation.getPick_Up());
 
                     //Return Location
                     TextView returnLocation = (TextView) findViewById(R.id.tvReturnLocation);
-                    returnLocation.setText(memberReservation.getReturnLocation());
+                    //returnLocation.setText(memberReservation.getReturnLocation());
 
                     //Reservation Date
                     TextView reservationDate = (TextView) findViewById(R.id.tvReservationDate);
-                    reservationDate.setText("Reservation Date: " + memberReservation.getPick_Up_Date());
+                    //reservationDate.setText("Reservation Date: " + memberReservation.getPick_Up_Date());
 
 
 

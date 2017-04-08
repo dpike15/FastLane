@@ -65,6 +65,10 @@ public class Beacons extends AppCompatActivity {
         return car_id;
     }
 
+    public static Map<String, String> getNearableMap(){
+        return nearableMap;
+    }
+
     public static void setCar_id(String car_id) {
         Beacons.car_id = car_id;
     }
@@ -110,16 +114,16 @@ public class Beacons extends AppCompatActivity {
 
     private static Context context = null;
 
-
-    public static int pos;
     private List<String> carIds;
-/*
-    public Beacons (){
+
+
+    public Beacons () {
         carIds = new ArrayList<String>();
-        mCars = new ArrayList<>();
         nearableMap = new HashMap<String, String>();
+        mCars = new ArrayList<Car>();
     }
-*/
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -271,14 +275,14 @@ public class Beacons extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        Log.d("Message", "OnBackPressed");
-        super.onBackPressed();
-        Intent userActivityIntent = new Intent(Beacons.this, UserActivity.class);
-        Beacons.this.startActivity(userActivityIntent);
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Log.d("Message", "OnBackPressed");
+//        super.onBackPressed();
+//        Intent userActivityIntent = new Intent(Beacons.this, UserActivity.class);
+//        Beacons.this.startActivity(userActivityIntent);
+//
+//    }
 
     public void setBeaconBackground() {
         if(!mCars.isEmpty()){
@@ -501,11 +505,20 @@ public class Beacons extends AppCompatActivity {
         nearableId = nearable;
 
                 String id = getCar_ID(nearableId);
-                carIds.add(id);
+        Log.d("id", id);
+
+        if(id == null) {
+            carIds.add("12345");
+        } else {
+            carIds.add(id);
+        }
+
                 nearableMap.put(id,nearableId);
                 Car car = null;
 
                 car = getCarInfo(id);
+        if (car == null)
+            car = new Car();
 
                 mCars.add(car);
             }
