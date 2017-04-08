@@ -2,6 +2,9 @@ package com.example.hertzfastlane;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
+import android.media.MediaPlayer;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -9,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -16,6 +20,8 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+
+import java.net.URI;
 
 
 public class CarActivity extends YouTubeBaseActivity {
@@ -61,6 +67,18 @@ public class CarActivity extends YouTubeBaseActivity {
         TextView rate = (TextView) findViewById(R.id.tvRate);
         rate.setText(car.getInfo().getRate() + " USD");
 
+        VideoView videoView = ((VideoView) findViewById(R.id.videoView));
+
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        MediaController mc = new MediaController(context);
+        mc.setMediaPlayer((VideoView)findViewById(R.id.videoView));
+        ((VideoView) findViewById(R.id.videoView)).setMediaController(mc);
+        Uri clip = Uri.parse(car.getVideoURL());
+        videoView.setVideoURI(clip);
+        videoView.requestFocus();
+        videoView.start();
+
+/*
         youTubePlayerView = (YouTubePlayerView) findViewById(R.id.videoView);
         onInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
@@ -75,7 +93,7 @@ public class CarActivity extends YouTubeBaseActivity {
         };
 
         playVideo();
-
+**/
         Button chooseButton = (Button) findViewById(R.id.bChooseVehicle);
         chooseButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,7 +23,7 @@
         android:textColor="@color/colorAccent"
         android:textSize="22sp" />
 
-    <com.google.android.youtube.player.YouTubePlayerView
+    <VideoView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_below="@id/tvCollection"

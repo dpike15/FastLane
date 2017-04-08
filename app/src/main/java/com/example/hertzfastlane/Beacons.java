@@ -85,6 +85,7 @@ public class Beacons extends AppCompatActivity {
 
     private SecureRegion secureRegion;
     private SecureRegion secureRegion2;
+    private SecureRegion secureRegion3;
 
 
     private static final Region ALL_ESTIMOTE_BEACONS = new Region("rid", ESTIMOTE_PROXIMITY_UUID, null, null);
@@ -141,6 +142,7 @@ public class Beacons extends AppCompatActivity {
         // use for proximity Beacons STOP RANGING
         secureRegion = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 20930, 14720);
         secureRegion2 = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 26788, 12168);
+        secureRegion3 = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 20859, 25702);
 
         Log.d("Tag", "Beacons");
         proximityContentManager = new ProximityContentManager(this,
@@ -148,7 +150,8 @@ public class Beacons extends AppCompatActivity {
                         /** Proximity Beacons Identifier, minor and major*/
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 32725, 55822),
                         new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 20930, 14720),
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 26788, 12168)), //
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 26788, 12168),
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 3138, 64033)), //
 
                 new EstimoteCloudBeaconDetailsFactory());
 
@@ -236,7 +239,10 @@ public class Beacons extends AppCompatActivity {
                     backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 
                     //GATE ACTOR
-                    if (beaconDetails.getBeaconName().equals("ice")) {
+                    if (beaconDetails.getBeaconName().equals("lemon")) {
+
+                        Log.d("Found", " lemon");
+                        Log.d("Color", beaconDetails.getBeaconColor().toString());
 
 
                         Runnable runnable = new Runnable() {
