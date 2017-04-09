@@ -252,9 +252,9 @@ public class Beacons extends AppCompatActivity {
                         Runnable runnable = new Runnable() {
                             @Override
                             public void run() {
-                                String result = checkExitConditions("1");
+                                //String result = checkExitConditions("1");
 
-                                Log.d("result", result);
+                                //Log.d("result", result);
                             }
                         };
 
@@ -410,52 +410,52 @@ public class Beacons extends AppCompatActivity {
         return carInformation;
     }
 
-    private String checkExitConditions(String member_id) {
-
-
-        URL url = null;
-        try {
-            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
-                    + member_id);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        HttpURLConnection urlConnection = null;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            result = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            String resultString = result.toString();
-            Log.d("TAGGY", result.toString());
-
-            JSONObject resMap = new JSONObject(resultString);
-
-            JSONArray reses = resMap.getJSONArray("Items");
-            JSONObject res = reses.getJSONObject(0);
-
-            String car_vin = res.getString("car_Vin");
-            Log.d("result", car_vin);
-            Log.d("result", res.getString("status"));
-
-            if (carIds.contains(car_vin) && res.getString("status").equals("active")) {
-
-                return "Success!";
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
-
-
-        return "FAIL";
-    }
+//    private String checkExitConditions(String member_id) {
+//
+//
+//        URL url = null;
+//        try {
+//            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
+//                    + member_id);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        HttpURLConnection urlConnection = null;
+//        try {
+//            urlConnection = (HttpURLConnection) url.openConnection();
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//            result = new StringBuilder();
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                result.append(line);
+//            }
+//            String resultString = result.toString();
+//            Log.d("TAGGY", result.toString());
+//
+//            JSONObject resMap = new JSONObject(resultString);
+//
+//            JSONArray reses = resMap.getJSONArray("Items");
+//            JSONObject res = reses.getJSONObject(0);
+//
+//            String car_vin = res.getString("car_Vin");
+//            Log.d("result", car_vin);
+//            Log.d("result", res.getString("status"));
+//
+//            if (carIds.contains(car_vin) && res.getString("status").equals("active")) {
+//
+//                return "Success!";
+//            }
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e1) {
+//            e1.printStackTrace();
+//        }
+//
+//
+//        return "FAIL";
+//    }
 
     private String getCar_ID(String beacon_id){
 

@@ -147,21 +147,21 @@ public class MyReservationActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    public static Drawable LoadImage(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "SrcName");
-
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private void sendSMS(String phoneNumber, String message) {
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, null, null);
-    }
+//    public static Drawable LoadImage(String url) {
+//        try {
+//            InputStream is = (InputStream) new URL(url).getContent();
+//            Drawable d = Drawable.createFromStream(is, "SrcName");
+//
+//            return d;
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+//
+//    private void sendSMS(String phoneNumber, String message) {
+//        SmsManager sms = SmsManager.getDefault();
+//        sms.sendTextMessage(phoneNumber, null, message, null, null);
+//    }
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -185,19 +185,19 @@ public class MyReservationActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_maps:
-                startActivity(new Intent(this, MapActivity.class));
-                return true;
-            case R.id.action_help:
-                startActivity(new Intent(this, HelpActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_maps:
+//                startActivity(new Intent(this, MapActivity.class));
+//                return true;
+//            case R.id.action_help:
+//                startActivity(new Intent(this, HelpActivity.class));
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     @Override
     public void onStart() {
@@ -265,73 +265,73 @@ public class MyReservationActivity extends AppCompatActivity {
 
     }
 
-    private Car getCarInfo(String car_id) {
-        StringBuilder result = null;
-        Car carInformation = null;
-        URL url = null;
-        try {
-            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id="
-                    + car_id);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        HttpURLConnection urlConnection = null;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            result = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            String resultString = result.toString();
+//    private Car getCarInfo(String car_id) {
+//        StringBuilder result = null;
+//        Car carInformation = null;
+//        URL url = null;
+//        try {
+//            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id="
+//                    + car_id);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        HttpURLConnection urlConnection = null;
+//        try {
+//            urlConnection = (HttpURLConnection) url.openConnection();
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//            result = new StringBuilder();
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                result.append(line);
+//            }
+//            String resultString = result.toString();
+//
+//            JSONObject carMap = new JSONObject(resultString);
+//
+//            JSONObject car = carMap.getJSONObject("Item");
+//            JSONObject carInfo = car.getJSONObject("info");
+//
+//            //Deserializing to JSON Car Information
+//            ObjectMapper mapper = new ObjectMapper();
+//
+//            carInformation = mapper.readValue(car.toString(), Car.class);
+//
+//            Info infoCar = mapper.readValue(carInfo.toString(), Info.class);
+//            carInformation.setInfo(infoCar);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e1) {
+//            e1.printStackTrace();
+//        }
+//
+//        return carInformation;
+//    }
 
-            JSONObject carMap = new JSONObject(resultString);
-
-            JSONObject car = carMap.getJSONObject("Item");
-            JSONObject carInfo = car.getJSONObject("info");
-
-            //Deserializing to JSON Car Information
-            ObjectMapper mapper = new ObjectMapper();
-
-            carInformation = mapper.readValue(car.toString(), Car.class);
-
-            Info infoCar = mapper.readValue(carInfo.toString(), Info.class);
-            carInformation.setInfo(infoCar);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
-
-        return carInformation;
-    }
-
-    public static String convertStreamToString(InputStream is) {
-	    /*
-	     * To convert the InputStream to String we use the BufferedReader.readLine()
-	     * method. We iterate until the BufferedReader return null which means
-	     * there's no more data to read. Each line will appended to a StringBuilder
-	     * and returned as String.
-	     */
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        String line = null;
-        try {
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return sb.toString();
-    }
+//    public static String convertStreamToString(InputStream is) {
+//	    /*
+//	     * To convert the InputStream to String we use the BufferedReader.readLine()
+//	     * method. We iterate until the BufferedReader return null which means
+//	     * there's no more data to read. Each line will appended to a StringBuilder
+//	     * and returned as String.
+//	     */
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+//        StringBuilder sb = new StringBuilder();
+//
+//        String line = null;
+//        try {
+//            while ((line = reader.readLine()) != null) {
+//                sb.append(line + "\n");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                is.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return sb.toString();
+//    }
 }

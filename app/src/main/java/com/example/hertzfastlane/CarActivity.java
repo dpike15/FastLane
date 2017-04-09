@@ -109,20 +109,20 @@ public class CarActivity extends YouTubeBaseActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        Log.d("Message", "OnBackPressed");
-        super.onBackPressed();
-        Intent userActivityIntent = new Intent(CarActivity.this, Beacons.class);
-        CarActivity.this.startActivity(userActivityIntent);
+//    @Override
+//    public void onBackPressed() {
+//        Log.d("Message", "OnBackPressed");
+//        super.onBackPressed();
+//        Intent userActivityIntent = new Intent(CarActivity.this, Beacons.class);
+//        CarActivity.this.startActivity(userActivityIntent);
+//
+//    }
 
-    }
-
-    public void playVideo() {
-        //youTubePlayerView.initialize(PlayerConfig.API_KEY, onInitializedListener);
-        youTubePlayerView.initialize("AIzaSyADBw6Hhc3WXE7GZ4U9CpA1Lyweneq15YI", onInitializedListener);
-
-    }
+//    public void playVideo() {
+//        //youTubePlayerView.initialize(PlayerConfig.API_KEY, onInitializedListener);
+//        youTubePlayerView.initialize("AIzaSyADBw6Hhc3WXE7GZ4U9CpA1Lyweneq15YI", onInitializedListener);
+//
+//    }
 
     public static Car getCar() {
         return car;

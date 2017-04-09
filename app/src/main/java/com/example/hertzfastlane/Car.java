@@ -28,6 +28,7 @@ public class Car implements Serializable{
     private Info info;
     private String vehicleClass;
 
+
     public String getImageURL() {
         return imageURL;
     }

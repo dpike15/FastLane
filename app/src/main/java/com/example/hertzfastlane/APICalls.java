@@ -102,35 +102,35 @@ public class APICalls {
         return carInformation;
     }
 
-    public static Weather getWeather(String lat, String lon) throws IOException, JSONException {
-        Weather weatherData;
-        URL url = null;
-        try {
-            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/openWeather?lat="
-                    + lat + "&lon=" + lon);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        HttpURLConnection urlConnection = null;
-
-        urlConnection = (HttpURLConnection) url.openConnection();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder result = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
-        }
-        String resultString = result.toString();
-
-        JSONObject weatherResult = new JSONObject(resultString);
-
-        //Deserializing to JSON Weather Information
-        ObjectMapper mapper = new ObjectMapper();
-
-        weatherData = mapper.readValue(weatherResult.toString(), Weather.class);
-
-        return weatherData;
-    }
+//    public static Weather getWeather(String lat, String lon) throws IOException, JSONException {
+//        Weather weatherData;
+//        URL url = null;
+//        try {
+//            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/openWeather?lat="
+//                    + lat + "&lon=" + lon);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        HttpURLConnection urlConnection = null;
+//
+//        urlConnection = (HttpURLConnection) url.openConnection();
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//        StringBuilder result = new StringBuilder();
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            result.append(line);
+//        }
+//        String resultString = result.toString();
+//
+//        JSONObject weatherResult = new JSONObject(resultString);
+//
+//        //Deserializing to JSON Weather Information
+//        ObjectMapper mapper = new ObjectMapper();
+//
+//        weatherData = mapper.readValue(weatherResult.toString(), Weather.class);
+//
+//        return weatherData;
+//    }
 
     public static Reservation getReservation(Member member) throws IOException, JSONException {
         StringBuilder result = null;
@@ -169,42 +169,42 @@ public class APICalls {
 
     }
 
-    public static String checkExitConditions(String member_id, List<String> carIds) throws IOException, JSONException {
-
-
-        URL url = null;
-        try {
-            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
-                    + member_id);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        HttpURLConnection urlConnection = null;
-
-        urlConnection = (HttpURLConnection) url.openConnection();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder result = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
-        }
-        String resultString = result.toString();
-
-
-        JSONObject resMap = new JSONObject(resultString);
-
-        JSONArray reses = resMap.getJSONArray("Items");
-        JSONObject res = reses.getJSONObject(0);
-
-        String car_vin = res.getString("car_Vin");
-
-        if (carIds.contains(car_vin) && res.getString("status").equals("active")) {
-            return "Success!";
-        }
-
-
-        return "FAILED";
-    }
+//    public static String checkExitConditions(String member_id, List<String> carIds) throws IOException, JSONException {
+//
+//
+//        URL url = null;
+//        try {
+//            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
+//                    + member_id);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        HttpURLConnection urlConnection = null;
+//
+//        urlConnection = (HttpURLConnection) url.openConnection();
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//        StringBuilder result = new StringBuilder();
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            result.append(line);
+//        }
+//        String resultString = result.toString();
+//
+//
+//        JSONObject resMap = new JSONObject(resultString);
+//
+//        JSONArray reses = resMap.getJSONArray("Items");
+//        JSONObject res = reses.getJSONObject(0);
+//
+//        String car_vin = res.getString("car_Vin");
+//
+//        if (carIds.contains(car_vin) && res.getString("status").equals("active")) {
+//            return "Success!";
+//        }
+//
+//
+//        return "FAILED";
+//    }
 
     public static String getCar_ID(String beacon_id) throws IOException, JSONException{
 
@@ -238,58 +238,58 @@ public class APICalls {
 
     }
 
-    public static JSONArray findFleet(String city,String carType)throws IOException, JSONException{
-        URL url = null;
-        try {
-            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/findFleet?city="
-                    + city + "&carType=" + carType);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        HttpURLConnection urlConnection = null;
+//    public static JSONArray findFleet(String city,String carType)throws IOException, JSONException{
+//        URL url = null;
+//        try {
+//            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/findFleet?city="
+//                    + city + "&carType=" + carType);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        HttpURLConnection urlConnection = null;
+//
+//        urlConnection = (HttpURLConnection) url.openConnection();
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//        StringBuilder result = new StringBuilder();
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            result.append(line);
+//        }
+//        String resultString = result.toString();
+//
+//        JSONObject map = new JSONObject(resultString);
+//
+//        JSONArray cars = map.getJSONArray("Items");
+//
+//        return cars;
+//
+//    }
 
-        urlConnection = (HttpURLConnection) url.openConnection();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder result = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
-        }
-        String resultString = result.toString();
-
-        JSONObject map = new JSONObject(resultString);
-
-        JSONArray cars = map.getJSONArray("Items");
-
-        return cars;
-
-    }
-
-    public static JSONArray findFleetAirportCode(String airportCode)throws IOException, JSONException{
-        URL url = null;
-        try {
-            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/findFleetAirport?airportCode="
-                    + airportCode);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        HttpURLConnection urlConnection = null;
-
-        urlConnection = (HttpURLConnection) url.openConnection();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        StringBuilder result = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            result.append(line);
-        }
-        String resultString = result.toString();
-
-        JSONObject map = new JSONObject(resultString);
-
-        JSONArray cars = map.getJSONArray("Items");
-
-        return cars;
-    }
+//    public static JSONArray findFleetAirportCode(String airportCode)throws IOException, JSONException{
+//        URL url = null;
+//        try {
+//            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/findFleetAirport?airportCode="
+//                    + airportCode);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        HttpURLConnection urlConnection = null;
+//
+//        urlConnection = (HttpURLConnection) url.openConnection();
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//        StringBuilder result = new StringBuilder();
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            result.append(line);
+//        }
+//        String resultString = result.toString();
+//
+//        JSONObject map = new JSONObject(resultString);
+//
+//        JSONArray cars = map.getJSONArray("Items");
+//
+//        return cars;
+//    }
 
 
 }
