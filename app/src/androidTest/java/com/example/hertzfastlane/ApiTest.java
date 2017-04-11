@@ -18,14 +18,14 @@ import static junit.framework.Assert.assertTrue;
 
 public class ApiTest {
 
-    @Test(timeout=1000)
+    @Test(timeout=1500)
     public void testLoginApi() throws IOException, JSONException {
         assertTrue(APICalls.login("dpike15","test"));
         Member member = APICalls.getUser();
         assertEquals(member.getFirst_NM(),"Derek");
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 1500)
     public void testLoginApi2() throws IOException, JSONException {
         assertFalse(APICalls.login("dpike15","da"));
     }
@@ -44,7 +44,7 @@ public class ApiTest {
     }
 
 
-    @Test(timeout = 500)
+    @Test(timeout = 1500)
     public void testCarData() throws JSONException, IOException {
         String car_id = "93855";
         Car carInfo = APICalls.getCarInfo(car_id);
@@ -92,7 +92,7 @@ public class ApiTest {
 
     //Check that the right car_id is matched with the correct car
     //Data known from Database
-    @Test(timeout = 500)
+    @Test(timeout = 1500)
     public void testBeacons() throws JSONException, IOException {
         assertEquals("1234",APICalls.getCar_ID("a8209e97ce7e3ed6"));
     }
@@ -104,7 +104,7 @@ public class ApiTest {
 
     //Testing wrong car_vin
     //car_vin should be "1234" - returned from AWS
-    @Test(timeout = 500)
+    @Test(timeout = 1500)
     public void testBeaconsFail() throws JSONException, IOException {
         assertFalse("41".equals(APICalls.getCar_ID("a8209e97ce7e3ed6")));
     }

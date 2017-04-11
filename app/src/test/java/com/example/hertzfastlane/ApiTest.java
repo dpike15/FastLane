@@ -59,24 +59,24 @@ public class ApiTest {
         Car carInfo = APICalls.getCarInfo(car_id);
     }
 
-    @Test(timeout = 500)
-    public void testWeatherApi() throws JSONException, IOException {
-        String lat = "24";
-        String lon = "-81";
-        String name = "Marathon";
-        Weather weather = APICalls.getWeather(lat,lon);
-        assertEquals(name,weather.getName());
-    }
+//    @Test(timeout = 500)
+//    public void testWeatherApi() throws JSONException, IOException {
+//        String lat = "24";
+//        String lon = "-81";
+//        String name = "Marathon";
+//        Weather weather = APICalls.getWeather(lat,lon);
+//        assertEquals(name,weather.getName());
+//    }
 
 
 
-    @Test(expected = IOException.class,timeout = 500)
-    public void testWeatherApi2() throws JSONException, IOException {
-        String lat = "d";
-        String lon = "s";
-        Weather weather = APICalls.getWeather(lat,lon);
-
-    }
+//    @Test(expected = IOException.class,timeout = 500)
+//    public void testWeatherApi2() throws JSONException, IOException {
+//        String lat = "d";
+//        String lon = "s";
+//        Weather weather = APICalls.getWeather(lat,lon);
+//
+//    }
 
     //Valid Reservation
     @Test(timeout = 500)
@@ -111,35 +111,35 @@ public class ApiTest {
 
     //Test whether car can leave based on status inside AWS
     //For testing car is set to "active" - able to leave
-    @Test(timeout = 500)
-    public void testExitConditions() throws JSONException, IOException {
-        List<String> carIds = new ArrayList<String>();
-        carIds.add("123");
-        carIds.add("1234");
+//    @Test(timeout = 500)
+//    public void testExitConditions() throws JSONException, IOException {
+//        List<String> carIds = new ArrayList<String>();
+//        carIds.add("123");
+//        carIds.add("1234");
+//
+//        String result = APICalls.checkExitConditions("1",carIds);
+//        assertEquals("Success!",result);
+//    }
 
-        String result = APICalls.checkExitConditions("1",carIds);
-        assertEquals("Success!",result);
-    }
+//    //Fail Test
+//    @Test(timeout = 500)
+//    public void testExitConditionsFail() throws JSONException, IOException {
+//        List<String> carIds = new ArrayList<String>();
+//        carIds.add("123");
+//
+//        String result = APICalls.checkExitConditions("1",carIds);
+//        assertEquals("FAILED",result);
+//    }
 
     //Fail Test
-    @Test(timeout = 500)
-    public void testExitConditionsFail() throws JSONException, IOException {
-        List<String> carIds = new ArrayList<String>();
-        carIds.add("123");
-
-        String result = APICalls.checkExitConditions("1",carIds);
-        assertEquals("FAILED",result);
-    }
-
-    //Fail Test
-    @Test(expected = JSONException.class,timeout = 500)
-    public void testExitConditionsFailJSON() throws JSONException, IOException {
-        List<String> carIds = new ArrayList<String>();
-        carIds.add("123");
-
-        String result = APICalls.checkExitConditions("0",carIds);
-        assertEquals("FAILED",result);
-    }
+//    @Test(expected = JSONException.class,timeout = 500)
+//    public void testExitConditionsFailJSON() throws JSONException, IOException {
+//        List<String> carIds = new ArrayList<String>();
+//        carIds.add("123");
+//
+//        String result = APICalls.checkExitConditions("0",carIds);
+//        assertEquals("FAILED",result);
+//    }
 
     //Check that the right car_id is matched with the correct car
     //Data known from Database
@@ -161,28 +161,28 @@ public class ApiTest {
     }
 
     //Using info known about database information (White Box)
-    @Test(timeout = 500)
-    public void testFleetCityCarType()throws JSONException,IOException{
-        String city = "Tampa";
-        String carType = "luxury";
+//    @Test(timeout = 500)
+//    public void testFleetCityCarType()throws JSONException,IOException{
+//        String city = "Tampa";
+//        String carType = "luxury";
+//
+//        assertEquals(3,APICalls.findFleet(city,carType).length());
+//    }
 
-        assertEquals(3,APICalls.findFleet(city,carType).length());
-    }
-
-    @Test(expected=IOException.class,timeout = 1700)
-    public void testFleetCityCarTypeFail()throws JSONException,IOException{
-        String city = "Nashville";
-        String carType = "";
-
-       APICalls.findFleet(city,carType).length();
-    }
+//    @Test(expected=IOException.class,timeout = 1700)
+//    public void testFleetCityCarTypeFail()throws JSONException,IOException{
+//        String city = "Nashville";
+//        String carType = "";
+//
+//       APICalls.findFleet(city,carType).length();
+//    }
 
 
-    @Test(timeout = 500)
-    public void testFleetAirportCode()throws JSONException,IOException{
-        //TAMPA INT'L AIRPORT
-        String airportCode = "TPA";
-
-        assertEquals(7,APICalls.findFleetAirportCode(airportCode).length());
-    }
+//    @Test(timeout = 500)
+//    public void testFleetAirportCode()throws JSONException,IOException{
+//        //TAMPA INT'L AIRPORT
+//        String airportCode = "TPA";
+//
+//        assertEquals(7,APICalls.findFleetAirportCode(airportCode).length());
+//    }
 }

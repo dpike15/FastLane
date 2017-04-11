@@ -39,6 +39,7 @@ import static com.estimote.sdk.Nearable.FirmwareState.APP;
 import static com.estimote.sdk.cloud.model.BroadcastingPower.LEVEL_1;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.core.IsNot.not;
 
 
 /**
@@ -106,13 +107,65 @@ public class BeaconsTest {
             e.printStackTrace();
         }
     }
-}
+
+
+//    public void setBeaconBackground() {
+//        if(!mCars.isEmpty()){
+//            findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
+//            findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
+//        } else {
+//            findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
+//            findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
+//        }
+//    }
 
 
 //    @Test
-//    public void testBeaconsInRange () {
+//    public void testBackgroundList() {
+//        Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                Looper.prepare();
 //
+//                final Beacons beacons = new Beacons();
+//                try {
+//                    final String nearables = "624ec2233b5f0546";
+//                    beacons.beaconsInRange(nearables);
+//                    beacons.clearList();
+//
+//
+//
+//                    if (beacons.getmCars().isEmpty()) {
+//                        beacons.setBeaconBackground();
+//                     onView(withId(R.id.imageViewBeacons)).check(matches(isDisplayed()));
+//                     onView(withId(R.id.tvLookingForBeacons)).check(matches(isDisplayed()));
+//                }
+////                    else if (!beacons.getmCars().isEmpty()) {
+////                 onView(withId(R.id.progress_loader)).check(matches(not(isDisplayed())));
+////                 onView(withId(R.id.tvLookingForBeacons)).check(matches(not(isDisplayed())));
+////            }
+//
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//        };
+//        Thread thread = new Thread(runnable);
+//        thread.start();
+//
+//        try {
+//            thread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 //    }
+}
+
+
 
 
 

@@ -53,8 +53,6 @@ import static com.estimote.sdk.internal.utils.EstimoteBeacons.ESTIMOTE_PROXIMITY
 
 public class Beacons extends AppCompatActivity {
 
-
-
     private static final String TAG = "Beacons";
 
     public static List<Car> getmCars() {
@@ -205,7 +203,6 @@ public class Beacons extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
 
-
                 Log.d("TAG1", "Discovered nearables: " + nearables);
                 Log.d(TAG, "nearable discovered");
                 Log.d(TAG, "size of list is " + String.valueOf(nearables.size()));
@@ -236,7 +233,15 @@ public class Beacons extends AppCompatActivity {
                 Integer backgroundColor;
 
                 if (content != null) {
+
+
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
+
+
+
+
+
+
 
                     text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
 
@@ -275,37 +280,21 @@ public class Beacons extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        Log.d("Message", "OnBackPressed");
-//        super.onBackPressed();
-//        Intent userActivityIntent = new Intent(Beacons.this, UserActivity.class);
-//        Beacons.this.startActivity(userActivityIntent);
+
+
+
+//    public static Car getCarData() {
+//        Car car123 = new Car();
 //
+//        return car123;
 //    }
 
-    public void setBeaconBackground() {
-        if(!mCars.isEmpty()){
-            findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
-            findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
-        } else {
-            findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
-            findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
-        }
-    }
 
-    public static Car getCarData() {
-        Car car123 = new Car();
-
-        return car123;
-    }
-
-
-    private void goToUrl(String url) {
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
-    }
+//    private void goToUrl(String url) {
+//        Uri uriUrl = Uri.parse(url);
+//        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+//        startActivity(launchBrowser);
+//    }
 
     @Override
     protected void onResume() {
@@ -499,6 +488,17 @@ public class Beacons extends AppCompatActivity {
         mCars.clear();
         nearableMap.clear();
         carIds.clear();
+    }
+
+    public void setBeaconBackground() {
+
+        if(!mCars.isEmpty()){
+            findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
+            findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
+            findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
+        }
     }
 
     public void beaconsInRange(String nearable)throws IOException,JSONException{
