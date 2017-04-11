@@ -50,12 +50,14 @@ public class BeaconsTest {
 
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
+
     @Rule
     public ActivityTestRule<Beacons> nBeaconsActivityTestRule =
             new ActivityTestRule<Beacons>(Beacons.class);
 
     @Test
     public void run() {
+
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -64,7 +66,6 @@ public class BeaconsTest {
                 beacon1.nearableMap.put("624ec2233b5f0546", "624ec2233b5f0546");
 
                 // onView(withId(R.id.rvTestingCar)).perform(RecyclerViewActions.scrollToPosition(3));
-
 
                 Log.d("TestingTag", "mCars = " + beacon1.nearableMap.containsValue(nearables));
                 assertTrue(beacon1.nearableMap.containsValue(nearables));

@@ -23,6 +23,7 @@ import static android.support.test.espresso.Espresso.openActionBarOverflowOrOpti
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 
@@ -36,12 +37,12 @@ public class ActionBarTest {
 
     @Test // method to test if helpActivity loads from actionBar
     public void testActionBar() throws Exception {
-    // logs in loads UserActivity class
+        // logs in loads UserActivity class
 
         Member member = new Member();
         member.setLoyaltyPoints(275);
         member.setFirst_NM("derek");
-        Log.d("name",member.getFirst_NM());
+        Log.d("name", member.getFirst_NM());
 
         Intent user = new Intent();
         user.setAction(Intent.ACTION_SEND);
@@ -49,15 +50,67 @@ public class ActionBarTest {
 
         user.putExtra("member", member);
         activityRule.launchActivity(user);
-        // Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, user);
-        // intending(toPackage("com.example.hertzfastlane")).respondWith(result);
+
+
 
         try { // activates menu actions bar
             openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getTargetContext());
 
         } catch (Exception e) {
-        }  // clicks on need help, loads intented help activity
+        }
         onView(withText(R.string.action_help)).perform(click());
         intended(hasComponent(new ComponentName(getTargetContext(), HelpActivity.class)));
     }
-}
+
+        public void testActionBar_MapActivity() throws Exception {
+
+            Member member = new Member();
+            member.setLoyaltyPoints(275);
+            member.setFirst_NM("derek");
+            Log.d("name",member.getFirst_NM());
+
+            Intent user = new Intent();
+            user.setAction(Intent.ACTION_SEND);
+            user.setType("text/plain");
+
+            user.putExtra("member", member);
+            activityRule.launchActivity(user);
+
+
+            try { // activates menu actions bar
+                openActionBarOverflowOrOptionsMenu(getTargetContext());
+                onView(withId(R.id.action_maps)).perform(click());
+                intended(hasComponent(new ComponentName(getTargetContext(), MapActivity.class)));
+
+            } catch (Exception e) {
+
+            } // clicks on need help, loads intented help activity
+
+    }
+
+        public void testActionBar_Beacon() throws Exception {
+
+            Member member = new Member();
+            member.setLoyaltyPoints(275);
+            member.setFirst_NM("derek");
+            Log.d("name",member.getFirst_NM());
+
+            Intent user = new Intent();
+            user.setAction(Intent.ACTION_SEND);
+            user.setType("text/plain");
+
+            user.putExtra("member", member);
+            activityRule.launchActivity(user);
+
+
+            try { // activates menu actions bar
+                openActionBarOverflowOrOptionsMenu(getTargetContext());
+                onView(withId(R.id.Beacon)).perform(click());
+                intended(hasComponent(new ComponentName(getTargetContext(), Beacons.class)));
+
+            } catch (Exception e) {
+            } // clicks on need help, loads intented help activity
+
+        }
+    }
+

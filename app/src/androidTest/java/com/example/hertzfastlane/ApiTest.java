@@ -18,7 +18,7 @@ import static junit.framework.Assert.assertTrue;
 
 public class ApiTest {
 
-    @Test(timeout=1500)
+    @Test(timeout=2500)
     public void testLoginApi() throws IOException, JSONException {
         assertTrue(APICalls.login("dpike15","test"));
         Member member = APICalls.getUser();
@@ -81,7 +81,7 @@ public class ApiTest {
 //
 //    }
 
-    @Test(expected = IOException.class,timeout = 500)
+    @Test(expected = IOException.class,timeout = 2500)
     public void testReservations3() throws JSONException, IOException {
         //Retrieved manually from database
         Member member = new Member();

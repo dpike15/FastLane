@@ -34,9 +34,6 @@ public class ImageLoadingTest {
 
     @Test
     public void test() throws Exception {
-//        onView(withId(R.id.et_Username)).perform(typeText("dpike15")).perform(ViewActions.closeSoftKeyboard());
-//        onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
-//        onView(withId(R.id.b_Login)).perform(click());
 
         Member member = new Member();
         member.setLoyaltyPoints(275);
@@ -50,7 +47,6 @@ public class ImageLoadingTest {
         user.putExtra("member", member);
         activityRule.launchActivity(user);
 
-        // Type text and then press the button.
         onView(withId(R.id.home_bg)).check(matches(withDrawable(R.drawable.login_bg_dark_6)));
         //ViewInteraction check = onView(withId(R.id.home_bg)).check(matches(withId(R.drawable.login_bg_dark_6)));
     }
