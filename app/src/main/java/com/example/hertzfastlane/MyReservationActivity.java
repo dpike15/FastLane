@@ -137,8 +137,8 @@ public class MyReservationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 spinner.setVisibility(View.VISIBLE);
                 //sendSMS("8605978596", "Testing message");
-                Intent scanIntent = new Intent(MyReservationActivity.this, QrScanner.class);
-                MyReservationActivity.this.startActivity(scanIntent);
+//                Intent scanIntent = new Intent(MyReservationActivity.this, QrScanner.class);
+//                MyReservationActivity.this.startActivity(scanIntent);
             }
         });
 

@@ -54,7 +54,6 @@ import static com.estimote.sdk.internal.utils.EstimoteBeacons.ESTIMOTE_PROXIMITY
 public class Beacons extends AppCompatActivity {
 
 
-
     private static final String TAG = "Beacons";
 
     public static List<Car> getmCars() {
@@ -65,7 +64,7 @@ public class Beacons extends AppCompatActivity {
         return car_id;
     }
 
-    public static Map<String, String> getNearableMap(){
+    public static Map<String, String> getNearableMap() {
         return nearableMap;
     }
 
@@ -117,7 +116,7 @@ public class Beacons extends AppCompatActivity {
     private List<String> carIds;
 
 
-    public Beacons () {
+    public Beacons() {
         carIds = new ArrayList<String>();
         nearableMap = new HashMap<String, String>();
         mCars = new ArrayList<Car>();
@@ -172,13 +171,13 @@ public class Beacons extends AppCompatActivity {
                 /** loops through nearable ID's*/
                 for (Nearable nearable : nearables) {
                     if (!nearableMap.containsValue(nearable.identifier)) {
-                       nearableId = nearable.identifier;
+                        nearableId = nearable.identifier;
                         Runnable runnable = new Runnable() {
                             @Override
                             public void run() {
                                 try {
                                     beaconsInRange(nearableId);
-                                   //adapter.notifyDataSetChanged();
+                                    //adapter.notifyDataSetChanged();
 
 
                                 } catch (IOException e) {
@@ -201,14 +200,8 @@ public class Beacons extends AppCompatActivity {
                     }
                 }
 
-                setBeaconBackground();
+                //setBeaconBackground();
                 adapter.notifyDataSetChanged();
-
-
-
-                Log.d("TAG1", "Discovered nearables: " + nearables);
-                Log.d(TAG, "nearable discovered");
-                Log.d(TAG, "size of list is " + String.valueOf(nearables.size()));
             }
 
         });
@@ -235,41 +228,41 @@ public class Beacons extends AppCompatActivity {
                 String text;
                 Integer backgroundColor;
 
-                if (content != null) {
-                    EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
-
-                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
-
-                    backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
-
-                    //GATE ACTOR
-                    if (beaconDetails.getBeaconName().equals("lemon")) {
-
-                        Log.d("Found", " lemon");
-                        Log.d("Color", beaconDetails.getBeaconColor().toString());
-
-
-                        Runnable runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                //String result = checkExitConditions("1");
-
-                                //Log.d("result", result);
-                            }
-                        };
-
-                        Thread thread = new Thread(runnable);
-                        thread.start();
-
-                        try {
-                            thread.join();
-                        } catch (Exception e) {
-                            return;
-                        }
-
-                    }
-
-                }
+//                if (content != null) {
+//                    EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
+//
+//                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
+//
+//                    backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
+//
+//                    //GATE ACTOR
+//                    if (beaconDetails.getBeaconName().equals("lemon")) {
+//
+//                        Log.d("Found", " lemon");
+//                        Log.d("Color", beaconDetails.getBeaconColor().toString());
+//
+//
+//                        Runnable runnable = new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //String result = checkExitConditions("1");
+//
+//                                //Log.d("result", result);
+//                            }
+//                        };
+//
+//                        Thread thread = new Thread(runnable);
+//                        thread.start();
+//
+//                        try {
+//                            thread.join();
+//                        } catch (Exception e) {
+//                            return;
+//                        }
+//
+//                    }
+//
+//                }
             }
         });
 
@@ -284,28 +277,15 @@ public class Beacons extends AppCompatActivity {
 //
 //    }
 
-    public void setBeaconBackground() {
-        if(!mCars.isEmpty()){
-            findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
-            findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
-        } else {
-            findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
-            findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
-        }
-    }
-
-    public static Car getCarData() {
-        Car car123 = new Car();
-
-        return car123;
-    }
-
-
-    private void goToUrl(String url) {
-        Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        startActivity(launchBrowser);
-    }
+//    public void setBeaconBackground() {
+//        if (!mCars.isEmpty()) {
+//            findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
+//            findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
+//        } else {
+//            findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
+//            findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
+//        }
+//    }
 
     @Override
     protected void onResume() {
@@ -377,35 +357,33 @@ public class Beacons extends AppCompatActivity {
     public static Car getCarInfo(String car_id) throws IOException, JSONException {
         Car carInformation = null;
         URL url = null;
-        try {
+
             url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id="
                     + car_id);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
         HttpURLConnection urlConnection = null;
 
-            urlConnection = (HttpURLConnection) url.openConnection();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            result = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            String resultString = result.toString();
+        urlConnection = (HttpURLConnection) url.openConnection();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+        result = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            result.append(line);
+        }
+        String resultString = result.toString();
 
-            JSONObject carMap = new JSONObject(resultString);
+        JSONObject carMap = new JSONObject(resultString);
 
-            JSONObject car = carMap.getJSONObject("Item");
-            JSONObject carInfo = car.getJSONObject("info");
+        JSONObject car = carMap.getJSONObject("Item");
+        JSONObject carInfo = car.getJSONObject("info");
 
-            //Deserializing to JSON Car Information
-            ObjectMapper mapper = new ObjectMapper();
+        //Deserializing to JSON Car Information
+        ObjectMapper mapper = new ObjectMapper();
 
-            carInformation = mapper.readValue(car.toString(), Car.class);
+        carInformation = mapper.readValue(car.toString(), Car.class);
 
-            Info infoCar = mapper.readValue(carInfo.toString(), Info.class);
-            carInformation.setInfo(infoCar);
+        Info infoCar = mapper.readValue(carInfo.toString(), Info.class);
+        carInformation.setInfo(infoCar);
 
         return carInformation;
     }
@@ -457,17 +435,15 @@ public class Beacons extends AppCompatActivity {
 //        return "FAIL";
 //    }
 
-    private String getCar_ID(String beacon_id){
+    private String getCar_ID(String beacon_id) throws IOException, JSONException{
 
         URL url = null;
-        try {
+
             url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/beaconMap?id="
                     + beacon_id);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
         HttpURLConnection urlConnection = null;
-        try {
+
             urlConnection = (HttpURLConnection) url.openConnection();
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             result = new StringBuilder();
@@ -486,41 +462,22 @@ public class Beacons extends AppCompatActivity {
             String car_id = hash.getString("car_id");
 
             return car_id;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
-        return null;
     }
 
-    public void clearList () {
+    public void clearList() {
         mCars.clear();
         nearableMap.clear();
         carIds.clear();
     }
 
-    public void beaconsInRange(String nearable)throws IOException,JSONException{
+    public void beaconsInRange(String nearable) throws IOException, JSONException {
         nearableId = nearable;
-
-                String id = getCar_ID(nearableId);
-        Log.d("id", id);
-
-        if(id == null) {
-            carIds.add("12345");
-        } else {
-            carIds.add(id);
-        }
-
-                nearableMap.put(id,nearableId);
-                Car car = null;
-
-                car = getCarInfo(id);
-        if (car == null)
-            car = new Car();
-
-                mCars.add(car);
-            }
+        String id = getCar_ID(nearableId);
+        carIds.add(id);
+        nearableMap.put(id, nearableId);
+        Car car = null;
+        car = getCarInfo(id);
+        mCars.add(car);
+    }
 
 }
