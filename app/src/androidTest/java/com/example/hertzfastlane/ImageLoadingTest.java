@@ -9,9 +9,12 @@ import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 import android.widget.ImageView;
 
+import org.json.JSONException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.IOException;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -48,6 +51,25 @@ public class ImageLoadingTest {
         activityRule.launchActivity(user);
 
         onView(withId(R.id.home_bg)).check(matches(withDrawable(R.drawable.login_bg_dark_6)));
-        //ViewInteraction check = onView(withId(R.id.home_bg)).check(matches(withId(R.drawable.login_bg_dark_6)));
     }
+
+
+    @Test
+    public void testDisplayBackgroundImages_LoadBackground() throws IOException, JSONException {
+
+        Member member = new Member();
+        member.setLoyaltyPoints(50);
+        member.setFirst_NM("derek");
+        Log.d("name",member.getFirst_NM());
+
+        Intent user = new Intent();
+        user.setAction(Intent.ACTION_SEND);
+        user.setType("text/plain");
+        user.putExtra("member", member);
+        activityRule.launchActivity(user);
+
+        onView(withId(R.id.home_bg)).check(matches((isDisplayed())));
+
+    }
+
 }

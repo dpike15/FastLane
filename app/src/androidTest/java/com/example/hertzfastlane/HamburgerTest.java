@@ -1,24 +1,39 @@
 package com.example.hertzfastlane;
 
 import android.content.Intent;
+import android.support.test.espresso.NoMatchingRootException;
+import android.support.test.espresso.Root;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
+import android.view.WindowManager;
 
+import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.app.PendingIntent.getActivity;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.DrawerActions.closeDrawer;
+import static android.support.test.espresso.contrib.DrawerMatchers.isOpen;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.test.espresso.contrib.DrawerActions.openDrawer;
+import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.IsNot.not;
 
 /**
  * Created by stevenjoy on 3/12/17.
@@ -34,10 +49,6 @@ public class HamburgerTest {
 
     @Test
     public void testNavigationDrawerItemClick() {
-//
-//        onView(withId(R.id.et_Username)).perform(typeText("dpike15")).perform(ViewActions.closeSoftKeyboard());
-//        onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
-//        onView(withId(R.id.b_Login)).perform(click());
 
 
         Member member = new Member();
@@ -52,15 +63,13 @@ public class HamburgerTest {
         user.putExtra("member", member);
         activityRule.launchActivity(user);
 
-        try {
-            openDrawer(R.id.navList);
-            onView(withText("Menu One")).perform(click());
-            onView(allOf(withId(R.id.drawer_layout), withText("Profile")));//.check(matches(isDisplayed()));
-            onView(withText("Thank You For Using Hertz!")).check(matches(isDisplayed()));
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.drawer_layout)).check(matches(isOpen()));
+        onView(withText("Profile")).perform(click());
 
-        }
-        catch (Exception e) {
+        onView(withText(R.string.Toast)).inRoot(withDecorView(not(activityRule.getActivity().getWindow().getDecorView())))
+                .check(matches(isDisplayed()));
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.close());
 
-        }
     }
 }

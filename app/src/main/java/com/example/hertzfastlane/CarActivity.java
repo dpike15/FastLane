@@ -101,7 +101,7 @@ public class CarActivity extends YouTubeBaseActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 AlertDialog alertDialog;
                 builder.setTitle("Updated: ");
-                builder.setMessage("Successfully updated reservation! Please proceed to the gate.");
+                builder.setMessage(R.string.ReserveToast);
                 alertDialog = builder.create();
                 alertDialog.show();
             }

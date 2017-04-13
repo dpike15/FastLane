@@ -44,7 +44,7 @@ public class ApiTest {
     }
 
 
-    @Test(timeout = 1500)
+    @Test(timeout = 2500)
     public void testCarData() throws JSONException, IOException {
         String car_id = "93855";
         Car carInfo = APICalls.getCarInfo(car_id);
@@ -97,7 +97,7 @@ public class ApiTest {
         assertEquals("1234",APICalls.getCar_ID("a8209e97ce7e3ed6"));
     }
 
-    @Test(expected = JSONException.class,timeout = 500)
+    @Test(expected = JSONException.class,timeout = 2000)
     public void testBeaconsJSONError() throws JSONException, IOException {
         APICalls.getCar_ID("testID");
     }

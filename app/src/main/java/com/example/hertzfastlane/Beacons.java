@@ -271,13 +271,10 @@ public class Beacons extends AppCompatActivity {
                         } catch (Exception e) {
                             return;
                         }
-
                     }
-
                 }
             }
         });
-
     }
 
 
@@ -522,5 +519,4 @@ public class Beacons extends AppCompatActivity {
 
                 mCars.add(car);
             }
-
 }

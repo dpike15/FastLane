@@ -19,5 +19,10 @@
     <string name="beacon">Beacon</string>
     <string name="drawer_open">Open navigation drawer</string>  <!-- toggle action bar-->
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="hello_round">Hello Round World!</string>
+    <string name="hello_square">Hello Square World!</string>
+    <string name="Toast">Thank You For Using Hertz!</string>
+    <string name="ReserveToast">Successfully updated reservation! Please proceed to the gate.</string>
+    <string name="title_activity_testing_test_car_adapter">TestingTestCarAdapter</string>
 
 </resources>

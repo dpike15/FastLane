@@ -38,11 +38,6 @@ public class LoyaltyPointsTest {
     public void testLoyalyPoints() throws Exception {
 
 
-//        onView(withId(R.id.et_Username)).perform(typeText("dpike15")).perform(ViewActions.closeSoftKeyboard());
-//        onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
-//        onView(withId(R.id.b_Login)).perform(click());
-
-
         Member member = new Member();
         member.setLoyaltyPoints(275);
         member.setFirst_NM("derek");

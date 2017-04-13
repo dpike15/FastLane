@@ -63,7 +63,6 @@ public class TestLogin {
         onView(withId(R.id.b_Login)).perform(click());
         onView(withText("Login Unsuccessful!")).check(matches(isDisplayed()));
 
-       // intended(hasComponent(new ComponentName(getTargetContext(), UserActivity.class)));
 
     }
 

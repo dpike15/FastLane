@@ -81,10 +81,6 @@ public class UserActivity extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
-    public void UserActivity (){
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,7 +150,7 @@ public class UserActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(UserActivity.this, "Thank You For Using Hertz!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserActivity.this, R.string.Toast, Toast.LENGTH_SHORT).show();
             }
         });
         /** hamburger layout ended ^^ */

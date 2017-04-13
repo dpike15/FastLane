@@ -21,6 +21,7 @@ import java.util.List;
  */
 
 public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.ViewHolder> {
+
     // Create the basic adapter extending from RecyclerView.Adapter
 // Note that we specify the custom ViewHolder which gives us access to our views
 
@@ -45,7 +46,7 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
     }
 
     // Easy access to the context object in the recyclerview
-    private static Context getContext() {
+    public static Context getContext() {
         return mContext;
     }
 
