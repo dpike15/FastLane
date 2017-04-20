@@ -69,12 +69,10 @@ public class APICalls {
     public static Car getCarInfo(String car_id) throws IOException, JSONException {
         Car carInformation = null;
         URL url = null;
-        try {
+
             url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/readingFleet?car_id="
                     + car_id);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
         HttpURLConnection urlConnection = null;
 
         urlConnection = (HttpURLConnection) url.openConnection();
@@ -135,12 +133,9 @@ public class APICalls {
     public static Reservation getReservation(Member member) throws IOException, JSONException {
         StringBuilder result = null;
         URL url = null;
-        try {
             url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
                     + member.getMember_id());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
 
         HttpURLConnection urlConnection = null;
 
@@ -209,12 +204,10 @@ public class APICalls {
     public static String getCar_ID(String beacon_id) throws IOException, JSONException{
 
         URL url = null;
-        try {
+
             url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/beaconMap?id="
                     + beacon_id);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+
         HttpURLConnection urlConnection = null;
 
             urlConnection = (HttpURLConnection) url.openConnection();

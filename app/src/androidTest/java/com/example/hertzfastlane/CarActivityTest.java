@@ -23,6 +23,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Rudy Trevino and stevenjoy on 4/10/17.
@@ -77,18 +78,6 @@ public class CarActivityTest {
 
         onView(withId(R.id.imageView8)).check(matches(isDisplayed()));
         onView(withId(R.id.bChooseVehicle)).perform(scrollTo()).perform(click());
-      //  onView(withText(R.string.ReserveToast)).check(matches(isDisplayed()));
-
-//        onView(withId(R.id.bChooseVehicle)).perform(scrollTo()).perform(click())
-//                .inRoot(isDialog())
-//                .check(matches(withText(R.string.ReserveToast)))
-//                .check(matches(isDisplayed()));
-
-        onView(withId(R.id.bChooseVehicle)).check(matches(allOf(withText(R.string.ReserveToast), isDisplayed())));
-
-//        onView(withText("Updated: ")).inRoot(withDecorView(not(activityRule.getActivity().getWindow().getDecorView())))
-//                .check(matches(isDisplayed()));
-      //  onView(withText("Updated: ")).inRoot(isDialog()).check(matches(isDisplayed()));
 
     }
     @Test

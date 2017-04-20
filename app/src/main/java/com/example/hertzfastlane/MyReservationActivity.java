@@ -92,27 +92,9 @@ public class MyReservationActivity extends AppCompatActivity {
                     TextView reservationDate = (TextView) findViewById(R.id.tvReservationDate);
                     //reservationDate.setText("Reservation Date: " + memberReservation.getPick_Up_Date());
 
-
-
-
-
                 }
         };  //END RUNNABLE
 
-  /*      ImageView carImage=(ImageView)findViewById(vehicleImage);
-        Picasso.with(getApplicationContext())
-                .load("http://i.imgur.com/OYMyYcj.png")
-//.resize(283,113)
-                .error(R.drawable.app_icon)
-                .into(carImage);
-*/
-
-//        ImageView carImage=(ImageView)findViewById(vehicleImage);
-//        Picasso.with(getApplicationContext())
-//                .load("http://i.imgur.com/OYMyYcj.png")
-////.resize(283,113)
-//                .error(R.drawable.app_icon)
-//                .into(carImage);
 
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
@@ -137,8 +119,8 @@ public class MyReservationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 spinner.setVisibility(View.VISIBLE);
                 //sendSMS("8605978596", "Testing message");
-//                Intent scanIntent = new Intent(MyReservationActivity.this, QrScanner.class);
-//                MyReservationActivity.this.startActivity(scanIntent);
+               // Intent scanIntent = new Intent(MyReservationActivity.this, QrScanner.class);
+               // MyReservationActivity.this.startActivity(scanIntent);
             }
         });
 
@@ -184,20 +166,6 @@ public class MyReservationActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.action_maps:
-//                startActivity(new Intent(this, MapActivity.class));
-//                return true;
-//            case R.id.action_help:
-//                startActivity(new Intent(this, HelpActivity.class));
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
 
     @Override
     public void onStart() {

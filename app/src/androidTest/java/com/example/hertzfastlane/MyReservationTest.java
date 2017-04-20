@@ -71,6 +71,7 @@ public class MyReservationTest{
         assertTrue(reserve.getPick_Up_Date()=="birthday");
 
         onView(withId(R.id.bMyReservation)).perform(click());
+        onView(withId(R.id.bSelectVehicle)).perform(click());
 
         intended(hasComponent(new ComponentName(getTargetContext(), MyReservationActivity.class)));
     }
