@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.EstimoteSDK;
 import com.estimote.sdk.Nearable;
@@ -90,6 +91,8 @@ public class Beacons extends AppCompatActivity {
     private SecureRegion secureRegion2;
     private SecureRegion secureRegion3;
 
+    private Region region;
+
 
     private static final Region ALL_ESTIMOTE_BEACONS = new Region("rid", ESTIMOTE_PROXIMITY_UUID, null, null);
 
@@ -141,38 +144,19 @@ public class Beacons extends AppCompatActivity {
         adapter = new TestingCarAdapter(mCars);
         rvTestingCars.setAdapter(adapter);
 
-
-        // use for proximity Beacons STOP RANGING
-        secureRegion = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 20930, 14720);
-        secureRegion2 = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 26788, 12168);
-        secureRegion3 = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 20859, 25702);
-
-        Log.d("Tag", "Beacons");
-        proximityContentManager = new ProximityContentManager(this,
-                Arrays.asList(
-                        /** Proximity Beacons Identifier, minor and major*/
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 32725, 55822),
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 20930, 14720),
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 26788, 12168),
-                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 3138, 64033)), //
-
-                new EstimoteCloudBeaconDetailsFactory());
-
-        /** listener used for nearable stickers*/
-        beaconManager = new BeaconManager(getApplicationContext());
-
-        beaconManager.setNearableListener(new BeaconManager.NearableListener() {
+        beaconManager = new BeaconManager(this);
+        beaconManager.setRangingListener(new BeaconManager.RangingListener(){
             @Override
-            public void onNearablesDiscovered(List<Nearable> nearables) {
-
-                clearList();
-
-
-                /** loops through nearable ID's*/
-                for (Nearable nearable : nearables) {
-                    if (!nearableMap.containsValue(nearable.identifier)) {
-                        nearableId = nearable.identifier;
-                        Runnable runnable = new Runnable() {
+            public void onBeaconsDiscovered(Region region, List<Beacon> list) {
+                Log.d("Rudy", "Found Beacon");
+                if(!list.isEmpty()){
+                    //EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) list;
+                    clearList();
+                    for(Beacon beacon : list) {
+                        if (!nearableMap.containsValue(beacon.getMajor())) {
+                            nearableId = String.valueOf(beacon.getMajor());
+                            Log.d("Rudy", nearableId);
+                            Runnable runnable = new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -197,43 +181,111 @@ public class Beacons extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                    }
-                }
 
-                //setBeaconBackground();
+                        }
+                    }
+
+                }
+                setBeaconBackground();
                 adapter.notifyDataSetChanged();
             }
-
         });
 
 
-        /** Broadcast the nearable Beacons signal*/
-        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
-            @Override
-            public void onServiceReady() {
+        // use for proximity Beacons STOP RANGING
+        secureRegion = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 20930, 14720);
+        secureRegion2 = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 26788, 12168);
+        secureRegion3 = new SecureRegion("Secure region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), 20859, 25702);
 
-                // Beacons ranging.
-                beaconManager.startRanging(ALL_ESTIMOTE_BEACONS);
+        Log.d("Tag", "Beacons");
+        proximityContentManager = new ProximityContentManager(this,
+                Arrays.asList(
+                        /** Proximity Beacons Identifier, minor and major*/
+                        //new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 32725, 55822), //
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 5323, 38267), //Candy
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 60973, 22221), //Beetroot
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 20930, 14720), //Ice
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 26788, 12168), //Mint
+                        new BeaconID("B9407F30-F5F8-466E-AFF9-25556B57FE6D", 3138, 64033)), //Lemon
 
-                // Nearable discovery.
-                beaconManager.startNearableDiscovery();
+                new EstimoteCloudBeaconDetailsFactory());
 
-            }
-        });
+//        /** listener used for nearable stickers*/
+//        beaconManager = new BeaconManager(getApplicationContext());
+//
+//        beaconManager.setNearableListener(new BeaconManager.NearableListener() {
+//            @Override
+//            public void onNearablesDiscovered(List<Nearable> nearables) {
+//
+//                clearList();
+//
+//
+//                /** loops through nearable ID's*/
+//                for (Nearable nearable : nearables) {
+//                    if (!nearableMap.containsValue(nearable.identifier)) {
+//                        nearableId = nearable.identifier;
+//                        Runnable runnable = new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                try {
+//                                    beaconsInRange(nearableId);
+//                                    //adapter.notifyDataSetChanged();
+//
+//
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        };
+//
+//                        Thread thread = new Thread(runnable);
+//                        thread.start();
+//
+//                        try {
+//                            thread.join();
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                }
+//
+//                //setBeaconBackground();
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//        });
+//
+//
+//        /** Broadcast the nearable Beacons signal*/
+//        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+//            @Override
+//            public void onServiceReady() {
+//
+//                // Beacons ranging.
+//                beaconManager.startRanging(ALL_ESTIMOTE_BEACONS);
+//
+//                // Nearable discovery.
+//                beaconManager.startNearableDiscovery();
+//
+//            }
+//        });
+//
 
-
-        proximityContentManager.setListener(new ProximityContentManager.Listener() {
-            @Override
-            public void onContentChanged(Object content) {
-                String text;
-                Integer backgroundColor;
-
+//        proximityContentManager.setListener(new ProximityContentManager.Listener() {
+//            @Override
+//            public void onContentChanged(Object content) {
+//                String text;
+//                Integer backgroundColor;
+//
 //                if (content != null) {
 //                    EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
 //
 //                    text = "You're in " + beaconDetails.getBeaconName() + "'s range!";
 //
-//                    backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
+//                    //backgroundColor = BACKGROUND_COLORS.get(beaconDetails.getBeaconColor());
 //
 //                    //GATE ACTOR
 //                    if (beaconDetails.getBeaconName().equals("lemon")) {
@@ -245,9 +297,7 @@ public class Beacons extends AppCompatActivity {
 //                        Runnable runnable = new Runnable() {
 //                            @Override
 //                            public void run() {
-//                                //String result = checkExitConditions("1");
 //
-//                                //Log.d("result", result);
 //                            }
 //                        };
 //
@@ -263,8 +313,10 @@ public class Beacons extends AppCompatActivity {
 //                    }
 //
 //                }
-            }
-        });
+//            }
+//        });
+
+        region = new Region("ranged region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
 
     }
 
@@ -277,15 +329,15 @@ public class Beacons extends AppCompatActivity {
 //
 //    }
 
-//    public void setBeaconBackground() {
-//        if (!mCars.isEmpty()) {
-//            findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
-//            findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
-//        } else {
-//            findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
-//            findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
-//        }
-//    }
+    public void setBeaconBackground() {
+        if (!mCars.isEmpty()) {
+            findViewById(R.id.imageViewBeacons).setVisibility(View.GONE);
+            findViewById(R.id.tvLookingForBeacons).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.imageViewBeacons).setVisibility(View.VISIBLE);
+            findViewById(R.id.tvLookingForBeacons).setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -299,6 +351,13 @@ public class Beacons extends AppCompatActivity {
             Log.d(TAG, "Starting ProximityContentManager content updates");
             proximityContentManager.startContentUpdates();
         }
+
+        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+            @Override
+            public void onServiceReady() {
+                beaconManager.startRanging(region);
+            }
+        });
     }
 
 
