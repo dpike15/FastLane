@@ -61,7 +61,7 @@ public class CarActivity extends YouTubeBaseActivity {
         features.setText(car.getFeatures().get(0));
 
         TextView summary = (TextView) findViewById(R.id.tvSummary);
-        // summary.setText("The Cadillac 2016 CTS Sedan turns every drive into a masterful experience with assured performance and ingenious technology.");
+        // summary.setText("The cadillac 2016 CTS Sedan turns every drive into a masterful experience with assured performance and ingenious technology.");
         summary.setText(car.getSummary());
 
         TextView rate = (TextView) findViewById(R.id.tvRate);
