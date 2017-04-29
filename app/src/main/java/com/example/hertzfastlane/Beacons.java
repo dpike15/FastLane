@@ -123,6 +123,8 @@ public class Beacons extends AppCompatActivity {
         carIds = new ArrayList<String>();
         nearableMap = new HashMap<String, String>();
         mCars = new ArrayList<Car>();
+      //  beaconManager = new BeaconManager(this);
+
     }
 
 
@@ -145,51 +147,55 @@ public class Beacons extends AppCompatActivity {
         rvTestingCars.setAdapter(adapter);
 
         beaconManager = new BeaconManager(this);
-        beaconManager.setRangingListener(new BeaconManager.RangingListener(){
-            @Override
-            public void onBeaconsDiscovered(Region region, List<Beacon> list) {
-                Log.d("Rudy", "Found Beacon");
-                if(!list.isEmpty()){
-                    //EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) list;
-                    clearList();
-                    for(Beacon beacon : list) {
-                        if (!nearableMap.containsValue(beacon.getMajor())) {
-                            nearableId = String.valueOf(beacon.getMajor());
-                            Log.d("Rudy", nearableId);
-                            Runnable runnable = new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        beaconsInRange(nearableId);
-                                        //adapter.notifyDataSetChanged();
-
-
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            };
-
-                            Thread thread = new Thread(runnable);
-                            thread.start();
-
-                            try {
-                                thread.join();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-
-                        }
-                    }
-
-                }
-                setBeaconBackground();
-                adapter.notifyDataSetChanged();
-            }
-        });
+//        beaconManager.setRangingListener(new BeaconManager.RangingListener(){
+//            @Override
+//            public void onBeaconsDiscovered(Region region, List<Beacon> list) {
+//                Log.d("Rudy", "Found Beacon");
+//                if(!list.isEmpty()){
+//                    //EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) list;
+//                    clearList();
+//                    for(Beacon beacon : list) {
+//                        if (!nearableMap.containsValue(beacon.getMajor())) {
+//                           // nearableId = String.valueOf(beacon.getMajor());
+//
+//                            nearableId = "60973";
+//
+//
+//                            Log.d("Rudy", nearableId);
+//                            Runnable runnable = new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    try {
+//                                        beaconsInRange(nearableId);
+//                                        //adapter.notifyDataSetChanged();
+//
+//
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    } catch (JSONException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            };
+//
+//                            Thread thread = new Thread(runnable);
+//                            thread.start();
+//
+//                            try {
+//                                thread.join();
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//
+//                        }
+//                    }
+//
+//                }
+//                setBeaconBackground();
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
 
 
         // use for proximity Beacons STOP RANGING

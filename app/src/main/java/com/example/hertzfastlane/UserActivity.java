@@ -233,22 +233,26 @@ public class UserActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-       if (mDrawerToggle.onOptionsItemSelected(item)) { // added for hamburger toggle
-            return true;
-        }
+      // if (mDrawerToggle.onOptionsItemSelected(item)) { // added for hamburger toggle
+      //      return true;
+      //  }
         switch (item.getItemId()) {
             case R.id.action_maps:
                 startActivity(new Intent(this, MapActivity.class));
+                //break;
                 return true;
             case R.id.action_help:
                 startActivity(new Intent(this, HelpActivity.class));
+              //  break;
                 return true;
             case R.id.Beacon:
                 startActivity(new Intent(this, Beacons.class));  // estimote Beacons action bar, created string and extra action button
-                return true;
+               //break;
+                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return true;
         }
+       // return true;
     }
 
     private void addDrawerItems() {  // hamburger layout display method

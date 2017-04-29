@@ -16,6 +16,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.estimote.sdk.Beacon;
+import com.example.hertzfastlane.estimote.BeaconID;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,11 +30,16 @@ import java.util.List;
 import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.core.IsNot.not;
 
 /**
  * Created by stevenjoy on 4/12/17.
@@ -45,8 +53,8 @@ public class AdapterTest {
 
 
     @Rule
-    public ActivityTestRule<Beacons> activityRule =
-            new ActivityTestRule<>(Beacons.class, true, false);
+    public IntentsTestRule<Beacons> activityRule =
+            new IntentsTestRule<>(Beacons.class, true, false);
 
 
     @Test
@@ -61,7 +69,7 @@ public class AdapterTest {
         member.setFirst_NM("derek");
 
         info.setYear("2017");
-        info.setMake("Tesla");
+        info.setMake("Bentley");
         info.setModel("Model 3");
         info.setRate("199.99");
         testCar.setInfo(info);
@@ -81,13 +89,16 @@ public class AdapterTest {
         user.putExtra("member", member);
 
         activityRule.launchActivity(user);
-
         adapter = new TestingCarAdapter(cars);
 
         assertTrue(adapter.getmCars()==cars);
         assertTrue(adapter.getContext()==mContext);
         adapter.notifyDataSetChanged();
-        onView(withId(R.id.rvTestingCar)).perform(RecyclerViewActions.scrollToPosition(3));
+        onView(withId(R.id.rvTestingCar)).perform(RecyclerViewActions.scrollToPosition(3), click());
+       // onView(withId(R.id.tvCarImage)).perform(scrollTo()).perform(click());
 
+        // intended(hasComponent(new ComponentName(getTargetContext(), CarActivity.class)));
+
+        // /onView(withId(R.id.imageViewBeacons)).check(matches((isDisplayed())));
     }
 }

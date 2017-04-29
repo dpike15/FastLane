@@ -39,6 +39,7 @@ import static com.estimote.sdk.Nearable.FirmwareState.APP;
 import static com.estimote.sdk.cloud.model.BroadcastingPower.LEVEL_1;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 import static org.hamcrest.core.IsNot.not;
 
 
@@ -65,13 +66,16 @@ public class BeaconsTest {
                 Beacons beacon1 = new Beacons();
                 beacon1.nearableMap.put("624ec2233b5f0546", "624ec2233b5f0546");
 
-                // onView(withId(R.id.rvTestingCar)).perform(RecyclerViewActions.scrollToPosition(3));
 
                 Log.d("TestingTag", "mCars = " + beacon1.nearableMap.containsValue(nearables));
                 assertTrue(beacon1.nearableMap.containsValue(nearables));
 
+               // onView(withId(R.id.rvTestingCar)).perform(RecyclerViewActions.scrollToPosition(3));
+
             }
         });
+
+
     }
 
     @Test

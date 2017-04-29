@@ -62,13 +62,15 @@ public class MyReservationActivity extends AppCompatActivity {
                 member = APICalls.getUser();
 
                 Reservation memberReservation = null;
-                try {
-                    memberReservation = getReservation(member);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //try {
+                //    memberReservation = getReservation(member);
+                //}
+                //catch (JSONException e) {
+                    //e.printStackTrace();
+                //}
+                //catch (IOException e) {
+                  //  e.printStackTrace();
+                //}
 
                     //Setting textViews with Dynamic Data
 
@@ -193,45 +195,45 @@ public class MyReservationActivity extends AppCompatActivity {
         spinner.setVisibility(View.GONE);
     }
 
-    private Reservation getReservation(Member member) throws JSONException, IOException {
-        StringBuilder result = null;
-        URL url = null;
-        try {
-            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
-                    + member.getMember_id());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        HttpURLConnection urlConnection = null;
-
-            urlConnection = (HttpURLConnection) url.openConnection();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            result = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            String resultString = result.toString();
-            Log.d("TAGGY", result.toString());
-
-            JSONObject resMap = new JSONObject(resultString);
-
-            JSONArray reses = resMap.getJSONArray("Items");
-            JSONObject res = reses.getJSONObject(0);
-
-            //Deserializing to JSON Car Information
-            ObjectMapper mapper = new ObjectMapper();
-
-            Reservation reservation  = mapper.readValue(res.toString(), Reservation.class);
-
-            return reservation;
-
-
-
-
-
-    }
+//    private Reservation getReservation(Member member) throws JSONException, IOException {
+//        StringBuilder result = null;
+//        URL url = null;
+//        try {
+//            url = new URL("https://q3igdv3op1.execute-api.us-east-1.amazonaws.com/prod/gate?mem_id="
+//                    + member.getMember_id());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        HttpURLConnection urlConnection = null;
+//
+//            urlConnection = (HttpURLConnection) url.openConnection();
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//            result = new StringBuilder();
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                result.append(line);
+//            }
+//            String resultString = result.toString();
+//            Log.d("TAGGY", result.toString());
+//
+//            JSONObject resMap = new JSONObject(resultString);
+//
+//            JSONArray reses = resMap.getJSONArray("Items");
+//            JSONObject res = reses.getJSONObject(0);
+//
+//            //Deserializing to JSON Car Information
+//            ObjectMapper mapper = new ObjectMapper();
+//
+//            Reservation reservation  = mapper.readValue(res.toString(), Reservation.class);
+//
+//            return reservation;
+//
+//
+//
+//
+//
+//    }
 
 //    private Car getCarInfo(String car_id) {
 //        StringBuilder result = null;

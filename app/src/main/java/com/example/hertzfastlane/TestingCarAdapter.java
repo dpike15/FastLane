@@ -75,24 +75,24 @@ public class TestingCarAdapter extends RecyclerView.Adapter<TestingCarAdapter.Vi
                 .into(viewHolder.tvImage);
 
         //OnClickListener
-       viewHolder.tvImage.setOnTouchListener(new View.OnTouchListener(){
-
-           @Override
-           public boolean onTouch(View v, MotionEvent event) {
-               ProgressDialog dialog = new ProgressDialog(v.getContext());
-               dialog.setMessage("Working....");
-               dialog.show();
-               //Beacons.pos = position;
-               Car car = mCars.get(position);
-               //Launch CarActivity
-               Intent userActivityIntent = new Intent(viewHolder.tvImage.getContext(),CarActivity.class);
-               userActivityIntent.putExtra("car", car);
-               viewHolder.tvImage.getContext().startActivity(userActivityIntent);
-
-               return true;
-           }
-
-        });
+//       viewHolder.tvImage.setOnTouchListener(new View.OnTouchListener(){
+//
+//           @Override
+//           public boolean onTouch(View v, MotionEvent event) {
+//               ProgressDialog dialog = new ProgressDialog(v.getContext());
+//               dialog.setMessage("Working....");
+//               dialog.show();
+//               //Beacons.pos = position;
+//               Car car = mCars.get(position);
+//               //Launch CarActivity
+//               Intent userActivityIntent = new Intent(viewHolder.tvImage.getContext(),CarActivity.class);
+//               userActivityIntent.putExtra("car", car);
+//               viewHolder.tvImage.getContext().startActivity(userActivityIntent);
+//
+//               return true;
+//           }
+//
+//        });
 
     }
 

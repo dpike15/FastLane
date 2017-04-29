@@ -25,6 +25,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.example.hertzfastlane.APICalls.getReservation;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.core.IsNot.not;
 
@@ -48,7 +49,7 @@ public class MyReservationTest{
         onView(withId(R.id.b_Login)).perform(click());
         intended(hasComponent(new ComponentName(getTargetContext(), UserActivity.class)));
 
-
+   //     Member member = new Member();
         Reservation reserve = new Reservation();
         reserve.setMember_id("12");
         reserve.setReservation_id("123");
@@ -60,6 +61,7 @@ public class MyReservationTest{
         reserve.setPick_Up_Date("birthday");
         reserve.setVehicleClass("prestige");
 
+//        assertNotNull(getReservation(member));
         assertTrue(reserve.getVehicleClass()=="prestige");
         assertTrue(reserve.getMember_id()=="12");
         assertTrue(reserve.getReservation_id()=="123");
