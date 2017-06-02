@@ -95,10 +95,5 @@ public class AdapterTest {
         assertTrue(adapter.getContext()==mContext);
         adapter.notifyDataSetChanged();
         onView(withId(R.id.rvTestingCar)).perform(RecyclerViewActions.scrollToPosition(3), click());
-       // onView(withId(R.id.tvCarImage)).perform(scrollTo()).perform(click());
-
-        // intended(hasComponent(new ComponentName(getTargetContext(), CarActivity.class)));
-
-        // /onView(withId(R.id.imageViewBeacons)).check(matches((isDisplayed())));
     }
 }

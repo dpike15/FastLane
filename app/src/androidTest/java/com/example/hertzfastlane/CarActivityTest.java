@@ -43,6 +43,15 @@ public class CarActivityTest {
         features.add("satelite radio");
 
         Car car = new Car();
+        car.set_rev("hello");
+        car.setAirport("RSW");
+        car.setAirportCode("911");
+        car.setCity("Naples");
+        car.setState("Fl");
+        car.setStatus("Y");
+        car.setImage("5");
+        car.setVin("009");
+
         Info info = new Info();
         info.setMake("BMW");
         info.setModel("X5");
@@ -63,6 +72,14 @@ public class CarActivityTest {
         car.getInfo().getRate();
         car.setVideoURL("https://www.youtube.com/watch?v=M30XXrrK3lY");
 
+        assertTrue((car.get_rev()=="hello"));
+        assertTrue(car.getAirport()=="RSW");
+        assertTrue(car.getAirportCode()=="911");
+        assertTrue(car.getCity()=="Naples");
+        assertTrue(car.getState()=="Fl");
+        assertTrue(car.getImage()=="5");
+        assertTrue(car.getVin()=="009");
+        assertTrue(car.getStatus()=="Y");
         assertTrue(car.getInfo().getMake()=="BMW");
         assertTrue(car.getInfo().getModel()=="X5");
         assertTrue(car.getInfo().getYear()=="2017");

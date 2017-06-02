@@ -66,16 +66,9 @@ public class BeaconsTest {
                 Beacons beacon1 = new Beacons();
                 beacon1.nearableMap.put("624ec2233b5f0546", "624ec2233b5f0546");
 
-
-                Log.d("TestingTag", "mCars = " + beacon1.nearableMap.containsValue(nearables));
                 assertTrue(beacon1.nearableMap.containsValue(nearables));
-
-               // onView(withId(R.id.rvTestingCar)).perform(RecyclerViewActions.scrollToPosition(3));
-
             }
         });
-
-
     }
 
     @Test

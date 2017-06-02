@@ -37,7 +37,6 @@ public class LoyaltyPointsTest {
     @Test
     public void testLoyalyPoints() throws Exception {
 
-
         Member member = new Member();
         member.setLoyaltyPoints(275);
         member.setFirst_NM("derek");
@@ -51,13 +50,6 @@ public class LoyaltyPointsTest {
         activityRule.launchActivity(user);
 
         assertTrue(member.getLoyaltyPoints()==275);
-
-//        int x = getLoyaltyPoints();
-//        Member member =LoginActivity.getMember();
-//        Log.d("Tag", String.valueOf(member.getLoyaltyPoints()));
-
         onView(withId(R.id.tvPoints)).check(matches(isDisplayed()));
-       // onView(withId(R.id.tvPoints)).check(matches(withText(String.valueOf(member.getLoyaltyPoints()))));
-
     }
 }

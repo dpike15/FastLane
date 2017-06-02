@@ -77,33 +77,4 @@ public class MyReservationTest{
 
         intended(hasComponent(new ComponentName(getTargetContext(), MyReservationActivity.class)));
     }
-
-//    @Test
-//    public void reservationSetter()  throws IOException, JSONException{
-//
-//        onView(withId(R.id.et_Username)).perform(typeText("dpike15")).perform(ViewActions.closeSoftKeyboard());
-//        onView(withId(R.id.et_Password)).perform(typeText("test")).perform(ViewActions.closeSoftKeyboard());
-//        onView(withId(R.id.b_Login)).perform(click());
-//        intended(hasComponent(new ComponentName(getTargetContext(), UserActivity.class)));
-//
-////
-//        Member member = new Member();
-//        member.setMember_id("1");
-//
-//        //"number_Of_Rental_Days", "returnLocation", "vehicleClass", "reservation_id",
-//        //"car_Vin", "status", "pick_Up_Date", "pick_Up"
-//
-//        Reservation reserve = new Reservation();
-//        reserve.setNumber_Of_Rental_Days("3");
-//        reserve.setReturnLocation("hood");
-//        reserve.setVehicleClass("prestige");
-//        reserve.setReservation_id("123");
-//        reserve.setCar_Vin("321");
-//        reserve.setStatus("Y");
-//        reserve.setPick_Up("Mon");
-//        reserve.setPick_Up_Date("1/1/11");
-//            reserve = getReservation(member);
-//        assertTrue(getReservation(member)==reserve);
-//    }
-
 }

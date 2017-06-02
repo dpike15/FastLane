@@ -93,7 +93,6 @@ public class ActionBarTest {
         } catch (Exception e) {
 
         }
-
     }
     @Test
     public void testActionBar_Beacon() throws Exception {
